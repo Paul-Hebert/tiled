@@ -1,12 +1,14 @@
 <script setup lang="ts">
-import Grid from "./components/Grid/Grid.vue";
-import Shape from "./components/Shape/Shape.vue";
+import Board from "./components/Board/Board.vue";
+import Tile from "./components/Tile/Tile.vue";
 import { onMounted, ref } from "vue";
+import { shapes } from "./data/shapes";
 
 const scale = 10;
 const gridSize = 10;
 
 const pos = ref({ x: 0, y: 0 });
+const placed = ref(false);
 
 onMounted(() => {
   document.addEventListener("keydown", (e) => {
@@ -24,6 +26,9 @@ onMounted(() => {
       case "ArrowRight":
         pos.value.x += 1;
         break;
+      case "Enter":
+        placed.value = !placed.value;
+        break;
     }
   });
 });
@@ -32,17 +37,14 @@ onMounted(() => {
 <template>
   <div class="game-screen">
     <svg :viewBox="`0 0 ${scale * gridSize} ${scale * gridSize}`">
-      <Grid :size="gridSize" :scale="scale" />
-      <Shape
+      <Board :size="gridSize" :scale="scale" />
+      <Tile
         :size="10"
         :scale="scale"
         :x="pos.x"
         :y="pos.y"
-        :shape="[
-          [0, 0, 1],
-          [1, 1, 1],
-          [0, 0, 1],
-        ]"
+        :shape="shapes.T"
+        :placed="placed"
       />
     </svg>
   </div>
@@ -58,7 +60,7 @@ svg {
 .game-screen {
   max-width: 90svw;
   max-height: 90svh;
-  overflow: hidden;
+  padding: 1em;
   display: grid;
   place-content: center;
 }
