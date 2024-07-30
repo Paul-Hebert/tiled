@@ -1,0 +1,9 @@
+{
+  "name": "Tiled",
+  "scripts": {
+    "start": "npx parcel src/index.html"
+  },
+  "devDependencies": {
+    "parcel": "^2.12.0"
+  }
+}
