@@ -1,15 +1,12 @@
 <script setup lang="ts">
 import { computed } from "vue";
-import type { Shape } from "../../types/shape";
-import { Point } from "../../types/point";
+import type { TileData } from "../../types/tile-data";
 
-const props = defineProps<{
-  shape: Shape;
+interface Props extends TileData {
   scale: number;
-  x: number;
-  y: number;
-  placed?: boolean;
-}>();
+}
+
+const props = defineProps<Props>();
 
 const scaledPoints = computed(() =>
   props.shape.outlinePoints.map((point) => ({
@@ -33,7 +30,21 @@ const path = computed(() => {
 </script>
 
 <template>
-  <g :style="{ '--x': x, '--y': y, '--scale': scale }">
+  <g
+    class="translate-group"
+    :style="{
+      '--x': x,
+      '--y': y,
+      '--scale': scale,
+      '--hue': hue,
+      '--rotation': `${rotation || 0}deg`,
+      '--rotate-origin': props.shape.rotationPoint
+        ? `${(0.5 + props.shape.rotationPoint.x) * scale}px ${
+            (0.5 + props.shape.rotationPoint.y) * scale
+          }px`
+        : 'center',
+    }"
+  >
     <path :d="path" class="shadow" />
     <path :d="path" class="tile" :class="{ placed }" />
   </g>
@@ -41,23 +52,44 @@ const path = computed(() => {
 
 <style scoped>
 g {
-  --hue: 120;
+  --move-ease: ease-out;
+
+  transition-duration: 0.1s;
+  transition-timing-function: var(--move-ease);
+  transform-origin: center;
+}
+
+.translate-group {
+  transition-property: translate;
   translate: calc(var(--x) * var(--scale) * 1%)
     calc(var(--y) * var(--scale) * 1%);
-  transition: translate 0.1s;
 }
 
 .tile {
   fill: hsl(var(--hue), 50%, 80%);
   stroke: hsl(var(--hue), 50%, 60%);
-  transition: translate 0.1s;
+  stroke-width: 0.5px;
+  transition-property: translate, opacity, rotate, scale;
 }
 
 .tile:not(.placed) {
-  translate: -0.25em -0.25em;
+  translate: -0.125em -0.125em;
+  scale: 1.02;
+  opacity: 0.85;
 }
 
 .shadow {
-  fill: hsl(var(--hue), 10%, 80%, 0.5);
+  fill: hsl(var(--hue), 10%, 30%, 0.3);
+  rotate: var(--rotation);
+  transition-property: rotate;
+}
+
+.tile,
+.shadow {
+  transform-box: fill-box;
+  transform-origin: var(--rotate-origin);
+  rotate: var(--rotation);
+  transition-duration: 0.1s;
+  transition-timing-function: var(--move-ease);
 }
 </style>

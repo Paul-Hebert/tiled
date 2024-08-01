@@ -22,7 +22,7 @@ defineProps<{ size: number; scale: number }>();
 <style scoped>
 line {
   stroke: #ddd;
-  stroke-width: 1;
+  stroke-width: 0.5;
   stroke-linecap: round;
 }
 </style>

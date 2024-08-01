@@ -2,3 +2,25 @@
   font-family: system-ui;
   line-height: 1.5;
 }
+
+html,
+body {
+  display: grid;
+  height: 100%;
+  margin: 0;
+}
+
+body {
+  background: #f0f0f0;
+  place-content: center;
+}
+
+#app {
+  display: contents;
+}
+
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+}
