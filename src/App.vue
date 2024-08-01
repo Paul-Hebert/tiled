@@ -18,25 +18,27 @@ const placedTiles: Ref<TileData[]> = ref([]);
 const currentTile = ref(newTile());
 
 function newTile(): TileData {
-  return {
+  const tile = {
     x: 0,
     y: 0,
     shape: randomItemInArray(shapes),
     id: getIncrementedId(),
     hue: randomItemInArray(hues),
   };
+
+  return tile;
 }
 
 const commands: Commands = {
-  moveBlockLeft: () => (currentTile.value.x -= 1),
-  moveBlockRight: () => (currentTile.value.x += 1),
-  moveBlockUp: () => (currentTile.value.y -= 1),
-  moveBlockDown: () => (currentTile.value.y += 1),
-  rotateBlockLeft: () =>
+  moveTileLeft: () => (currentTile.value.x -= 1),
+  moveTileRight: () => (currentTile.value.x += 1),
+  moveTileUp: () => (currentTile.value.y -= 1),
+  moveTileDown: () => (currentTile.value.y += 1),
+  rotateTileLeft: () =>
     (currentTile.value.rotation = (currentTile.value?.rotation || 0) - 90),
-  rotateBlockRight: () =>
+  rotateTileRight: () =>
     (currentTile.value.rotation = (currentTile.value?.rotation || 0) + 90),
-  placeBlock: () => {
+  placeTile: () => {
     currentTile.value.placed = true;
     placedTiles.value.push({ ...currentTile.value });
     currentTile.value = newTile();

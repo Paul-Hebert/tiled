@@ -8,4 +8,5 @@ export interface TileData {
   id: number | string;
   hue: number;
   rotation?: number;
+  flipped?: boolean;
 }

@@ -14,32 +14,32 @@ defineProps<{ commands: Commands }>();
 
 <template>
   <div class="controls">
-    <Button @click="commands.rotateBlockLeft">
+    <Button @click="commands.rotateTileLeft">
       <RotateCcwIcon aria-label="Rotate counter-clockwise" />
     </Button>
-    <Button @click="commands.moveBlockUp">
+    <Button @click="commands.moveTileUp">
       <ArrowUpIcon aria-label="Move up" />
     </Button>
-    <Button @click="commands.rotateBlockRight">
+    <Button @click="commands.rotateTileRight">
       <RotateCwIcon aria-label="Rotate clockwise" />
     </Button>
-    <Button @click="commands.moveBlockLeft">
+    <Button @click="commands.moveTileLeft">
       <ArrowLeftIcon aria-label="Move left" />
     </Button>
-    <Button @click="commands.moveBlockDown">
+    <Button @click="commands.moveTileDown">
       <ArrowDownIcon aria-label="Move down" />
     </Button>
-    <Button @click="commands.moveBlockRight">
+    <Button @click="commands.moveTileRight">
       <ArrowRightIcon aria-label="Move right" />
     </Button>
-    <Button @click="commands.placeBlock" class="place">Place Tile</Button>
+    <Button @click="commands.placeTile" class="place">Place Tile</Button>
   </div>
 </template>
 
 <style scoped>
 .controls {
   display: grid;
-  gap: 0.75em;
+  gap: 0.5em;
   grid-template-areas:
     "rotate-left up rotate-right"
     "left down right"

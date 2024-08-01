@@ -2,13 +2,13 @@ import { onMounted } from "vue";
 import { Commands } from "../types/commands";
 
 export function useKeyboardCommands({
-  moveBlockUp,
-  moveBlockDown,
-  moveBlockLeft,
-  moveBlockRight,
-  rotateBlockLeft,
-  rotateBlockRight,
-  placeBlock,
+  moveTileUp,
+  moveTileDown,
+  moveTileLeft,
+  moveTileRight,
+  rotateTileLeft,
+  rotateTileRight,
+  placeTile,
 }: Commands) {
   onMounted(() => {
     document.addEventListener("keydown", (e) => {
@@ -16,29 +16,29 @@ export function useKeyboardCommands({
       switch (e.key) {
         case "ArrowUp":
         case "w":
-          moveBlockUp();
+          moveTileUp();
           break;
         case "ArrowDown":
         case "s":
-          moveBlockDown();
+          moveTileDown();
           break;
         case "ArrowLeft":
         case "a":
-          moveBlockLeft();
+          moveTileLeft();
           break;
         case "ArrowRight":
         case "d":
-          moveBlockRight();
+          moveTileRight();
           break;
         case "q":
-          rotateBlockLeft();
+          rotateTileLeft();
           break;
         case "e":
-          rotateBlockRight();
+          rotateTileRight();
           break;
         case "Enter":
         case " ":
-          placeBlock();
+          placeTile();
           break;
       }
     });

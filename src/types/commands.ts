@@ -1,9 +1,9 @@
 export interface Commands {
-  moveBlockUp: () => void;
-  moveBlockDown: () => void;
-  moveBlockLeft: () => void;
-  moveBlockRight: () => void;
-  rotateBlockLeft: () => void;
-  rotateBlockRight: () => void;
-  placeBlock: () => void;
+  moveTileUp: () => void;
+  moveTileDown: () => void;
+  moveTileLeft: () => void;
+  moveTileRight: () => void;
+  rotateTileLeft: () => void;
+  rotateTileRight: () => void;
+  placeTile: () => void;
 }
