@@ -12,6 +12,7 @@
     "@vueuse/core": "^10.11.0",
     "lucide-vue-next": "^0.419.0",
     "randomness-helpers": "^0.0.1",
+    "rotate-matrix": "^0.0.3",
     "vue": "^3.4.31"
   },
   "devDependencies": {

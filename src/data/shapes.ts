@@ -70,4 +70,27 @@ export const shapes: Shape[] = [
       { x: 0, y: 2 },
     ],
   },
+  // TODO: these don't rotate right
+  // {
+  //   name: "Long Bar",
+  //   grid: [[1], [1], [1], [1]],
+  //   outlinePoints: [
+  //     { x: 0, y: 0 },
+  //     { x: 1, y: 0 },
+  //     { x: 1, y: 4 },
+  //     { x: 0, y: 4 },
+  //   ],
+  //   rotationPoint: { x: 0, y: 0 },
+  // },
+  // {
+  //   name: "Short Bar",
+  //   grid: [[1], [1]],
+  //   outlinePoints: [
+  //     { x: 0, y: 0 },
+  //     { x: 1, y: 0 },
+  //     { x: 1, y: 2 },
+  //     { x: 0, y: 2 },
+  //   ],
+  //   rotationPoint: { x: 0, y: 0 },
+  // },
 ];

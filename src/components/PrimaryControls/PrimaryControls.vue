@@ -7,32 +7,34 @@ import {
   RotateCcwIcon,
   RotateCwIcon,
 } from "lucide-vue-next";
-import Button from "../Button/Button.vue";
+import LongPressButton from "../LongPressButton/LongPressButton.vue";
 import { Commands } from "../../types/commands.ts";
 defineProps<{ commands: Commands }>();
 </script>
 
 <template>
   <div class="controls">
-    <Button @click="commands.rotateTileLeft">
+    <LongPressButton @longPress="commands.rotateTileLeft">
       <RotateCcwIcon aria-label="Rotate counter-clockwise" />
-    </Button>
-    <Button @click="commands.moveTileUp">
+    </LongPressButton>
+    <LongPressButton @longPress="commands.moveTileUp">
       <ArrowUpIcon aria-label="Move up" />
-    </Button>
-    <Button @click="commands.rotateTileRight">
+    </LongPressButton>
+    <LongPressButton @longPress="commands.rotateTileRight">
       <RotateCwIcon aria-label="Rotate clockwise" />
-    </Button>
-    <Button @click="commands.moveTileLeft">
+    </LongPressButton>
+    <LongPressButton @longPress="commands.moveTileLeft">
       <ArrowLeftIcon aria-label="Move left" />
-    </Button>
-    <Button @click="commands.moveTileDown">
+    </LongPressButton>
+    <LongPressButton @longPress="commands.moveTileDown">
       <ArrowDownIcon aria-label="Move down" />
-    </Button>
-    <Button @click="commands.moveTileRight">
+    </LongPressButton>
+    <LongPressButton @longPress="commands.moveTileRight">
       <ArrowRightIcon aria-label="Move right" />
-    </Button>
-    <Button @click="commands.placeTile" class="place">Place Tile</Button>
+    </LongPressButton>
+    <LongPressButton @longPress="commands.placeTile" class="place">
+      Place Tile
+    </LongPressButton>
   </div>
 </template>
 

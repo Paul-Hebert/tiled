@@ -1,9 +1,9 @@
+import { Point } from "./point";
 import { Shape } from "./shape";
 
 export interface TileData {
   shape: Shape;
-  x: number;
-  y: number;
+  offset: Point;
   placed?: boolean;
   id: number | string;
   hue: number;

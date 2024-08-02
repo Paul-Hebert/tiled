@@ -12,7 +12,6 @@ export function useKeyboardCommands({
 }: Commands) {
   onMounted(() => {
     document.addEventListener("keydown", (e) => {
-      console.log(e);
       switch (e.key) {
         case "ArrowUp":
         case "w":

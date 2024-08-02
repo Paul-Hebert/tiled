@@ -4,6 +4,8 @@ import type { TileData } from "../../types/tile-data";
 
 interface Props extends TileData {
   scale: number;
+  canBePlaced?: boolean;
+  invalidPlacement?: boolean;
 }
 
 const props = defineProps<Props>();
@@ -31,10 +33,11 @@ const path = computed(() => {
 
 <template>
   <g
-    class="translate-group"
+    class="translate-group tile-wrapper"
+    :class="{ canBePlaced, placed }"
     :style="{
-      '--x': x,
-      '--y': y,
+      '--x': offset.x,
+      '--y': offset.y,
       '--scale': scale,
       '--hue': hue,
       '--rotation': `${rotation || 0}deg`,
@@ -46,7 +49,7 @@ const path = computed(() => {
     }"
   >
     <path :d="path" class="shadow" />
-    <path :d="path" class="tile" :class="{ placed }" />
+    <path :d="path" class="tile" :class="{ invalidPlacement }" />
   </g>
 </template>
 
@@ -70,18 +73,37 @@ g {
   stroke: hsl(var(--hue), 50%, 60%);
   stroke-width: 0.5px;
   transition-property: translate, opacity, rotate, scale;
-}
-
-.tile:not(.placed) {
   translate: -0.125em -0.125em;
   scale: 1.02;
+}
+
+.tile-wrapper:not(.placed) .tile {
   opacity: 0.85;
+}
+
+.tile-wrapper.placed .tile {
+  animation: placed 0.15s both ease-in-out;
+}
+
+@keyframes placed {
+  10% {
+    translate: -0.15em -0.15em;
+    scale: 1.04;
+  }
+
+  100% {
+    translate: 0;
+    scale: 1;
+  }
 }
 
 .shadow {
   fill: hsl(var(--hue), 10%, 30%, 0.3);
-  rotate: var(--rotation);
   transition-property: rotate;
+}
+
+.tile-wrapper:not(.canBePlaced, .placed) .shadow {
+  fill: hsl(360, 100%, 50%, 0.5);
 }
 
 .tile,
@@ -91,5 +113,28 @@ g {
   rotate: var(--rotation);
   transition-duration: 0.1s;
   transition-timing-function: var(--move-ease);
+}
+
+.invalidPlacement {
+  animation: shake-z 0.5s both;
+}
+
+@keyframes shake-z {
+  0%,
+  100% {
+    transform: rotate(0deg);
+  }
+  20% {
+    transform: rotate(-10deg);
+  }
+  40% {
+    transform: rotate(10deg);
+  }
+  60% {
+    transform: rotate(-10deg);
+  }
+  80% {
+    transform: rotate(10deg);
+  }
 }
 </style>

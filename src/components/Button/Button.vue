@@ -20,6 +20,7 @@ button {
   height: 4rem;
   cursor: pointer;
   touch-action: manipulation;
+  user-select: none;
   position: relative;
   font-size: 1.25rem;
 }
@@ -43,6 +44,7 @@ button::before {
   transition: translate 0.1s ease-out;
   display: grid;
   place-content: center;
+  user-select: none;
 }
 
 button::before {
