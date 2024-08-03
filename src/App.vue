@@ -1,5 +1,6 @@
 <script setup lang="ts">
 import Board from "./components/Board/Board.vue";
+import PlacementDebugger from "./components/PlacementDebugger/PlacementDebugger.vue";
 import PrimaryControls from "./components/PrimaryControls/PrimaryControls.vue";
 import Tile from "./components/Tile/Tile.vue";
 import { computed, type Ref, ref } from "vue";
@@ -118,6 +119,8 @@ useKeyboardCommands(commands);
         :scale="scale"
         :key="tile.id"
       />
+
+      <!-- <PlacementDebugger :scale="scale" :points="currentTileGridSquares" /> -->
     </svg>
 
     <PrimaryControls :commands="commands" />
