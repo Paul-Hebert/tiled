@@ -29,6 +29,8 @@ const path = computed(() => {
   path += "Z";
   return path;
 });
+
+const squareSize = computed(() => props.shape.grid.length);
 </script>
 
 <template>
@@ -41,39 +43,70 @@ const path = computed(() => {
       '--scale': scale,
       '--hue': hue,
       '--rotation': `${rotation || 0}deg`,
-      '--rotate-origin': props.shape.rotationPoint
-        ? `${(0.5 + props.shape.rotationPoint.x) * scale}px ${
-            (0.5 + props.shape.rotationPoint.y) * scale
-          }px`
-        : 'center',
     }"
   >
-    <path :d="path" class="shadow" />
-    <path :d="path" class="tile" :class="{ invalidPlacement }" />
+    <g class="rotate-group translate-group">
+      <path :d="path" class="shadow" />
+
+      <g
+        class="offset-group translate-group"
+        :class="{ 'half-down': invalidPlacement }"
+      >
+        <g class="translate-group" :class="{ invalidPlacement }">
+          <path :d="path" class="tile" />
+        </g>
+      </g>
+
+      <rect
+        class="square-placeholder"
+        :width="(squareSize + 2) * scale"
+        :height="(squareSize + 2) * scale"
+        :x="-1 * scale"
+        :y="-1 * scale"
+      />
+    </g>
   </g>
 </template>
 
 <style scoped>
-g {
-  --move-ease: ease-out;
-
+.translate-group {
   transition-duration: 0.1s;
   transition-timing-function: var(--move-ease);
   transform-origin: center;
+  transform-box: fill-box;
+  transform-origin: center;
 }
 
-.translate-group {
+.tile-wrapper {
+  --offset-distance: 0.125em;
+  --offset-angle: calc(-135deg - var(--rotation));
+
+  --move-ease: ease-out;
+
   transition-property: translate;
   translate: calc(var(--x) * var(--scale) * 1%)
     calc(var(--y) * var(--scale) * 1%);
+  transform-box: initial;
+}
+
+.rotate-group {
+  transition-property: rotate;
+  rotate: var(--rotation);
+}
+
+.offset-group {
+  transition-property: translate;
+  translate: calc(cos(var(--offset-angle)) * var(--offset-distance))
+    calc(sin(var(--offset-angle)) * var(--offset-distance));
 }
 
 .tile {
   fill: hsl(var(--hue), 50%, 80%);
   stroke: hsl(var(--hue), 50%, 60%);
   stroke-width: 0.5px;
-  transition-property: translate, opacity, rotate, scale;
-  translate: -0.125em -0.125em;
+  transition-property: opacity, scale;
+  transform-origin: center;
+  transform-box: fill-box;
   scale: 1.02;
 }
 
@@ -81,20 +114,8 @@ g {
   opacity: 0.85;
 }
 
-.tile-wrapper.placed .tile {
-  animation: placed 0.15s both ease-in-out;
-}
-
-@keyframes placed {
-  10% {
-    translate: -0.15em -0.15em;
-    scale: 1.04;
-  }
-
-  100% {
-    translate: 0;
-    scale: 1;
-  }
+.tile-wrapper.placed .offset-group {
+  --offset-distance: 0;
 }
 
 .shadow {
@@ -106,17 +127,13 @@ g {
   fill: hsl(360, 100%, 50%, 0.5);
 }
 
-.tile,
-.shadow {
-  transform-box: fill-box;
-  transform-origin: var(--rotate-origin);
-  rotate: var(--rotation);
-  transition-duration: 0.1s;
-  transition-timing-function: var(--move-ease);
+.offset-group.half-down {
+  --offset-distance: 0.075em;
 }
 
 .invalidPlacement {
   animation: shake-z 0.5s both;
+  transform-origin: center;
 }
 
 @keyframes shake-z {
@@ -125,16 +142,20 @@ g {
     transform: rotate(0deg);
   }
   20% {
-    transform: rotate(-10deg);
+    transform: rotate(-8deg);
   }
   40% {
-    transform: rotate(10deg);
+    transform: rotate(8deg);
   }
   60% {
-    transform: rotate(-10deg);
+    transform: rotate(-8deg);
   }
   80% {
-    transform: rotate(10deg);
+    transform: rotate(8deg);
   }
+}
+
+.square-placeholder {
+  opacity: 0;
 }
 </style>

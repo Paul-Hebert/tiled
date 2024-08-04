@@ -32,9 +32,9 @@ export const shapes: Shape[] = [
   {
     name: "Squiggle",
     grid: [
-      [0, 1],
-      [1, 1],
-      [1, 0],
+      [0, 1, 0],
+      [1, 1, 0],
+      [1, 0, 0],
     ],
     outlinePoints: [
       { x: 1, y: 0 },
@@ -46,7 +46,6 @@ export const shapes: Shape[] = [
       { x: 0, y: 1 },
       { x: 1, y: 1 },
     ],
-    rotationPoint: { x: 1, y: 1 },
   },
   {
     name: "T",
