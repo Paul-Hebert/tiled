@@ -1,8 +1,7 @@
 ## Core Placement UI
 
-- Fix rotation/placement bugs for non-square tiles (or make all tiles square?)
-- More shapes
 - Larger grid on wide screens
+- Flipping tiles
 
 ## Enhanced Placement UI
 
@@ -16,3 +15,4 @@
 - Income
 - Surrounding spots
 - Different scoring objectives
+- Fill the board puzzles
