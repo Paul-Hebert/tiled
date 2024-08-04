@@ -104,7 +104,11 @@ useKeyboardCommands(commands);
 
 <template>
   <div class="game-screen">
-    <svg :viewBox="`0 0 ${scale * gridSize} ${scale * gridSize}`">
+    <svg
+      :viewBox="`0 0 ${scale * gridSize} ${scale * gridSize}`"
+      width="1000"
+      height="1000"
+    >
       <Board :size="gridSize" :scale="scale" />
       <Tile
         v-for="tile in [
@@ -121,26 +125,31 @@ useKeyboardCommands(commands);
       />
     </svg>
 
-    <PrimaryControls :commands="commands" />
+    <PrimaryControls class="primary-controls" :commands="commands" />
   </div>
 </template>
 
 <style scoped>
 svg {
-  background: #fff;
   overflow: visible;
   width: 100%;
   height: 100%;
 }
 
 .game-screen {
-  max-width: 90svw;
   max-height: 90svh;
+  max-width: 95svw;
   padding: 1em;
   display: grid;
   place-content: center;
+  grid-template-rows: 1fr auto;
   gap: 1em;
   width: 100%;
   height: 100%;
+}
+
+.primary-controls {
+  width: min(25em, 95svw);
+  place-self: center;
 }
 </style>

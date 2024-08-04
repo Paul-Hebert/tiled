@@ -17,7 +17,7 @@ button {
   border: none;
   appearance: none;
   border-radius: 0.5em;
-  height: 4rem;
+  height: 3rem;
   cursor: pointer;
   touch-action: manipulation;
   user-select: none;

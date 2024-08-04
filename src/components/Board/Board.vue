@@ -4,6 +4,7 @@ defineProps<{ size: number; scale: number }>();
 
 <template>
   <g class="board">
+    <rect :width="size * scale" :height="size * scale" fill="#fff" />
     <template v-for="i in size + 1">
       <line
         :x1="0"
