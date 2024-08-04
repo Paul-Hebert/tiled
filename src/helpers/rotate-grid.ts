@@ -1,5 +1,4 @@
 import { Grid } from "../types/grid";
-import { logGrid } from "./log-grid";
 import { rotate } from "2d-array-rotation";
 
 export function rotateGrid({

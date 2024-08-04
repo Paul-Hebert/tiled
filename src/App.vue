@@ -14,6 +14,7 @@ import { rotateGrid } from "./helpers/rotate-grid.ts";
 import { Grid } from "./types/grid.ts";
 import { getActivePointsFromGrid } from "./helpers/get-active-points-from-grid.ts";
 import { logGrid } from "./helpers/log-grid.ts";
+import { padShapeToSquare } from "./helpers/pad-shape-to-square.ts";
 
 const scale = 10;
 const gridSize = 10;
@@ -57,7 +58,7 @@ const invalidPlacement = ref(false);
 function newTile(): TileData {
   const tile = {
     offset: { x: 0, y: 0 },
-    shape: randomItemInArray(shapes),
+    shape: padShapeToSquare(randomItemInArray(shapes)),
     id: getIncrementedId(),
     hue: randomItemInArray(hues),
   };
