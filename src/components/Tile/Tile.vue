@@ -107,11 +107,11 @@ const squareSize = computed(() => props.shape.grid.length);
   transition-property: opacity, scale;
   transform-origin: center;
   transform-box: fill-box;
-  scale: 1.02;
 }
 
 .tile-wrapper:not(.placed) .tile {
   opacity: 0.85;
+  scale: 1.02;
 }
 
 .tile-wrapper.placed .offset-group {
