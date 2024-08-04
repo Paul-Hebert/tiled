@@ -1,11 +1,13 @@
 <script setup lang="ts">
 import { computed } from "vue";
 import type { TileData } from "../../types/tile-data";
+import StripedPattern from "../Patterns/StripedPattern.vue";
 
 interface Props extends TileData {
   scale: number;
   canBePlaced?: boolean;
   invalidPlacement?: boolean;
+  id: number;
 }
 
 const props = defineProps<Props>();
@@ -31,6 +33,8 @@ const path = computed(() => {
 });
 
 const squareSize = computed(() => props.shape.grid.length);
+
+const patternId = computed(() => `pattern-${props.id}`);
 </script>
 
 <template>
@@ -45,6 +49,9 @@ const squareSize = computed(() => props.shape.grid.length);
       '--rotation': `${rotation || 0}deg`,
     }"
   >
+    <defs>
+      <StripedPattern :scale="scale" :id="patternId" />
+    </defs>
     <g class="rotate-group translate-group">
       <path :d="path" class="shadow" />
 
@@ -53,7 +60,7 @@ const squareSize = computed(() => props.shape.grid.length);
         :class="{ 'half-down': invalidPlacement }"
       >
         <g class="translate-group" :class="{ invalidPlacement }">
-          <path :d="path" class="tile" />
+          <path :d="path" class="tile" :fill="`url(#${patternId})`" />
         </g>
       </g>
 
@@ -80,8 +87,10 @@ const squareSize = computed(() => props.shape.grid.length);
 .tile-wrapper {
   --offset-distance: 0.125em;
   --offset-angle: calc(-135deg - var(--rotation));
-
   --move-ease: ease-out;
+
+  --fill-color: hsl(var(--hue), 50%, 80%);
+  --stroke-color: hsl(var(--hue), 50%, 60%);
 
   transition-property: translate;
   translate: calc(var(--x) * var(--scale) * 1%)
@@ -101,8 +110,7 @@ const squareSize = computed(() => props.shape.grid.length);
 }
 
 .tile {
-  fill: hsl(var(--hue), 50%, 80%);
-  stroke: hsl(var(--hue), 50%, 60%);
+  stroke: var(--stroke-color);
   stroke-width: 0.5px;
   transition-property: opacity, scale;
   transform-origin: center;

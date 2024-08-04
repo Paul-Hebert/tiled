@@ -122,6 +122,7 @@ useKeyboardCommands(commands);
         v-bind="tile"
         :scale="scale"
         :key="tile.id"
+        :id="tile.id"
       />
     </svg>
 
