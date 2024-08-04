@@ -1,6 +1,6 @@
 import { Grid } from "../types/grid";
-import rotateMatrix from "rotate-matrix";
 import { logGrid } from "./log-grid";
+import { rotate } from "2d-array-rotation";
 
 export function rotateGrid({
   grid,
@@ -11,18 +11,9 @@ export function rotateGrid({
 }) {
   if (!rotation) return grid;
 
-  console.group("rotateGrid");
-  console.log("original grid");
-  logGrid(grid);
+  const gridCopy = [...grid.map((row) => [...row])];
 
-  const turns = (rotation / 90) % 4;
-
-  console.log("turns", turns);
-
-  const rotatedGrid = rotateMatrix([...grid.map((row) => [...row])], turns);
-  console.log("rotated grid");
-  logGrid(rotatedGrid);
-  console.groupEnd();
+  const rotatedGrid = rotate(gridCopy, rotation);
 
   return rotatedGrid;
 }

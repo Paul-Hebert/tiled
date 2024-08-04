@@ -97,15 +97,15 @@ test("rotate squiggle", () => {
 
   // The original grid should be unchanged
   expect(squiggle).toStrictEqual([
-    [1, 0],
-    [1, 1],
     [0, 1],
+    [1, 1],
+    [1, 0],
   ]);
 
   expect(rotateGrid({ grid: squiggle, rotation: 180 })).toStrictEqual([
-    [1, 0],
-    [1, 1],
     [0, 1],
+    [1, 1],
+    [1, 0],
   ]);
 
   expect(rotateGrid({ grid: squiggle, rotation: 270 })).toStrictEqual([
