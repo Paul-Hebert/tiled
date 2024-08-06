@@ -8,6 +8,7 @@ import {
   RotateCwIcon,
 } from "lucide-vue-next";
 import LongPressButton from "../LongPressButton/LongPressButton.vue";
+import Button from "../Button/Button.vue";
 import { Commands } from "../../types/commands.ts";
 defineProps<{ commands: Commands }>();
 </script>
@@ -32,9 +33,7 @@ defineProps<{ commands: Commands }>();
     <LongPressButton @longPress="commands.moveTileRight">
       <ArrowRightIcon aria-label="Move right" />
     </LongPressButton>
-    <LongPressButton @longPress="commands.placeTile" class="place">
-      Place Tile
-    </LongPressButton>
+    <Button @click="commands.placeTile" class="place"> Place Tile </Button>
   </div>
 </template>
 

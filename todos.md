@@ -1,11 +1,9 @@
 ## Core Placement UI
 
-- Larger grid on wide screens
 - Flipping tiles
 
 ## Enhanced Placement UI
 
-- Sound effects
 - Dark/light themes
 
 ## Game Concepts

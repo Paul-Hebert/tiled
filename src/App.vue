@@ -6,6 +6,7 @@ import { computed, type Ref, ref } from "vue";
 import { shapes } from "./data/shapes";
 import { hues } from "./data/hues";
 import type { TileData } from "./types/tile-data";
+import type { Point } from "./types/point";
 import { randomItemInArray } from "randomness-helpers";
 import { useKeyboardCommands } from "./composables/use-keyboard-commands.ts";
 import { Commands } from "./types/commands.ts";
@@ -15,6 +16,7 @@ import { Grid } from "./types/grid.ts";
 import { getActivePointsFromGrid } from "./helpers/get-active-points-from-grid.ts";
 import { logGrid } from "./helpers/log-grid.ts";
 import { padShapeToSquare } from "./helpers/pad-shape-to-square.ts";
+// import { useSound } from "./composables/use-sound.ts";
 
 const scale = 10;
 const gridSize = 10;
@@ -66,15 +68,25 @@ function newTile(): TileData {
   return tile;
 }
 
+function move(vector: Point) {
+  // useSound("placed.mp3");
+
+  currentTile.value.offset.x += vector.x;
+  currentTile.value.offset.y += vector.y;
+}
+
+function rotate(angle: 90 | -90) {
+  // useSound(angle === 90 ? "whoosh-2.mp3" : "whoosh-3.mp3");
+  currentTile.value.rotation = (currentTile.value?.rotation || 0) + angle;
+}
+
 const commands: Commands = {
-  moveTileLeft: () => (currentTile.value.offset.x -= 1),
-  moveTileRight: () => (currentTile.value.offset.x += 1),
-  moveTileUp: () => (currentTile.value.offset.y -= 1),
-  moveTileDown: () => (currentTile.value.offset.y += 1),
-  rotateTileLeft: () =>
-    (currentTile.value.rotation = (currentTile.value?.rotation || 0) - 90),
-  rotateTileRight: () =>
-    (currentTile.value.rotation = (currentTile.value?.rotation || 0) + 90),
+  moveTileLeft: () => move({ x: -1, y: 0 }),
+  moveTileRight: () => move({ x: 1, y: 0 }),
+  moveTileUp: () => move({ x: 0, y: -1 }),
+  moveTileDown: () => move({ x: 0, y: 1 }),
+  rotateTileLeft: () => rotate(-90),
+  rotateTileRight: () => rotate(90),
   placeTile: () => {
     if (!canPlaceTile.value) {
       invalidPlacement.value = true;
@@ -84,6 +96,8 @@ const commands: Commands = {
 
       return;
     }
+
+    // useSound("placed.mp3");
 
     invalidPlacement.value = false;
 
