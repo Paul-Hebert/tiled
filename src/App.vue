@@ -7,7 +7,7 @@ import PrimaryControls from "./components/PrimaryControls/PrimaryControls.vue";
   <div class="game-screen">
     <GameBoard :scale="10" :gridSize="10" />
 
-    <PrimaryControls class="primary-controls" :commands="commands" />
+    <PrimaryControls class="primary-controls" />
   </div>
 </template>
 
