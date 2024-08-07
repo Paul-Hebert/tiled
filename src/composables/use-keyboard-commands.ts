@@ -1,43 +1,38 @@
 import { onMounted } from "vue";
-import { Commands } from "../types/commands";
 
-export function useKeyboardCommands({
-  moveTileUp,
-  moveTileDown,
-  moveTileLeft,
-  moveTileRight,
-  rotateTileLeft,
-  rotateTileRight,
-  placeTile,
-}: Commands) {
+import { useCommands } from "./use-commands";
+
+export function useKeyboardCommands() {
+  const commands = useCommands();
+
   onMounted(() => {
     document.addEventListener("keydown", (e) => {
       switch (e.key) {
         case "ArrowUp":
         case "w":
-          moveTileUp();
+          commands.moveTileUp();
           break;
         case "ArrowDown":
         case "s":
-          moveTileDown();
+          commands.moveTileDown();
           break;
         case "ArrowLeft":
         case "a":
-          moveTileLeft();
+          commands.moveTileLeft();
           break;
         case "ArrowRight":
         case "d":
-          moveTileRight();
+          commands.moveTileRight();
           break;
         case "q":
-          rotateTileLeft();
+          commands.rotateTileLeft();
           break;
         case "e":
-          rotateTileRight();
+          commands.rotateTileRight();
           break;
         case "Enter":
         case " ":
-          placeTile();
+          commands.placeTile();
           break;
       }
     });

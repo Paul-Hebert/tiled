@@ -3,14 +3,14 @@ import { computed } from "vue";
 import type { TileData } from "../../types/tile-data";
 import StripedPattern from "../Patterns/StripedPattern.vue";
 
-interface Props extends TileData {
+export interface TileComponentProps extends TileData {
   scale: number;
   canBePlaced?: boolean;
   invalidPlacement?: boolean;
   id: number;
 }
 
-const props = defineProps<Props>();
+const props = defineProps<TileComponentProps>();
 
 const scaledPoints = computed(() =>
   props.shape.outlinePoints.map((point) => ({
@@ -111,7 +111,7 @@ const patternId = computed(() => `pattern-${props.id}`);
 
 .tile {
   stroke: var(--stroke-color);
-  stroke-width: 0.5px;
+  stroke-width: 0.25px;
   transition-property: opacity, scale;
   transform-origin: center;
   transform-box: fill-box;

@@ -9,8 +9,9 @@ import {
 } from "lucide-vue-next";
 import LongPressButton from "../LongPressButton/LongPressButton.vue";
 import Button from "../Button/Button.vue";
-import { Commands } from "../../types/commands.ts";
-defineProps<{ commands: Commands }>();
+import { useCommands } from "../../composables/use-commands";
+
+const commands = useCommands();
 </script>
 
 <template>
