@@ -13,11 +13,11 @@ import { storeToRefs } from "pinia";
 
 const props = defineProps<{ scale: number; gridSize: number }>();
 
-const BoardStateStore = useBoardState();
+const boardStateStore = useBoardState();
 
 const { currentTile, placedTiles, invalidPlacement, canPlaceTile } =
-  storeToRefs(BoardStateStore);
-const { setCurrentTile, refreshState } = BoardStateStore;
+  storeToRefs(boardStateStore);
+const { setCurrentTile, refreshState } = boardStateStore;
 
 refreshState({ _gridSize: props.gridSize });
 
@@ -28,7 +28,7 @@ setCurrentTile({
   hue: randomItemInArray(hues),
 });
 
-BoardStateStore.$subscribe((_mutation, state) => {
+boardStateStore.$subscribe((_mutation, state) => {
   if (typeof state.currentTile === "undefined") {
     setCurrentTile({
       offset: { x: 0, y: 0 },

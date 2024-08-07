@@ -4,9 +4,9 @@ import { Point } from "../types/point";
 import { storeToRefs } from "pinia";
 
 export function useCommands() {
-  const BoardStateStore = useBoardState();
-  const { currentTile } = storeToRefs(BoardStateStore);
-  const { placeCurrentTile } = BoardStateStore;
+  const boardStateStore = useBoardState();
+  const { currentTile } = storeToRefs(boardStateStore);
+  const { placeCurrentTile } = boardStateStore;
 
   function move(vector: Point) {
     if (!currentTile.value) return;
