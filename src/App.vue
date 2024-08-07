@@ -1,5 +1,6 @@
 <script setup lang="ts">
 import GameBoard from "./components/GameBoard/GameBoard.vue";
+import TilePicker from "./components/TilePicker/TilePicker.vue";
 import PrimaryControls from "./components/PrimaryControls/PrimaryControls.vue";
 import { getIncrementedId } from "./helpers/get-incremented-id.ts";
 import { shapes } from "./data/shapes";
@@ -8,11 +9,16 @@ import { padShapeToSquare } from "./helpers/pad-shape-to-square.ts";
 import { randomItemInArray } from "randomness-helpers";
 import { useBoardState } from "./stores/board-state.ts";
 import { useKeyboardCommands } from "./composables/use-keyboard-commands.ts";
+import { storeToRefs } from "pinia";
+import { type Ref, ref } from "vue";
+import { type TileData } from "./types/tile-data";
 
 useKeyboardCommands();
 
 const boardStateStore = useBoardState();
-const { setCurrentTile } = boardStateStore;
+
+const { currentTile } = storeToRefs(boardStateStore);
+const tileOptions: Ref<TileData[]> = ref([]);
 
 function randomTile() {
   return {
@@ -23,9 +29,13 @@ function randomTile() {
   };
 }
 
+function setTileOptions() {
+  tileOptions.value = [randomTile(), randomTile(), randomTile()];
+}
+
 boardStateStore.$subscribe((_mutation, state) => {
   if (typeof state.currentTile === "undefined") {
-    setCurrentTile(randomTile());
+    setTileOptions();
   }
 });
 </script>
@@ -34,7 +44,8 @@ boardStateStore.$subscribe((_mutation, state) => {
   <div class="game-screen">
     <GameBoard :scale="10" :gridSize="10" />
 
-    <PrimaryControls class="primary-controls" />
+    <PrimaryControls class="primary-controls" v-if="currentTile" />
+    <TilePicker :tiles="tileOptions" v-else />
   </div>
 </template>
 
