@@ -30,7 +30,16 @@ function randomTile() {
 }
 
 function setTileOptions() {
-  tileOptions.value = [randomTile(), randomTile(), randomTile()];
+  const newOptions = [];
+
+  while (newOptions.length < 3) {
+    const newTile = randomTile();
+
+    if (!newOptions.some((tile) => tile.shape.name === newTile.shape.name)) {
+      newOptions.push(newTile);
+    }
+  }
+  tileOptions.value = newOptions;
 }
 
 boardStateStore.$subscribe((_mutation, state) => {

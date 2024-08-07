@@ -1,14 +1,20 @@
 <script setup lang="ts">
+import { computed } from "vue";
 import type { TileData } from "../../types/tile-data";
 import Tile from "../Tile/Tile.vue";
+import BackgroundGrid from "../BackgroundGrid/BackgroundGrid.vue";
 import { useBoardState } from "../../stores/board-state.ts";
+
+const props = defineProps<{ tiles: TileData[] }>();
 
 const boardStateStore = useBoardState();
 const { setCurrentTile } = boardStateStore;
 
 const scale = 10;
 
-defineProps<{ tiles: TileData[] }>();
+const biggestTileSize = computed(() =>
+  Math.max(...props.tiles.map((tile) => tile.shape.grid.length))
+);
 </script>
 
 <template>
@@ -20,12 +26,11 @@ defineProps<{ tiles: TileData[] }>();
       @click="() => setCurrentTile(tile)"
     >
       <svg
-        :viewBox="`0 0 ${tile.shape.grid.length * scale} ${
-          tile.shape.grid.length * scale
-        }`"
+        :viewBox="`0 0 ${biggestTileSize * scale} ${biggestTileSize * scale}`"
         width="100"
         height="100"
       >
+        <BackgroundGrid :scale="scale" :size="biggestTileSize" />
         <Tile v-bind="tile" :scale="10" placed />
       </svg>
     </button>
@@ -36,7 +41,9 @@ defineProps<{ tiles: TileData[] }>();
 h2 {
   text-align: center;
   font-size: 1.5rem;
+  margin: 0;
 }
+
 .tile-picker {
   display: flex;
   gap: 1rem;

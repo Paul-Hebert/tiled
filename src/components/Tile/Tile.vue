@@ -128,7 +128,7 @@ const patternId = computed(() => `pattern-${props.id}`);
 
 .shadow {
   fill: hsl(var(--hue), 10%, 30%, 0.3);
-  transition-property: rotate;
+  transition-property: rotate, fill;
 }
 
 .tile-wrapper:not(.canBePlaced, .placed) .shadow {
