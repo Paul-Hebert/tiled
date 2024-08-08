@@ -82,6 +82,8 @@ const patternId = computed(() => `pattern-${props.id}`);
   transform-origin: center;
   transform-box: fill-box;
   transform-origin: center;
+
+  --ease-out-back: cubic-bezier(0.34, 1.56, 0.64, 1);
 }
 
 .tile-wrapper {
@@ -104,9 +106,16 @@ const patternId = computed(() => `pattern-${props.id}`);
 }
 
 .offset-group {
+  transition-delay: 0.025s;
   transition-property: translate;
   translate: calc(cos(var(--offset-angle)) * var(--offset-distance))
     calc(sin(var(--offset-angle)) * var(--offset-distance));
+}
+
+.rotate-group,
+.offset-group {
+  transition-timing-function: var(--ease-out-back);
+  transition-duration: 0.2s;
 }
 
 .tile {
