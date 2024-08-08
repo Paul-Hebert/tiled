@@ -39,7 +39,7 @@ const patternId = computed(() => `pattern-${props.id}`);
 
 <template>
   <g
-    class="translate-group tile-wrapper"
+    class="transform-group tile-wrapper"
     :class="{ canBePlaced, placed }"
     :style="{
       '--x': offset.x,
@@ -52,14 +52,14 @@ const patternId = computed(() => `pattern-${props.id}`);
     <defs>
       <StripedPattern :scale="scale" :id="patternId" />
     </defs>
-    <g class="rotate-group translate-group">
+    <g class="rotate-group transform-group">
       <path :d="path" class="shadow" />
 
       <g
-        class="offset-group translate-group"
+        class="offset-group transform-group"
         :class="{ 'half-down': invalidPlacement }"
       >
-        <g class="translate-group" :class="{ invalidPlacement }">
+        <g class="transform-group" :class="{ invalidPlacement }">
           <path :d="path" class="tile" :fill="`url(#${patternId})`" />
         </g>
       </g>
@@ -76,7 +76,7 @@ const patternId = computed(() => `pattern-${props.id}`);
 </template>
 
 <style scoped>
-.translate-group {
+.transform-group {
   transition-duration: 0.1s;
   transition-timing-function: var(--move-ease);
   transform-origin: center;

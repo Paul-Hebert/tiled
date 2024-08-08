@@ -2,6 +2,7 @@
 import { computed } from "vue";
 import type { TileData } from "../../types/tile-data";
 import Tile from "../Tile/Tile.vue";
+import Button from "../Button/Button.vue";
 import BackgroundGrid from "../BackgroundGrid/BackgroundGrid.vue";
 import { useBoardState } from "../../stores/board-state.ts";
 
@@ -21,18 +22,20 @@ const biggestTileSize = computed(() =>
   <div class="wrapper">
     <h2>Pick a Tile</h2>
     <div class="tile-picker">
-      <button
+      <Button
         v-for="tile in tiles"
         :key="tile.id"
         @click="() => setCurrentTile(tile)"
+        class="tile-button"
       >
         <svg
           :viewBox="`0 0 ${biggestTileSize * scale} ${biggestTileSize * scale}`"
+          class="tile"
         >
           <BackgroundGrid :scale="scale" :size="biggestTileSize" />
           <Tile v-bind="tile" :scale="10" placed />
         </svg>
-      </button>
+      </Button>
     </div>
   </div>
 </template>
@@ -47,6 +50,8 @@ h2 {
 .wrapper {
   justify-self: center;
   max-width: 25em;
+  gap: 1em;
+  display: grid;
 }
 
 .tile-picker {
@@ -57,27 +62,19 @@ h2 {
   place-self: center;
 }
 
-button {
-  cursor: pointer;
-  appearance: none;
-  background: none;
-  border: none;
+.tile-button {
+  border-radius: 0.25em;
+  aspect-ratio: 1;
+  height: 100%;
+  padding: 1em;
   display: grid;
   place-content: center;
-  padding: 0.5em;
-  height: 100%;
-  aspect-ratio: 1;
-  max-height: 100%;
-  transition-property: outline, background-color;
-  transition-timing-function: ease-out;
-  transition-duration: 0.1s;
-  outline: 0px solid transparent;
+  height: 6em;
 }
 
-button:hover,
-button:focus-visible {
-  outline: 2px solid hsl(200, 50%, 70%);
-  background-color: hsl(200, 50%, 90%);
+.tile {
+  border: 1px solid #ddd;
+  border-radius: 0.125em;
 }
 
 svg {

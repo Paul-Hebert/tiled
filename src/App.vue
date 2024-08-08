@@ -69,8 +69,7 @@ svg {
 }
 
 .game-screen {
-  max-height: 90svh;
-  max-width: 95svw;
+  max-height: 95svh;
   padding: 1em;
   display: flex;
   flex-direction: column;

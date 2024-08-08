@@ -25,6 +25,10 @@ button {
   font-size: 1.25rem;
 }
 
+button:hover {
+  --translation: 0.5em;
+}
+
 button:active {
   --translation: 0;
 }
@@ -45,6 +49,8 @@ button::before {
   display: grid;
   place-content: center;
   user-select: none;
+  padding: 0.5em;
+  will-change: transform;
 }
 
 button::before {
