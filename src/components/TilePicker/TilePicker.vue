@@ -18,22 +18,22 @@ const biggestTileSize = computed(() =>
 </script>
 
 <template>
-  <h2>Pick a Tile</h2>
-  <div class="tile-picker">
-    <button
-      v-for="tile in tiles"
-      :key="tile.id"
-      @click="() => setCurrentTile(tile)"
-    >
-      <svg
-        :viewBox="`0 0 ${biggestTileSize * scale} ${biggestTileSize * scale}`"
-        width="100"
-        height="100"
+  <div class="wrapper">
+    <h2>Pick a Tile</h2>
+    <div class="tile-picker">
+      <button
+        v-for="tile in tiles"
+        :key="tile.id"
+        @click="() => setCurrentTile(tile)"
       >
-        <BackgroundGrid :scale="scale" :size="biggestTileSize" />
-        <Tile v-bind="tile" :scale="10" placed />
-      </svg>
-    </button>
+        <svg
+          :viewBox="`0 0 ${biggestTileSize * scale} ${biggestTileSize * scale}`"
+        >
+          <BackgroundGrid :scale="scale" :size="biggestTileSize" />
+          <Tile v-bind="tile" :scale="10" placed />
+        </svg>
+      </button>
+    </div>
   </div>
 </template>
 
@@ -44,10 +44,17 @@ h2 {
   margin: 0;
 }
 
+.wrapper {
+  justify-self: center;
+  max-width: 25em;
+}
+
 .tile-picker {
-  display: flex;
+  display: inline-grid;
+  grid-template-columns: 1fr 1fr 1fr;
   gap: 1rem;
   justify-content: center;
+  place-self: center;
 }
 
 button {
@@ -57,11 +64,25 @@ button {
   border: none;
   display: grid;
   place-content: center;
-  padding: 0;
+  padding: 0.5em;
+  height: 100%;
+  aspect-ratio: 1;
+  max-height: 100%;
+  transition-property: outline, background-color;
+  transition-timing-function: ease-out;
+  transition-duration: 0.1s;
+  outline: 0px solid transparent;
+}
+
+button:hover,
+button:focus-visible {
+  outline: 2px solid hsl(200, 50%, 70%);
+  background-color: hsl(200, 50%, 90%);
 }
 
 svg {
   width: 100%;
-  height: 100%;
+  max-height: 100%;
+  max-width: 100%;
 }
 </style>

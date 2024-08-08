@@ -15,7 +15,7 @@ const commands = useCommands();
 </script>
 
 <template>
-  <div class="controls">
+  <div class="primary-controls">
     <LongPressButton @longPress="commands.rotateTileLeft" class="rotate-left">
       <RotateCcwIcon aria-label="Rotate counter-clockwise" />
     </LongPressButton>
@@ -40,13 +40,15 @@ const commands = useCommands();
 </template>
 
 <style scoped>
-.controls {
+.primary-controls {
+  width: 100%;
   display: grid;
   gap: 0.5em;
   grid-template-areas:
     "rotate-left rotate-left up up rotate-right rotate-right"
     "left left down down right right"
     "change change change place place place";
+  width: min(25em, 98svw);
 }
 
 .rotate-left {

@@ -50,12 +50,14 @@ watch(() => boardStateStore.filledSquares, setTileOptions);
 
 <template>
   <div class="game-screen">
-    <GameBoard :scale="10" :gridSize="10" />
+    <GameBoard :scale="10" :gridSize="10" class="board" />
 
-    <PrimaryControls class="primary-controls" v-if="currentTile" />
-    <TilePicker :tiles="tileOptions" v-else />
+    <div class="controls">
+      <PrimaryControls :class="{ hidden: !currentTile }" />
+      <TilePicker :tiles="tileOptions" :class="{ hidden: currentTile }" />
+    </div>
 
-    <GridProgress />
+    <GridProgress class="progress" />
   </div>
 </template>
 
@@ -70,16 +72,34 @@ svg {
   max-height: 90svh;
   max-width: 95svw;
   padding: 1em;
-  display: grid;
+  display: flex;
+  flex-direction: column;
   place-content: center;
-  grid-template-rows: 1fr auto auto;
-  gap: 1em;
+
+  grid-template-rows: 1fr 15em auto;
   width: 100%;
   height: 100%;
 }
 
-.primary-controls {
-  width: min(25em, 95svw);
+.board {
+  flex-grow: 2;
+}
+
+.controls {
+  padding-block: 1em;
+  flex-grow: 1;
   place-self: center;
+  display: grid;
+  grid-template-areas: "content";
+  place-content: stretch;
+}
+
+.controls > * {
+  grid-area: content;
+}
+
+.hidden {
+  visibility: hidden;
+  opacity: 0;
 }
 </style>

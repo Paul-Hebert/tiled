@@ -39,11 +39,7 @@ const allTiles: ComputedRef<TileComponentProps[]> = computed(() => {
 </script>
 
 <template>
-  <svg
-    :viewBox="`0 0 ${scale * gridSize} ${scale * gridSize}`"
-    width="1000"
-    height="1000"
-  >
+  <svg :viewBox="`0 0 ${scale * gridSize} ${scale * gridSize}`">
     <BackgroundGrid :size="gridSize" :scale="scale" />
     <Tile v-for="tile in allTiles" v-bind="tile" :key="tile.id" />
   </svg>
