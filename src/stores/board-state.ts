@@ -11,6 +11,11 @@ export const useBoardState = defineStore("board-state", () => {
   const currentTile: Ref<TileData | undefined> = ref();
   const placedTiles: Ref<TileData[]> = ref([]);
 
+  const totalSquares = computed(() => gridSize.value * gridSize.value);
+  const filledSquares = computed(
+    () => levelGrid.value.flat().filter((x) => x === 1).length
+  );
+
   const currentTileGridSquares = computed(() => {
     if (!currentTile.value) return [];
     const rotatedGrid = rotateGrid({
@@ -51,7 +56,7 @@ export const useBoardState = defineStore("board-state", () => {
     placedTiles.value = [];
   }
 
-  function setCurrentTile(tile: TileData) {
+  function setCurrentTile(tile?: TileData) {
     currentTile.value = tile;
   }
 
@@ -77,6 +82,8 @@ export const useBoardState = defineStore("board-state", () => {
   }
 
   return {
+    totalSquares,
+    filledSquares,
     levelGrid,
     currentTile,
     placedTiles,

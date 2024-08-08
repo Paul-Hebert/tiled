@@ -16,24 +16,25 @@ const commands = useCommands();
 
 <template>
   <div class="controls">
-    <LongPressButton @longPress="commands.rotateTileLeft">
+    <LongPressButton @longPress="commands.rotateTileLeft" class="rotate-left">
       <RotateCcwIcon aria-label="Rotate counter-clockwise" />
     </LongPressButton>
-    <LongPressButton @longPress="commands.moveTileUp">
+    <LongPressButton @longPress="commands.moveTileUp" class="up">
       <ArrowUpIcon aria-label="Move up" />
     </LongPressButton>
-    <LongPressButton @longPress="commands.rotateTileRight">
+    <LongPressButton @longPress="commands.rotateTileRight" class="rotate-right">
       <RotateCwIcon aria-label="Rotate clockwise" />
     </LongPressButton>
-    <LongPressButton @longPress="commands.moveTileLeft">
+    <LongPressButton @longPress="commands.moveTileLeft" class="left">
       <ArrowLeftIcon aria-label="Move left" />
     </LongPressButton>
-    <LongPressButton @longPress="commands.moveTileDown">
+    <LongPressButton @longPress="commands.moveTileDown" class="down">
       <ArrowDownIcon aria-label="Move down" />
     </LongPressButton>
-    <LongPressButton @longPress="commands.moveTileRight">
+    <LongPressButton @longPress="commands.moveTileRight" class="right">
       <ArrowRightIcon aria-label="Move right" />
     </LongPressButton>
+    <Button @click="commands.changeTile" class="change"> Change Tile </Button>
     <Button @click="commands.placeTile" class="place"> Place Tile </Button>
   </div>
 </template>
@@ -43,9 +44,37 @@ const commands = useCommands();
   display: grid;
   gap: 0.5em;
   grid-template-areas:
-    "rotate-left up rotate-right"
-    "left down right"
-    "place place place";
+    "rotate-left rotate-left up up rotate-right rotate-right"
+    "left left down down right right"
+    "change change change place place place";
+}
+
+.rotate-left {
+  grid-area: rotate-left;
+}
+
+.up {
+  grid-area: up;
+}
+
+.rotate-right {
+  grid-area: rotate-right;
+}
+
+.left {
+  grid-area: left;
+}
+
+.down {
+  grid-area: down;
+}
+
+.right {
+  grid-area: right;
+}
+
+.change {
+  grid-area: change;
 }
 
 .place {

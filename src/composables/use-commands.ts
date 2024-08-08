@@ -6,7 +6,7 @@ import { storeToRefs } from "pinia";
 export function useCommands() {
   const boardStateStore = useBoardState();
   const { currentTile } = storeToRefs(boardStateStore);
-  const { placeCurrentTile } = boardStateStore;
+  const { placeCurrentTile, setCurrentTile } = boardStateStore;
 
   function move(vector: Point) {
     if (!currentTile.value) return;
@@ -36,6 +36,7 @@ export function useCommands() {
       // useSound("placed.mp3");
       placeCurrentTile();
     },
+    changeTile: () => setCurrentTile(undefined),
   };
 
   return commands;

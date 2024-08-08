@@ -5,5 +5,6 @@ export interface Commands {
   moveTileRight: () => void;
   rotateTileLeft: () => void;
   rotateTileRight: () => void;
+  changeTile: () => void;
   placeTile: () => void;
 }

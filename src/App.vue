@@ -1,5 +1,6 @@
 <script setup lang="ts">
 import GameBoard from "./components/GameBoard/GameBoard.vue";
+import GridProgress from "./components/GridProgress/GridProgress.vue";
 import TilePicker from "./components/TilePicker/TilePicker.vue";
 import PrimaryControls from "./components/PrimaryControls/PrimaryControls.vue";
 import { getIncrementedId } from "./helpers/get-incremented-id.ts";
@@ -10,7 +11,7 @@ import { randomItemInArray } from "randomness-helpers";
 import { useBoardState } from "./stores/board-state.ts";
 import { useKeyboardCommands } from "./composables/use-keyboard-commands.ts";
 import { storeToRefs } from "pinia";
-import { type Ref, ref } from "vue";
+import { type Ref, ref, watch } from "vue";
 import { type TileData } from "./types/tile-data";
 
 useKeyboardCommands();
@@ -30,7 +31,7 @@ function randomTile() {
 }
 
 function setTileOptions() {
-  const newOptions = [];
+  const newOptions: TileData[] = [];
 
   while (newOptions.length < 3) {
     const newTile = randomTile();
@@ -42,11 +43,9 @@ function setTileOptions() {
   tileOptions.value = newOptions;
 }
 
-boardStateStore.$subscribe((_mutation, state) => {
-  if (typeof state.currentTile === "undefined") {
-    setTileOptions();
-  }
-});
+setTileOptions();
+// This is a hacky way to update our tile option after a user plays a tile
+watch(() => boardStateStore.filledSquares, setTileOptions);
 </script>
 
 <template>
@@ -55,6 +54,8 @@ boardStateStore.$subscribe((_mutation, state) => {
 
     <PrimaryControls class="primary-controls" v-if="currentTile" />
     <TilePicker :tiles="tileOptions" v-else />
+
+    <GridProgress />
   </div>
 </template>
 
@@ -71,7 +72,7 @@ svg {
   padding: 1em;
   display: grid;
   place-content: center;
-  grid-template-rows: 1fr auto;
+  grid-template-rows: 1fr auto auto;
   gap: 1em;
   width: 100%;
   height: 100%;

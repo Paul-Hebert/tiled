@@ -51,6 +51,7 @@ h2 {
 }
 
 button {
+  cursor: pointer;
   appearance: none;
   background: none;
   border: none;
