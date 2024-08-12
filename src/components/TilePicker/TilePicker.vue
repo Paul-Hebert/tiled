@@ -49,7 +49,7 @@ h2 {
 
 .wrapper {
   justify-self: center;
-  max-width: 25em;
+  max-width: min(95svw, 25em);
   gap: 1em;
   display: grid;
 }
@@ -69,7 +69,7 @@ h2 {
   padding: 1em;
   display: grid;
   place-content: center;
-  height: 6em;
+  height: 5em;
 }
 
 .tile {

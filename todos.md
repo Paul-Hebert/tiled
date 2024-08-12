@@ -1,6 +1,8 @@
 ## Core Placement UI
 
 - Flipping tiles
+- "Can't place" state + losing the game
+- "Winning" levels
 
 ## Enhanced Placement UI
 
@@ -12,5 +14,5 @@
 - Paying for tiles
 - Income
 - Surrounding spots
-- Different scoring objectives
+- Different scoring objectives/patterns
 - Fill the board puzzles

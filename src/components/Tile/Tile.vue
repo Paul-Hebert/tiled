@@ -8,6 +8,7 @@ export interface TileComponentProps extends TileData {
   canBePlaced?: boolean;
   invalidPlacement?: boolean;
   id: number;
+  selected?: boolean;
 }
 
 const props = defineProps<TileComponentProps>();
@@ -60,7 +61,12 @@ const patternId = computed(() => `pattern-${props.id}`);
         :class="{ 'half-down': invalidPlacement }"
       >
         <g class="transform-group" :class="{ invalidPlacement }">
-          <path :d="path" class="tile" :fill="`url(#${patternId})`" />
+          <path
+            :d="path"
+            class="tile"
+            :class="{ selected }"
+            :fill="`url(#${patternId})`"
+          />
         </g>
       </g>
 
@@ -84,6 +90,7 @@ const patternId = computed(() => `pattern-${props.id}`);
   transform-origin: center;
 
   --ease-out-back: cubic-bezier(0.34, 1.56, 0.64, 1);
+  --ease-in-out-back: cubic-bezier(0.68, -0.6, 0.32, 1.6);
 }
 
 .tile-wrapper {
@@ -121,14 +128,32 @@ const patternId = computed(() => `pattern-${props.id}`);
 .tile {
   stroke: var(--stroke-color);
   stroke-width: 0.25px;
+  transition-timing-function: ease-out;
+  transition-timing-function: 0.2s;
   transition-property: opacity, scale;
   transform-origin: center;
   transform-box: fill-box;
 }
 
+.tile.selected {
+  animation: tile-selected 0.3s ease-out;
+}
+
+.tile-wrapper.placed :is(.tile, .offset-group) {
+  transition-timing-function: var(--ease-in-out-back);
+  transition-duration: 0.2s;
+}
+
 .tile-wrapper:not(.placed) .tile {
   opacity: 0.85;
   scale: 1.02;
+}
+
+@keyframes tile-selected {
+  from {
+    opacity: 0.25;
+    scale: 1.25;
+  }
 }
 
 .tile-wrapper.placed .offset-group {

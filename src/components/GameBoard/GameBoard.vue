@@ -16,7 +16,7 @@ const { refreshState } = boardStateStore;
 refreshState({ _gridSize: props.gridSize });
 
 const allTiles: ComputedRef<TileComponentProps[]> = computed(() => {
-  const tiles = placedTiles.value.map((tile) => ({
+  const tiles: TileComponentProps[] = placedTiles.value.map((tile) => ({
     ...tile,
     canBePlaced: false,
     invalidPlacement: false,
@@ -31,6 +31,7 @@ const allTiles: ComputedRef<TileComponentProps[]> = computed(() => {
       invalidPlacement: invalidPlacement.value,
       scale: props.scale,
       id: currentTile.value.id,
+      selected: true,
     });
   }
 
