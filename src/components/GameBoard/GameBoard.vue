@@ -11,9 +11,6 @@ const boardStateStore = useBoardState();
 
 const { currentTile, placedTiles, invalidPlacement, canPlaceTile } =
   storeToRefs(boardStateStore);
-const { refreshState } = boardStateStore;
-
-refreshState({ _gridSize: props.gridSize });
 
 const allTiles: ComputedRef<TileComponentProps[]> = computed(() => {
   const tiles: TileComponentProps[] = placedTiles.value.map((tile) => ({

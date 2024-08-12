@@ -10,10 +10,19 @@ const {
 </script>
 
 <template>
-  <h2>
-    Cover {{ percentRequiredComplete * 100 }}% of the board to win ({{
-      Math.ceil(percentComplete * 100)
-    }}% complete)
-  </h2>
-  <progress :value="percentComplete"></progress>
+  <div>
+    <h2>
+      Cover {{ percentRequiredComplete * 100 }}% of the board to win ({{
+        Math.ceil(percentComplete * 100)
+      }}% complete)
+    </h2>
+    <progress :value="percentComplete"></progress>
+  </div>
 </template>
+
+<style scoped>
+div {
+  display: grid;
+  gap: 0.5em;
+}
+</style>

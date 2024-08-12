@@ -4,11 +4,24 @@ import { Grid } from "../types/grid";
 import { TileData } from "../types/tile-data";
 import { getActivePointsFromGrid } from "../helpers/get-active-points-from-grid";
 import { rotateGrid } from "../helpers/rotate-grid";
+import { Level } from "../types/level";
 
 export const useBoardState = defineStore("board-state", () => {
   const levelGrid: Ref<Grid> = ref([[]]);
   const currentTile: Ref<TileData | undefined> = ref();
   const placedTiles: Ref<TileData[]> = ref([]);
+
+  function loadLevel(level: Level) {
+    percentRequiredComplete.value = level.percentRequiredComplete;
+    gridSize.value = level.gridSize;
+
+    levelGrid.value = Array.from({ length: level.gridSize }, () =>
+      Array.from({ length: level.gridSize }, () => 0)
+    );
+
+    currentTile.value = undefined;
+    placedTiles.value = [];
+  }
 
   // Configuration
   const gridSize = ref(5);
@@ -55,16 +68,6 @@ export const useBoardState = defineStore("board-state", () => {
 
   const invalidPlacement = ref(false);
 
-  function refreshState({ _gridSize = 10 }) {
-    gridSize.value = _gridSize;
-    levelGrid.value = Array.from({ length: _gridSize }, () =>
-      Array.from({ length: _gridSize }, () => 0)
-    );
-
-    currentTile.value = undefined;
-    placedTiles.value = [];
-  }
-
   function setCurrentTile(tile?: TileData) {
     currentTile.value = tile;
   }
@@ -102,7 +105,7 @@ export const useBoardState = defineStore("board-state", () => {
     percentComplete,
     isComplete,
     gridSize,
-    refreshState,
+    loadLevel,
     setCurrentTile,
     placeCurrentTile,
   };
