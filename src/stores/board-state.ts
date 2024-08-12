@@ -11,7 +11,7 @@ export const useBoardState = defineStore("board-state", () => {
   const placedTiles: Ref<TileData[]> = ref([]);
 
   // Configuration
-  const gridSize = ref(10);
+  const gridSize = ref(5);
   const percentRequiredComplete = ref(0.75);
 
   const totalSquares = computed(() => gridSize.value * gridSize.value);

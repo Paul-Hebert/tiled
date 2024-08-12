@@ -9,6 +9,7 @@ export interface TileComponentProps extends TileData {
   invalidPlacement?: boolean;
   id: number;
   selected?: boolean;
+  gridSize: number;
 }
 
 const props = defineProps<TileComponentProps>();
@@ -48,6 +49,7 @@ const patternId = computed(() => `pattern-${props.id}`);
       '--scale': scale,
       '--hue': hue,
       '--rotation': `${rotation || 0}deg`,
+      '--grid-size': gridSize,
     }"
   >
     <defs>
@@ -101,9 +103,11 @@ const patternId = computed(() => `pattern-${props.id}`);
   --fill-color: hsl(var(--hue), 50%, 80%);
   --stroke-color: hsl(var(--hue), 50%, 60%);
 
+  --scale-modifier: calc(100% / var(--grid-size));
+
   transition-property: translate;
-  translate: calc(var(--x) * var(--scale) * 1%)
-    calc(var(--y) * var(--scale) * 1%);
+  translate: calc(var(--x) * var(--scale-modifier))
+    calc(var(--y) * var(--scale-modifier));
   transform-box: initial;
 }
 

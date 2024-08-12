@@ -22,6 +22,7 @@ const allTiles: ComputedRef<TileComponentProps[]> = computed(() => {
     invalidPlacement: false,
     scale: props.scale,
     id: tile.id,
+    gridSize: props.gridSize,
   }));
 
   if (currentTile.value) {
@@ -32,6 +33,7 @@ const allTiles: ComputedRef<TileComponentProps[]> = computed(() => {
       scale: props.scale,
       id: currentTile.value.id,
       selected: true,
+      gridSize: props.gridSize,
     });
   }
 

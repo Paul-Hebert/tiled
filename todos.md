@@ -1,8 +1,13 @@
 ## Core Placement UI
 
 - Flipping tiles
+
+## Core Shared Game Logic
+
 - "Can't place" state + losing the game
+- Smaller maps
 - "Winning" levels
+- Level configurations
 
 ## Enhanced Placement UI
 
