@@ -1,9 +1,19 @@
 <script setup>
 import { storeToRefs } from "pinia";
 import { useBoardState } from "../../stores/board-state.ts";
-const { filledSquares, totalSquares } = storeToRefs(useBoardState());
+const {
+  filledSquares,
+  totalSquares,
+  percentRequiredComplete,
+  percentComplete,
+} = storeToRefs(useBoardState());
 </script>
 
 <template>
-  <progress :value="filledSquares" :max="totalSquares"></progress>
+  <h2>
+    Cover {{ percentRequiredComplete * 100 }}% of the board to win ({{
+      Math.ceil(percentComplete * 100)
+    }}% complete)
+  </h2>
+  <progress :value="percentComplete"></progress>
 </template>

@@ -18,7 +18,7 @@ useKeyboardCommands();
 
 const boardStateStore = useBoardState();
 
-const { currentTile } = storeToRefs(boardStateStore);
+const { currentTile, gridSize } = storeToRefs(boardStateStore);
 const tileOptions: Ref<TileData[]> = ref([]);
 
 function randomTile() {
@@ -50,7 +50,7 @@ watch(() => boardStateStore.filledSquares, setTileOptions);
 
 <template>
   <div class="game-screen">
-    <GameBoard :scale="10" :gridSize="10" class="board" />
+    <GameBoard :scale="10" :gridSize="gridSize" class="board" />
 
     <div class="controls">
       <PrimaryControls :class="{ hidden: !currentTile }" />

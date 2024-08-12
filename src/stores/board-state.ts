@@ -6,14 +6,23 @@ import { getActivePointsFromGrid } from "../helpers/get-active-points-from-grid"
 import { rotateGrid } from "../helpers/rotate-grid";
 
 export const useBoardState = defineStore("board-state", () => {
-  const gridSize = ref(10);
   const levelGrid: Ref<Grid> = ref([[]]);
   const currentTile: Ref<TileData | undefined> = ref();
   const placedTiles: Ref<TileData[]> = ref([]);
 
+  // Configuration
+  const gridSize = ref(10);
+  const percentRequiredComplete = ref(0.75);
+
   const totalSquares = computed(() => gridSize.value * gridSize.value);
   const filledSquares = computed(
     () => levelGrid.value.flat().filter((x) => x === 1).length
+  );
+  const percentComplete = computed(
+    () => filledSquares.value / totalSquares.value
+  );
+  const isComplete = computed(
+    () => percentComplete.value >= percentRequiredComplete.value
   );
 
   const currentTileGridSquares = computed(() => {
@@ -89,6 +98,10 @@ export const useBoardState = defineStore("board-state", () => {
     placedTiles,
     invalidPlacement,
     canPlaceTile,
+    percentRequiredComplete,
+    percentComplete,
+    isComplete,
+    gridSize,
     refreshState,
     setCurrentTile,
     placeCurrentTile,
