@@ -31,6 +31,8 @@ const biggestTileSize = computed(() =>
         <svg
           :viewBox="`0 0 ${biggestTileSize * scale} ${biggestTileSize * scale}`"
           class="tile"
+          width="1000"
+          height="1000"
         >
           <BackgroundGrid :scale="scale" :size="biggestTileSize" />
           <Tile v-bind="tile" :scale="10" placed :grid-size="biggestTileSize" />
@@ -58,18 +60,14 @@ h2 {
   display: inline-grid;
   grid-template-columns: 1fr 1fr 1fr;
   gap: 1rem;
-  justify-content: center;
-  place-self: center;
+  place-content: center;
 }
 
 .tile-button {
   border-radius: 0.25em;
   aspect-ratio: 1;
   height: 100%;
-  padding: 1em;
-  display: grid;
-  place-content: center;
-  height: 5em;
+  display: flex;
 }
 
 .tile {
@@ -78,8 +76,7 @@ h2 {
 }
 
 svg {
-  width: 100%;
-  max-height: 100%;
   max-width: 100%;
+  max-height: 100%;
 }
 </style>

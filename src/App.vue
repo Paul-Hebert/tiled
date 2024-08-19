@@ -14,13 +14,16 @@ import { storeToRefs } from "pinia";
 import { onMounted, type Ref, ref, watch } from "vue";
 import { type TileData } from "./types/tile-data";
 import { useLevels } from "./stores/levels.ts";
+import Button from "./components/Button/Button.vue";
 
 useKeyboardCommands();
 
 const boardStateStore = useBoardState();
-const levelsStore = useLevels();
-
 const { currentTile, gridSize } = storeToRefs(boardStateStore);
+
+const levelsStore = useLevels();
+const { currentLevel, gameComplete } = storeToRefs(levelsStore);
+
 const tileOptions: Ref<TileData[]> = ref([]);
 
 function randomTile() {
@@ -57,7 +60,7 @@ onMounted(() => {
 // And load subsequent levels when the current level clears
 // TODO... give the user the option when to proceed.
 watch(
-  () => levelsStore.gameComplete,
+  () => gameComplete,
   (gameComplete) => {
     if (gameComplete) {
       // Wait a moment after user placement before announcing victory
@@ -71,6 +74,12 @@ watch(
 
 <template>
   <div class="game-screen">
+    <header>
+      <h1>Level {{ currentLevel + 1 }}</h1>
+
+      <Button @click="levelsStore.restartLevel">Restart Level</Button>
+    </header>
+
     <GameBoard :scale="10" :gridSize="gridSize" class="board" />
 
     <div class="controls">
@@ -83,6 +92,16 @@ watch(
 </template>
 
 <style scoped>
+header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+h1 {
+  text-align: center;
+}
+
 .game-screen {
   max-height: 100svh;
   max-width: 100svw;
@@ -90,15 +109,16 @@ watch(
   display: flex;
   flex-direction: column;
   place-content: center;
-
-  grid-template-rows: 1fr 15em auto;
   width: 100%;
   height: 100%;
+  z-index: 0;
+  position: relative;
 }
 
 .board {
   flex-grow: 2;
   overflow: visible;
+  pointer-events: none;
 }
 
 .controls {

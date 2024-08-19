@@ -34,11 +34,16 @@ export const useLevels = defineStore("levels", () => {
     }
   }
 
+  function restartLevel() {
+    boardStateStore.loadLevel(levels[currentLevel.value]);
+  }
+
   return {
     levels,
     currentLevel,
     loadLevel,
     loadNextLevel,
     gameComplete,
+    restartLevel,
   };
 });
