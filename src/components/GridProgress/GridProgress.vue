@@ -22,12 +22,19 @@ const { gameComplete } = storeToRefs(levelsStore);
       <h2>You won the game!</h2>
     </template>
     <template v-else>
-      <h2 v-if="isComplete">Level complete!</h2>
-      <h2 v-else>
-        Cover {{ percentRequiredComplete * 100 }}% of the board to win ({{
-          Math.ceil(percentComplete * 100)
-        }}% complete)
-      </h2>
+      <header v-if="isComplete">
+        <h2>Level complete!</h2>
+
+        <Button @click="levelsStore.loadNextLevel()"> Next Level! </Button>
+      </header>
+      <header v-else>
+        <span>
+          <h2>Cover {{ percentRequiredComplete * 100 }}% of the board</h2>
+          <span> ({{ Math.ceil(percentComplete * 100) }}% complete)</span>
+        </span>
+
+        <Button @click="levelsStore.restartLevel">Restart Level</Button>
+      </header>
 
       <progress :value="percentComplete"></progress>
     </template>
@@ -35,10 +42,12 @@ const { gameComplete } = storeToRefs(levelsStore);
 </template>
 
 <style scoped>
-h2 {
-  text-align: center;
-  font-size: 1.125rem;
+header {
+  display: flex;
+  gap: 0.5em;
+  justify-content: space-between;
 }
+
 div {
   display: grid;
   gap: 0.5em;

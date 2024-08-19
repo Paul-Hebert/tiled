@@ -74,18 +74,11 @@ watch(
 
 <template>
   <div class="game-screen">
-    <header>
-      <h1>Level {{ currentLevel + 1 }}</h1>
-
-      <Button v-if="isComplete" @click="levelsStore.loadNextLevel()">
-        Next Level!
-      </Button>
-      <Button v-else @click="levelsStore.restartLevel">Restart Level</Button>
-    </header>
-
-    <GridProgress class="progress" />
+    <h1>Level {{ currentLevel + 1 }}</h1>
 
     <GameBoard :scale="10" :gridSize="gridSize" class="board" />
+
+    <GridProgress class="progress" />
 
     <div class="controls">
       <PrimaryControls :class="{ hidden: !currentTile }" />
@@ -98,18 +91,20 @@ watch(
 * {
   margin: 0;
 }
+
+h1,
+h2 {
+  line-height: 1.2;
+}
+
+h2 {
+  font-size: 1.125rem;
+}
 </style>
 
 <style scoped>
-header {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-}
-
 h1 {
   text-align: center;
-  line-height: 1.2;
 }
 
 .game-screen {

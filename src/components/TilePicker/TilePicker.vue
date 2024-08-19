@@ -43,12 +43,6 @@ const biggestTileSize = computed(() =>
 </template>
 
 <style scoped>
-h2 {
-  text-align: center;
-  font-size: 1.5rem;
-  margin: 0;
-}
-
 .wrapper {
   justify-self: center;
   max-width: min(95svw, 25em);
