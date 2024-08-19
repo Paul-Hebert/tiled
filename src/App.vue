@@ -19,7 +19,7 @@ import Button from "./components/Button/Button.vue";
 useKeyboardCommands();
 
 const boardStateStore = useBoardState();
-const { currentTile, gridSize } = storeToRefs(boardStateStore);
+const { currentTile, gridSize, isComplete } = storeToRefs(boardStateStore);
 
 const levelsStore = useLevels();
 const { currentLevel, gameComplete } = storeToRefs(levelsStore);
@@ -77,8 +77,13 @@ watch(
     <header>
       <h1>Level {{ currentLevel + 1 }}</h1>
 
-      <Button @click="levelsStore.restartLevel">Restart Level</Button>
+      <Button v-if="isComplete" @click="levelsStore.loadNextLevel()">
+        Next Level!
+      </Button>
+      <Button v-else @click="levelsStore.restartLevel">Restart Level</Button>
     </header>
+
+    <GridProgress class="progress" />
 
     <GameBoard :scale="10" :gridSize="gridSize" class="board" />
 
@@ -86,10 +91,14 @@ watch(
       <PrimaryControls :class="{ hidden: !currentTile }" />
       <TilePicker :tiles="tileOptions" :class="{ hidden: currentTile }" />
     </div>
-
-    <GridProgress class="progress" />
   </div>
 </template>
+
+<style>
+* {
+  margin: 0;
+}
+</style>
 
 <style scoped>
 header {
@@ -100,12 +109,13 @@ header {
 
 h1 {
   text-align: center;
+  line-height: 1.2;
 }
 
 .game-screen {
   max-height: 100svh;
   max-width: 100svw;
-  padding: 2em;
+  padding: 1em;
   display: flex;
   flex-direction: column;
   place-content: center;
@@ -113,16 +123,17 @@ h1 {
   height: 100%;
   z-index: 0;
   position: relative;
+  gap: 1em;
 }
 
 .board {
   flex-grow: 2;
   overflow: visible;
   pointer-events: none;
+  padding-block: 1em;
 }
 
 .controls {
-  padding-block: 1em;
   flex-grow: 1;
   place-self: center;
   display: grid;
