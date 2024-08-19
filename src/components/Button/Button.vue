@@ -23,6 +23,7 @@ button {
   user-select: none;
   position: relative;
   font-size: 1.25rem;
+  padding: 0 1px;
 }
 
 button:hover {
@@ -33,11 +34,13 @@ button:active {
   --translation: 0;
 }
 
+button:focus {
+  outline: none;
+}
+
 .button-inner,
 button::before {
   border-radius: inherit;
-  position: absolute;
-  inset: 0;
 }
 
 .button-inner {
@@ -51,10 +54,18 @@ button::before {
   user-select: none;
   padding: 0.5em;
   will-change: transform;
+  width: 100%;
+  height: 100%;
 }
 
 button::before {
   content: "";
   background: #ddd;
+  position: absolute;
+  inset: 0;
+}
+
+button:focus-visible .button-inner {
+  outline: 3px solid hsl(210, 100%, 40%);
 }
 </style>
