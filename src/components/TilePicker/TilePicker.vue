@@ -45,7 +45,8 @@ const biggestTileSize = computed(() =>
 <style scoped>
 .wrapper {
   justify-self: center;
-  max-width: min(95svw, 25em);
+  width: 100%;
+  max-width: 25em;
   gap: 1em;
   display: grid;
 }
@@ -62,11 +63,6 @@ const biggestTileSize = computed(() =>
   aspect-ratio: 1;
   height: 100%;
   display: flex;
-}
-
-.tile {
-  border: 1px solid #ddd;
-  border-radius: 0.125em;
 }
 
 svg {

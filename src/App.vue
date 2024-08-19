@@ -14,12 +14,11 @@ import { storeToRefs } from "pinia";
 import { onMounted, type Ref, ref, watch } from "vue";
 import { type TileData } from "./types/tile-data";
 import { useLevels } from "./stores/levels.ts";
-import Button from "./components/Button/Button.vue";
 
 useKeyboardCommands();
 
 const boardStateStore = useBoardState();
-const { currentTile, gridSize, isComplete } = storeToRefs(boardStateStore);
+const { currentTile, gridSize } = storeToRefs(boardStateStore);
 
 const levelsStore = useLevels();
 const { currentLevel, gameComplete } = storeToRefs(levelsStore);
@@ -81,51 +80,77 @@ watch(
     <GridProgress class="progress" />
 
     <div class="controls">
-      <PrimaryControls :class="{ hidden: !currentTile }" />
-      <TilePicker :tiles="tileOptions" :class="{ hidden: currentTile }" />
+      <PrimaryControls
+        :class="{ hidden: !currentTile }"
+        :inert="!currentTile"
+      />
+      <TilePicker
+        :tiles="tileOptions"
+        :class="{ hidden: currentTile }"
+        :inert="currentTile"
+      />
     </div>
   </div>
 </template>
 
-<style>
-* {
-  margin: 0;
-}
-
-h1,
-h2 {
-  line-height: 1.2;
-}
-
-h2 {
-  font-size: 1.125rem;
-}
-</style>
-
 <style scoped>
-h1 {
-  text-align: center;
-}
-
 .game-screen {
   max-height: 100svh;
   max-width: 100svw;
   padding: 1em;
-  display: flex;
+  display: grid;
+  grid-template-areas:
+    "title"
+    "board"
+    "progress"
+    "controls";
   flex-direction: column;
   place-content: center;
   width: 100%;
   height: 100%;
   z-index: 0;
   position: relative;
-  gap: 1em;
+  row-gap: 1em;
+  column-gap: 2em;
+  justify-content: space-around;
+  align-content: center;
+  grid-template-columns: minmax(0, auto);
+  align-self: end;
+}
+
+h1 {
+  text-align: center;
+  grid-area: title;
 }
 
 .board {
-  flex-grow: 2;
   overflow: visible;
   pointer-events: none;
   padding-block: 1em;
+  grid-area: board;
+  width: 100%;
+  height: 100%;
+}
+
+@media (orientation: landscape) and (width > 800px) {
+  .game-screen {
+    grid-template-areas:
+      "board title"
+      "board progress"
+      "board controls";
+    grid-template-columns: 1fr auto;
+    padding: 2em;
+    column-gap: 1em;
+    grid-template-rows: auto auto 1fr;
+  }
+
+  h1 {
+    text-align: left;
+  }
+
+  .board {
+    padding-block: 0;
+  }
 }
 
 .controls {
@@ -134,14 +159,21 @@ h1 {
   display: grid;
   grid-template-areas: "content";
   place-content: stretch;
+  grid-area: controls;
+  align-self: end;
 }
 
 .controls > * {
   grid-area: content;
 }
 
+.progress {
+  grid-area: progress;
+}
+
 .hidden {
   visibility: hidden;
   opacity: 0;
+  pointer-events: none;
 }
 </style>

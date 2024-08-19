@@ -4,7 +4,7 @@ defineProps<{ size: number; scale: number }>();
 
 <template>
   <g class="board">
-    <rect :width="size * scale" :height="size * scale" fill="#fff" />
+    <rect :width="size * scale" :height="size * scale" />
     <template v-for="i in size + 1">
       <line
         :x1="0"
@@ -24,8 +24,12 @@ defineProps<{ size: number; scale: number }>();
 
 <style scoped>
 line {
-  stroke: #ddd;
+  stroke: #fff;
   stroke-width: 0.5;
   stroke-linecap: round;
+}
+
+rect {
+  fill: #eee;
 }
 </style>

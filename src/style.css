@@ -11,8 +11,7 @@ body {
 }
 
 body {
-  background: #f0f0f0;
-  place-content: center;
+  background: #fff;
 }
 
 #app {
@@ -23,4 +22,17 @@ body {
 *::before,
 *::after {
   box-sizing: border-box;
+}
+
+* {
+  margin: 0;
+}
+
+h1,
+h2 {
+  line-height: 1.2;
+}
+
+h2 {
+  font-size: 1.125rem;
 }

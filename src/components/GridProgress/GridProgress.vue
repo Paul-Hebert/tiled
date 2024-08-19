@@ -52,4 +52,9 @@ div {
   display: grid;
   gap: 0.5em;
 }
+
+progress {
+  display: block;
+  width: 100%;
+}
 </style>
