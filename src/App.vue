@@ -13,22 +13,15 @@ import { useKeyboardCommands } from "./composables/use-keyboard-commands.ts";
 import { storeToRefs } from "pinia";
 import { onMounted, type Ref, ref, watch } from "vue";
 import { type TileData } from "./types/tile-data";
-import { Level } from "./types/level.ts";
+import { useLevels } from "./stores/levels.ts";
 
 useKeyboardCommands();
 
 const boardStateStore = useBoardState();
+const levelsStore = useLevels();
 
 const { currentTile, gridSize } = storeToRefs(boardStateStore);
 const tileOptions: Ref<TileData[]> = ref([]);
-
-const levels: Level[] = [
-  { percentRequiredComplete: 0.5, gridSize: 5 },
-  { percentRequiredComplete: 0.75, gridSize: 7 },
-  { percentRequiredComplete: 0.9, gridSize: 9 },
-];
-
-const currentLevel = ref(0);
 
 function randomTile() {
   return {
@@ -59,26 +52,17 @@ watch(() => boardStateStore.filledSquares, setTileOptions);
 
 // Load our starting level
 onMounted(() => {
-  boardStateStore.loadLevel(levels[currentLevel.value]);
+  levelsStore.loadLevel();
 });
 // And load subsequent levels when the current level clears
 // TODO... give the user the option when to proceed.
 watch(
-  () => boardStateStore.isComplete,
-  (isComplete) => {
-    if (isComplete) {
+  () => levelsStore.gameComplete,
+  (gameComplete) => {
+    if (gameComplete) {
       // Wait a moment after user placement before announcing victory
       setTimeout(() => {
-        currentLevel.value++;
-
-        const nextLevel = levels[currentLevel.value];
-
-        if (nextLevel) {
-          alert("You've cleared the level!");
-          boardStateStore.loadLevel(nextLevel);
-        } else {
-          alert("You win the game!");
-        }
+        alert("You won the game!");
       }, 500);
     }
   }
@@ -99,12 +83,6 @@ watch(
 </template>
 
 <style scoped>
-svg {
-  overflow: visible;
-  width: 100%;
-  height: 100%;
-}
-
 .game-screen {
   max-height: 100svh;
   max-width: 100svw;
@@ -120,6 +98,7 @@ svg {
 
 .board {
   flex-grow: 2;
+  overflow: visible;
 }
 
 .controls {
