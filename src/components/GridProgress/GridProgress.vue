@@ -3,13 +3,9 @@ import { storeToRefs } from "pinia";
 import { useBoardState } from "../../stores/board-state.ts";
 import { useLevels } from "../../stores/levels.ts";
 import Button from "../Button/Button.vue";
-const {
-  filledSquares,
-  totalSquares,
-  percentRequiredComplete,
-  percentComplete,
-  isComplete,
-} = storeToRefs(useBoardState());
+const { percentRequiredComplete, percentComplete, isComplete } = storeToRefs(
+  useBoardState()
+);
 
 const levelsStore = useLevels();
 
