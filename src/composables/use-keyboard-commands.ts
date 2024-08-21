@@ -28,10 +28,10 @@ export function useKeyboardCommands() {
           commands.rotateTileLeft();
           break;
         case "e":
+        case " ":
           commands.rotateTileRight();
           break;
         case "Enter":
-        case " ":
           commands.placeTile();
           break;
       }
