@@ -1,4 +1,4 @@
-<script setup>
+<script setup lang="ts">
 import { storeToRefs } from "pinia";
 import { useBoardState } from "../../stores/board-state.ts";
 import { useLevels } from "../../stores/levels.ts";
