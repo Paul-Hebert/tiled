@@ -27,8 +27,8 @@ export const useLevels = defineStore("levels", () => {
 
   function loadNextLevel() {
     if (nextLevel.value) {
-      currentLevel.value++;
       boardStateStore.loadLevel(nextLevel.value);
+      currentLevel.value++;
     } else {
       throw new Error("No more levels!");
     }
