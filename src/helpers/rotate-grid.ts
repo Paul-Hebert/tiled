@@ -1,4 +1,5 @@
 import { Grid } from "../types/grid";
+/* @ts-expect-error */
 import { rotate } from "2d-array-rotation";
 
 export function rotateGrid({

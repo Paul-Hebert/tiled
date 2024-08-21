@@ -7,6 +7,7 @@ import { getIncrementedId } from "./helpers/get-incremented-id.ts";
 import { shapes } from "./data/shapes";
 import { hues } from "./data/hues";
 import { padShapeToSquare } from "./helpers/pad-shape-to-square.ts";
+/* @ts-expect-error */
 import { randomItemInArray } from "randomness-helpers";
 import { useBoardState } from "./stores/board-state.ts";
 import { useKeyboardCommands } from "./composables/use-keyboard-commands.ts";
