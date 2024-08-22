@@ -26,7 +26,3 @@
 - Surrounding spots
 - Different scoring objectives/patterns
 - Fill the board puzzles
-
-## Bugs
-
-- After moving a tile and then deselectint it, its position is changed in the tile picker
