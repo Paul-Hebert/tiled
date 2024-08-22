@@ -2,13 +2,14 @@
 withDefaults(
   defineProps<{
     size?: "large" | "medium";
+    pulse?: boolean;
   }>(),
   { size: "medium" }
 );
 </script>
 
 <template>
-  <button :class="`size-${size}`">
+  <button :class="`size-${size} ${pulse ? 'pulse' : ''}`">
     <span class="button-inner">
       <slot />
     </span>
@@ -82,5 +83,20 @@ button:focus-visible .button-inner {
 
 .size-large .button-inner {
   padding: 0.5em 1em;
+}
+
+.pulse .button-inner {
+  --shake: 2deg;
+  animation: pulse 1s var(--ease-out-back), shake-z 0.6s ease-out;
+}
+
+@keyframes pulse {
+  0% {
+    translate: 0;
+  }
+  50% {
+    translate: 0 -1em;
+    scale: 1.02;
+  }
 }
 </style>

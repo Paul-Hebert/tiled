@@ -126,7 +126,11 @@ let controlStatus: ComputedRef<"won" | "picking-tile" | "placing-tile"> =
         :class="{ shown: controlStatus === 'won' }"
         :inert="controlStatus !== 'won'"
       >
-        <Button size="large" @click="levelsStore.loadNextLevel">
+        <Button
+          size="large"
+          @click="levelsStore.loadNextLevel"
+          :class="{ pulse: controlStatus === 'won' }"
+        >
           Next Level
         </Button>
       </div>
@@ -182,7 +186,7 @@ h1 {
   height: 100%;
 }
 
-@media (orientation: landscape) and (width > 800px) {
+@media (orientation: landscape) and (width > 900px) {
   .game-screen {
     grid-template-areas:
       "board title"
@@ -231,9 +235,16 @@ dialog[open] {
   display: flex;
   flex-direction: column;
   gap: 1em;
-  padding: 1em;
+  padding: 2em;
+  border-radius: 0.5em;
+  border: none;
   margin: auto;
   max-width: 60ch;
+}
+
+::backdrop {
+  background: rgba(0, 0, 0, 0.5);
+  backdrop-filter: blur(2px);
 }
 
 .success-wrapper {

@@ -1,15 +1,13 @@
 ## Core Placement UI
 
 - Flipping tiles
+- Refactor tile display into individual SVGs to enable animations that rely on z-index? Or reorder the tiles based on position?
 
 ## Core Shared Game Logic
 
-- Give use the option to go to next level
 - Better "winning" announcements
 - "Can't place" state + losing the game
-- Smaller maps
-- "Winning" levels
-- Level configurations
+- Specific tiles for levels
 
 ## Enhanced Placement UI
 

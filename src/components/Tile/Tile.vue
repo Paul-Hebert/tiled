@@ -90,9 +90,6 @@ const patternId = computed(() => `pattern-${props.id}`);
   transform-origin: center;
   transform-box: fill-box;
   transform-origin: center;
-
-  --ease-out-back: cubic-bezier(0.34, 1.56, 0.64, 1);
-  --ease-in-out-back: cubic-bezier(0.68, -0.6, 0.32, 1.6);
 }
 
 .tile-wrapper {
@@ -180,25 +177,6 @@ const patternId = computed(() => `pattern-${props.id}`);
 .invalidPlacement {
   animation: shake-z 0.5s both;
   transform-origin: center;
-}
-
-@keyframes shake-z {
-  0%,
-  100% {
-    transform: rotate(0deg);
-  }
-  20% {
-    transform: rotate(-8deg);
-  }
-  40% {
-    transform: rotate(8deg);
-  }
-  60% {
-    transform: rotate(-8deg);
-  }
-  80% {
-    transform: rotate(8deg);
-  }
 }
 
 .square-placeholder {
