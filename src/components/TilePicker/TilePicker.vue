@@ -35,7 +35,13 @@ const biggestTileSize = computed(() =>
           height="1000"
         >
           <BackgroundGrid :scale="scale" :size="biggestTileSize" />
-          <Tile v-bind="tile" :scale="10" placed :grid-size="biggestTileSize" />
+          <Tile
+            v-bind="tile"
+            :offset="{ x: 0, y: 0 }"
+            :scale="10"
+            placed
+            :grid-size="biggestTileSize"
+          />
         </svg>
       </Button>
     </div>
