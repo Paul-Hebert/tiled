@@ -126,7 +126,9 @@ let controlStatus: ComputedRef<"won" | "picking-tile" | "placing-tile"> =
         :class="{ shown: controlStatus === 'won' }"
         :inert="controlStatus !== 'won'"
       >
-        <Button size="large" @click="levelsStore.loadLevel">Next Level</Button>
+        <Button size="large" @click="levelsStore.loadNextLevel">
+          Next Level
+        </Button>
       </div>
       <PrimaryControls
         :class="{ shown: controlStatus === 'placing-tile' }"
