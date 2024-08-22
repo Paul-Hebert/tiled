@@ -2,6 +2,11 @@
 
 - Flipping tiles
 - Refactor tile display into individual SVGs to enable animations that rely on z-index? Or reorder the tiles based on position?
+- "destroyed"/non-fillable places on grid
+
+## Surrounding Game UI
+
+- Fix phone layout
 
 ## Core Shared Game Logic
 
