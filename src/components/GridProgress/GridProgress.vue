@@ -20,8 +20,6 @@ const { gameComplete } = storeToRefs(levelsStore);
     <template v-else>
       <header v-if="isComplete">
         <h2>Level complete!</h2>
-
-        <Button @click="levelsStore.loadNextLevel()"> Next Level! </Button>
       </header>
       <header v-else>
         <span>
@@ -32,7 +30,10 @@ const { gameComplete } = storeToRefs(levelsStore);
         <Button @click="levelsStore.restartLevel">Restart Level</Button>
       </header>
 
-      <progress :value="percentComplete"></progress>
+      <progress
+        :value="percentComplete"
+        :max="percentRequiredComplete"
+      ></progress>
     </template>
   </div>
 </template>

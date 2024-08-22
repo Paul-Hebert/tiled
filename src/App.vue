@@ -12,7 +12,7 @@ import { randomItemInArray } from "randomness-helpers";
 import { useBoardState } from "./stores/board-state.ts";
 import { useKeyboardCommands } from "./composables/use-keyboard-commands.ts";
 import { storeToRefs } from "pinia";
-import { onMounted, type Ref, ref, watch } from "vue";
+import { computed, ComputedRef, onMounted, type Ref, ref, watch } from "vue";
 import { type TileData } from "./types/tile-data";
 import { useLevels } from "./stores/levels.ts";
 import Button from "./components/Button/Button.vue";
@@ -22,7 +22,7 @@ useKeyboardCommands();
 const instructionsDialog = ref();
 
 const boardStateStore = useBoardState();
-const { currentTile, gridSize } = storeToRefs(boardStateStore);
+const { currentTile, gridSize, isComplete } = storeToRefs(boardStateStore);
 
 const levelsStore = useLevels();
 const { currentLevel, gameComplete } = storeToRefs(levelsStore);
@@ -75,6 +75,17 @@ watch(
     }
   }
 );
+
+let controlStatus: ComputedRef<"won" | "picking-tile" | "placing-tile"> =
+  computed(() => {
+    if (isComplete.value) {
+      return "won";
+    }
+    if (currentTile.value) {
+      return "placing-tile";
+    }
+    return "picking-tile";
+  });
 </script>
 
 <template>
@@ -110,14 +121,21 @@ watch(
     <GridProgress class="progress" />
 
     <div class="controls">
+      <div
+        class="success-wrapper"
+        :class="{ shown: controlStatus === 'won' }"
+        :inert="controlStatus !== 'won'"
+      >
+        <Button size="large" @click="levelsStore.loadLevel">Next Level</Button>
+      </div>
       <PrimaryControls
-        :class="{ hidden: !currentTile }"
-        :inert="!currentTile"
+        :class="{ shown: controlStatus === 'placing-tile' }"
+        :inert="controlStatus !== 'placing-tile'"
       />
       <TilePicker
         :tiles="tileOptions"
-        :class="{ hidden: currentTile }"
-        :inert="currentTile"
+        :class="{ shown: controlStatus === 'picking-tile' }"
+        :inert="controlStatus !== 'picking-tile'"
       />
     </div>
   </div>
@@ -201,7 +219,7 @@ h1 {
   grid-area: progress;
 }
 
-.hidden {
+.controls > *:not(.shown) {
   visibility: hidden;
   opacity: 0;
   pointer-events: none;
@@ -214,5 +232,10 @@ dialog[open] {
   padding: 1em;
   margin: auto;
   max-width: 60ch;
+}
+
+.success-wrapper {
+  display: grid;
+  place-content: center;
 }
 </style>

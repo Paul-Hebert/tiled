@@ -1,7 +1,14 @@
-<script setup lang="ts"></script>
+<script setup lang="ts">
+withDefaults(
+  defineProps<{
+    size?: "large" | "medium";
+  }>(),
+  { size: "medium" }
+);
+</script>
 
 <template>
-  <button>
+  <button :class="`size-${size}`">
     <span class="button-inner">
       <slot />
     </span>
@@ -17,12 +24,12 @@ button {
   border: none;
   appearance: none;
   border-radius: 0.5em;
-  height: 3rem;
+  height: 3em;
   cursor: pointer;
   touch-action: manipulation;
   user-select: none;
   position: relative;
-  font-size: 1.25rem;
+  font-size: 1.25em;
   padding: 0 1px;
 }
 
@@ -67,5 +74,13 @@ button::before {
 
 button:focus-visible .button-inner {
   outline: 3px solid hsl(210, 100%, 40%);
+}
+
+.size-large {
+  font-size: 2em;
+}
+
+.size-large .button-inner {
+  padding: 0.5em 1em;
 }
 </style>
