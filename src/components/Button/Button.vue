@@ -14,10 +14,10 @@ withDefaults(
   <button :class="`size-${size} ${pulse ? 'pulse' : ''}`">
     <span class="button-inner">
       <slot />
+    </span>
 
-      <span class="disabled-message" v-if="$attrs.disabled">
-        <XIcon />
-      </span>
+    <span class="disabled-message" v-if="$attrs.disabled">
+      <XIcon />
     </span>
   </button>
 </template>
@@ -106,7 +106,7 @@ button[disabled] {
   display: grid;
   place-content: center;
   color: #fff;
-  background: hsla(0, 100%, 81%, 0.7);
+  background: hsla(0, 100%, 81%, 0.9);
   border-radius: inherit;
   font-size: 3em;
   color: red;

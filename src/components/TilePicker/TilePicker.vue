@@ -36,41 +36,47 @@ const resetPrice = 3;
   <div class="wrapper">
     <h2>Pick a Tile</h2>
     <div class="tile-picker">
-      <TilePickerButton
-        @click="setCurrentTile(tile)"
-        v-for="tile in tilesWithoutPatch"
-        :key="tile.id"
-        :grid-size="biggestTileSize"
-        :scale="scale"
-        :tile="tile"
-        :canAfford="canAfford(tile.price)"
-        class="big-tile-button"
-      />
+      <div class="tiles">
+        <TilePickerButton
+          @click="setCurrentTile(tile)"
+          v-for="tile in tilesWithoutPatch"
+          :key="tile.id"
+          :grid-size="biggestTileSize"
+          :scale="scale"
+          :tile="tile"
+          :canAfford="canAfford(tile.price)"
+          class="big-tile-button"
+        />
+      </div>
 
-      <TilePickerButton
-        class="additional-option"
-        v-if="patch"
-        @click="setCurrentTile(patch)"
-        :grid-size="1"
-        :scale="scale / 2"
-        :tile="patch"
-        :canAfford="canAfford(patch.price)"
-      />
+      <div class="additional-options">
+        <TilePickerButton
+          v-if="patch"
+          @click="setCurrentTile(patch)"
+          :grid-size="1"
+          :scale="scale / 2"
+          :tile="patch"
+          :canAfford="canAfford(patch.price)"
+        />
 
-      <ButtonWithPrice
-        :price="resetPrice"
-        :disabled="!canAfford(resetPrice)"
-        :income="0"
-        class="additional-option"
-        @click="
-          () => {
-            spend(resetPrice);
-            emit('refresh');
-          }
-        "
-      >
-        <RefreshCwIcon />
-      </ButtonWithPrice>
+        <ButtonWithPrice
+          :price="resetPrice"
+          :disabled="!canAfford(resetPrice)"
+          :income="0"
+          class="additional-option"
+          @click="
+            () => {
+              spend(resetPrice);
+              emit('refresh');
+            }
+          "
+        >
+          <span class="refresh-inner">
+            <RefreshCwIcon />
+            New Tiles
+          </span>
+        </ButtonWithPrice>
+      </div>
     </div>
   </div>
 </template>
@@ -85,19 +91,28 @@ const resetPrice = 3;
 
 .tile-picker {
   display: grid;
-  grid-template-columns: auto auto auto auto auto;
-  gap: 1rem;
-  align-items: center;
-  justify-content: space-between;
-  container-type: inline-size;
+  gap: 1.5em;
 }
 
-.additional-option {
-  width: 12cqi;
+.tiles {
+  display: flex;
+  gap: 1em;
+  justify-content: space-around;
+}
+
+.additional-options {
+  display: flex;
+  gap: 1em;
+  justify-self: center;
 }
 
 .big-tile-button {
-  height: auto;
-  width: 20cqi;
+  flex: 1;
+  height: 100%;
+}
+
+.refresh-inner {
+  display: flex;
+  gap: 0.5em;
 }
 </style>
