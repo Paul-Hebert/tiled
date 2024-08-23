@@ -18,6 +18,8 @@ export const useMoney = defineStore("money", () => {
   const earn = (amount: number) => (playerMoney.value += amount);
   const earnIncome = () => (playerMoney.value += income.value);
   const increaseIncome = (amount: number) => (income.value += amount);
+  const setPlayerMoney = (amount: number) => (playerMoney.value = amount);
+  const setPlayerIncome = (amount: number) => (income.value = amount);
 
   return {
     playerMoney,
@@ -27,5 +29,7 @@ export const useMoney = defineStore("money", () => {
     income,
     earnIncome,
     increaseIncome,
+    setPlayerMoney,
+    setPlayerIncome,
   };
 });

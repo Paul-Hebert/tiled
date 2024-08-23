@@ -2,20 +2,24 @@
 import GameBoard from "./components/GameBoard/GameBoard.vue";
 import GridProgress from "./components/GridProgress/GridProgress.vue";
 import TilePicker from "./components/TilePicker/TilePicker.vue";
+import MoneyInfo from "./components/MoneyInfo/MoneyInfo.vue";
 import PrimaryControls from "./components/PrimaryControls/PrimaryControls.vue";
 import { getIncrementedId } from "./helpers/get-incremented-id.ts";
 import { shapes } from "./data/shapes";
 import { hues } from "./data/hues";
 import { padShapeToSquare } from "./helpers/pad-shape-to-square.ts";
 /* @ts-expect-error */
-import { randomItemInArray } from "randomness-helpers";
+import { randomItemInArray, randomInt } from "randomness-helpers";
 import { useBoardState } from "./stores/board-state.ts";
 import { useKeyboardCommands } from "./composables/use-keyboard-commands.ts";
 import { storeToRefs } from "pinia";
 import { computed, ComputedRef, onMounted, type Ref, ref, watch } from "vue";
-import { type TileData } from "./types/tile-data";
 import { useLevels } from "./stores/levels.ts";
 import Button from "./components/Button/Button.vue";
+import { TileData } from "./types/tile-data.ts";
+import { useMoney } from "./stores/money.ts";
+
+const moneyStore = useMoney();
 
 useKeyboardCommands();
 
@@ -29,12 +33,14 @@ const { currentLevel, gameComplete } = storeToRefs(levelsStore);
 
 const tileOptions: Ref<TileData[]> = ref([]);
 
-function randomTile() {
+function randomTile(): TileData {
   return {
-    offset: { x: 0, y: 0 },
     shape: padShapeToSquare(randomItemInArray(shapes)),
     id: getIncrementedId(),
     hue: randomItemInArray(hues),
+    price: randomInt(1, 4),
+    income: randomItemInArray([0, 0, 0, randomInt(0, 3)]),
+    offset: { x: 0, y: 0 },
   };
 }
 
@@ -54,7 +60,13 @@ function setTileOptions() {
 setTileOptions();
 // This is a hacky way to update our tile option after a user plays a tile
 // TODO: In the future increment a "turns" property that we can watch for updates.
-watch(() => boardStateStore.filledSquares, setTileOptions);
+watch(
+  () => boardStateStore.filledSquares,
+  () => {
+    setTileOptions();
+    moneyStore.earnIncome();
+  }
+);
 
 // Load our starting level
 onMounted(() => {
@@ -120,6 +132,8 @@ let controlStatus: ComputedRef<"won" | "picking-tile" | "placing-tile"> =
 
     <GridProgress class="progress" />
 
+    <MoneyInfo class="money-info" />
+
     <div class="controls">
       <div
         class="success-wrapper"
@@ -134,6 +148,7 @@ let controlStatus: ComputedRef<"won" | "picking-tile" | "placing-tile"> =
           Next Level
         </Button>
       </div>
+
       <PrimaryControls
         :class="{ shown: controlStatus === 'placing-tile' }"
         :inert="controlStatus !== 'placing-tile'"
@@ -157,6 +172,7 @@ let controlStatus: ComputedRef<"won" | "picking-tile" | "placing-tile"> =
     "title"
     "board"
     "progress"
+    "money-info"
     "controls";
   flex-direction: column;
   place-content: center;
@@ -191,6 +207,7 @@ h1 {
     grid-template-areas:
       "board title"
       "board progress"
+      "board money-info"
       "board controls";
     grid-template-columns: 1fr auto;
     padding: 2em;
@@ -250,5 +267,9 @@ dialog[open] {
 .success-wrapper {
   display: grid;
   place-content: center;
+}
+
+.money-info {
+  grid-area: money-info;
 }
 </style>

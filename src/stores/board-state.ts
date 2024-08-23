@@ -5,11 +5,14 @@ import { TileData } from "../types/tile-data";
 import { getActivePointsFromGrid } from "../helpers/get-active-points-from-grid";
 import { rotateGrid } from "../helpers/rotate-grid";
 import { Level } from "../types/level";
+import { useMoney } from "./money";
 
 export const useBoardState = defineStore("board-state", () => {
   const levelGrid: Ref<Grid> = ref([[]]);
   const currentTile: Ref<TileData | undefined> = ref();
   const placedTiles: Ref<TileData[]> = ref([]);
+
+  const { spend, increaseIncome } = useMoney();
 
   function loadLevel(level: Level) {
     percentRequiredComplete.value = level.percentRequiredComplete;
@@ -87,6 +90,9 @@ export const useBoardState = defineStore("board-state", () => {
     currentTileGridSquares.value.forEach((point) => {
       levelGrid.value[point.y][point.x] = 1;
     });
+
+    spend(currentTile.value.price);
+    increaseIncome(currentTile.value.income);
 
     currentTile.value.placed = true;
     placedTiles.value.push({ ...currentTile.value });

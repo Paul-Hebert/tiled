@@ -9,4 +9,6 @@ export interface TileData {
   hue: number;
   rotation?: number;
   flipped?: boolean;
+  price: number;
+  income: number;
 }

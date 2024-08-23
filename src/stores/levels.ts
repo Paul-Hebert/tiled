@@ -2,10 +2,12 @@ import { defineStore, storeToRefs } from "pinia";
 import { Level } from "../types/level";
 import { computed, ref } from "vue";
 import { useBoardState } from "./board-state";
+import { useMoney } from "./money";
 
 export const useLevels = defineStore("levels", () => {
   const boardStateStore = useBoardState();
   const { isComplete: levelIsComplete } = storeToRefs(boardStateStore);
+  const moneyStore = useMoney();
 
   const levels: Level[] = [
     { percentRequiredComplete: 0.5, gridSize: 5 },
@@ -17,6 +19,9 @@ export const useLevels = defineStore("levels", () => {
 
   function loadLevel() {
     boardStateStore.loadLevel(levels[currentLevel.value]);
+
+    moneyStore.setPlayerIncome(0);
+    moneyStore.setPlayerMoney(10);
   }
 
   const nextLevel = computed(() => levels[currentLevel.value + 1]);

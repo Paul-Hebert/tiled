@@ -34,11 +34,11 @@ button {
   padding: 0 1px;
 }
 
-button:hover {
+button:not([disabled]):hover {
   --translation: 0.5em;
 }
 
-button:active {
+button:not([disabled]):active {
   --translation: 0;
 }
 
