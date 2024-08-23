@@ -39,7 +39,7 @@ function randomTile(): TileData {
     id: getIncrementedId(),
     hue: randomItemInArray(hues),
     price: randomInt(1, 4),
-    income: randomItemInArray([0, 0, 0, randomInt(0, 3)]),
+    income: randomItemInArray([0, 0, 0, 1, 2]),
     offset: { x: 0, y: 0 },
   };
 }
@@ -70,7 +70,7 @@ watch(
 
 // Load our starting level
 onMounted(() => {
-  levelsStore.loadLevel();
+  levelsStore.loadLevel(0);
 
   instructionsDialog.value.showModal();
 });
@@ -271,5 +271,6 @@ dialog[open] {
 
 .money-info {
   grid-area: money-info;
+  align-self: end;
 }
 </style>

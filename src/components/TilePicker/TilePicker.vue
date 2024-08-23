@@ -112,9 +112,11 @@ svg {
 }
 
 .can-not-afford {
-  background: red;
+  background: hsla(0, 50%, 50%, 0.5);
   position: absolute;
   inset: 0;
   color: #fff;
+  display: grid;
+  place-content: center;
 }
 </style>
