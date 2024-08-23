@@ -48,7 +48,6 @@ const commands = useCommands();
     "rotate-left rotate-left up up rotate-right rotate-right"
     "left left down down right right"
     "change change change place place place";
-  max-width: 25em;
 }
 
 .rotate-left {

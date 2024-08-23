@@ -1,4 +1,6 @@
 <script setup lang="ts">
+import { XIcon } from "lucide-vue-next";
+
 withDefaults(
   defineProps<{
     size?: "large" | "medium";
@@ -12,6 +14,10 @@ withDefaults(
   <button :class="`size-${size} ${pulse ? 'pulse' : ''}`">
     <span class="button-inner">
       <slot />
+
+      <span class="disabled-message" v-if="$attrs.disabled">
+        <XIcon />
+      </span>
     </span>
   </button>
 </template>
@@ -88,6 +94,23 @@ button:focus-visible .button-inner {
 .pulse .button-inner {
   --shake: 2deg;
   animation: pulse 1s var(--ease-out-back), shake-z 0.6s ease-out;
+}
+
+button[disabled] {
+  --translation: 0;
+}
+
+.disabled-message {
+  position: absolute;
+  inset: 0;
+  display: grid;
+  place-content: center;
+  color: #fff;
+  background: hsla(0, 100%, 81%, 0.7);
+  border-radius: inherit;
+  font-size: 3em;
+  color: red;
+  border-radius: inherit;
 }
 
 @keyframes pulse {

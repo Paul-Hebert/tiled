@@ -7,6 +7,7 @@
 ## Surrounding Game UI
 
 - Fix phone layout
+- "Messages" system
 
 ## Core Shared Game Logic
 

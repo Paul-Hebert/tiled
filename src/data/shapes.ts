@@ -215,3 +215,14 @@ export const shapes: Shape[] = [
     ],
   },
 ];
+
+export const patch: Shape = {
+  name: "Patch",
+  grid: [[1]],
+  outlinePoints: [
+    { x: 0, y: 0 },
+    { x: 1, y: 0 },
+    { x: 1, y: 1 },
+    { x: 0, y: 1 },
+  ],
+};

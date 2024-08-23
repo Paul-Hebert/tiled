@@ -1,60 +1,76 @@
 <script setup lang="ts">
 import { computed } from "vue";
-import Tile from "../Tile/Tile.vue";
-import Button from "../Button/Button.vue";
-import BackgroundGrid from "../BackgroundGrid/BackgroundGrid.vue";
 import { useBoardState } from "../../stores/board-state.ts";
 import { TileData } from "../../types/tile-data.ts";
 import { useMoney } from "../../stores/money.ts";
+import TilePickerButton from "./subcomponents/TilePickerButton.vue";
+import ButtonWithPrice from "./subcomponents/ButtonWithPrice.vue";
+import { RefreshCwIcon } from "lucide-vue-next";
 
 const props = defineProps<{ tiles: TileData[] }>();
+const emit = defineEmits(["refresh"]);
 
 const boardStateStore = useBoardState();
 const { setCurrentTile } = boardStateStore;
 
-const { canAfford } = useMoney();
+const { canAfford, spend } = useMoney();
 
 const scale = 10;
 
 const biggestTileSize = computed(() =>
   Math.max(...props.tiles.map((tile) => tile.shape.grid.length))
 );
+
+const patch = computed(() =>
+  props.tiles.find((tile) => tile.shape.name === "Patch")
+);
+
+const tilesWithoutPatch = computed(() =>
+  props.tiles.filter((tile) => tile.shape.name !== "Patch")
+);
+
+const resetPrice = 3;
 </script>
 
 <template>
   <div class="wrapper">
     <h2>Pick a Tile</h2>
     <div class="tile-picker">
-      <Button
-        v-for="tile in tiles"
+      <TilePickerButton
+        @click="setCurrentTile(tile)"
+        v-for="tile in tilesWithoutPatch"
         :key="tile.id"
-        @click="() => setCurrentTile(tile)"
-        class="tile-button"
-        :disabled="!canAfford(tile.price)"
+        :grid-size="biggestTileSize"
+        :scale="scale"
+        :tile="tile"
+        :canAfford="canAfford(tile.price)"
+        class="big-tile-button"
+      />
+
+      <TilePickerButton
+        class="additional-option"
+        v-if="patch"
+        @click="setCurrentTile(patch)"
+        :grid-size="1"
+        :scale="scale / 2"
+        :tile="patch"
+        :canAfford="canAfford(patch.price)"
+      />
+
+      <ButtonWithPrice
+        :price="resetPrice"
+        :disabled="!canAfford(resetPrice)"
+        :income="0"
+        class="additional-option"
+        @click="
+          () => {
+            spend(resetPrice);
+            emit('refresh');
+          }
+        "
       >
-        <div v-if="tile.income > 0" class="income">{{ tile.income }}</div>
-        <div v-if="tile.price > 0" class="cost">{{ tile.price }}</div>
-
-        <svg
-          :viewBox="`0 0 ${biggestTileSize * scale} ${biggestTileSize * scale}`"
-          class="tile"
-          width="1000"
-          height="1000"
-        >
-          <BackgroundGrid :scale="scale" :size="biggestTileSize" />
-          <Tile
-            v-bind="tile"
-            :offset="{ x: 0, y: 0 }"
-            :scale="10"
-            placed
-            :grid-size="biggestTileSize"
-          />
-        </svg>
-
-        <div class="can-not-afford" v-if="!canAfford(tile.price)">
-          Too expensive!
-        </div>
-      </Button>
+        <RefreshCwIcon />
+      </ButtonWithPrice>
     </div>
   </div>
 </template>
@@ -63,60 +79,25 @@ const biggestTileSize = computed(() =>
 .wrapper {
   justify-self: center;
   width: 100%;
-  max-width: 25em;
   gap: 1em;
   display: grid;
 }
 
 .tile-picker {
-  display: inline-grid;
-  grid-template-columns: 1fr 1fr 1fr;
+  display: grid;
+  grid-template-columns: auto auto auto auto auto;
   gap: 1rem;
-  place-content: center;
+  align-items: center;
+  justify-content: space-between;
+  container-type: inline-size;
 }
 
-.tile-button {
-  border-radius: 0.25em;
-  aspect-ratio: 1;
-  height: 100%;
-  display: flex;
+.additional-option {
+  width: 12cqi;
 }
 
-svg {
-  max-width: 100%;
-  max-height: 100%;
-}
-
-.cost,
-.income {
-  --size: 1.5em;
-
-  display: grid;
-  place-content: center;
-  aspect-ratio: 1;
-  width: var(--size);
-  position: absolute;
-  right: calc(var(--size) * -0.5);
-  color: #fff;
-  border-radius: 50%;
-}
-
-.cost {
-  background-color: red;
-  top: calc(var(--size) * -0.5);
-}
-
-.income {
-  background-color: green;
-  bottom: calc(var(--size) * -0.5);
-}
-
-.can-not-afford {
-  background: hsla(0, 50%, 50%, 0.5);
-  position: absolute;
-  inset: 0;
-  color: #fff;
-  display: grid;
-  place-content: center;
+.big-tile-button {
+  height: auto;
+  width: 20cqi;
 }
 </style>

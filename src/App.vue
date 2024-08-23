@@ -5,7 +5,7 @@ import TilePicker from "./components/TilePicker/TilePicker.vue";
 import MoneyInfo from "./components/MoneyInfo/MoneyInfo.vue";
 import PrimaryControls from "./components/PrimaryControls/PrimaryControls.vue";
 import { getIncrementedId } from "./helpers/get-incremented-id.ts";
-import { shapes } from "./data/shapes";
+import { patch, shapes } from "./data/shapes";
 import { hues } from "./data/hues";
 import { padShapeToSquare } from "./helpers/pad-shape-to-square.ts";
 /* @ts-expect-error */
@@ -54,6 +54,16 @@ function setTileOptions() {
       newOptions.push(newTile);
     }
   }
+
+  newOptions.push({
+    shape: patch,
+    id: getIncrementedId(),
+    hue: randomItemInArray(hues),
+    price: 3,
+    income: 0,
+    offset: { x: 0, y: 0 },
+  });
+
   tileOptions.value = newOptions;
 }
 
@@ -157,6 +167,7 @@ let controlStatus: ComputedRef<"won" | "picking-tile" | "placing-tile"> =
         :tiles="tileOptions"
         :class="{ shown: controlStatus === 'picking-tile' }"
         :inert="controlStatus !== 'picking-tile'"
+        @refresh="setTileOptions"
       />
     </div>
   </div>
@@ -209,7 +220,7 @@ h1 {
       "board progress"
       "board money-info"
       "board controls";
-    grid-template-columns: 1fr auto;
+    grid-template-columns: 1fr 30em;
     padding: 2em;
     column-gap: 1em;
     grid-template-rows: auto auto 1fr;
@@ -226,7 +237,6 @@ h1 {
 
 .controls {
   flex-grow: 1;
-  place-self: center;
   display: grid;
   grid-template-areas: "content";
   place-content: stretch;
