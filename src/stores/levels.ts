@@ -4,6 +4,8 @@ import { computed, ref } from "vue";
 import { useBoardState } from "./board-state";
 import { useMoney } from "./money";
 import { useTurns } from "./turns";
+import { level1 } from "../data/levels/level-1";
+import { level2 } from "../data/levels/level-2";
 
 export const useLevels = defineStore("levels", () => {
   const boardStateStore = useBoardState();
@@ -11,18 +13,15 @@ export const useLevels = defineStore("levels", () => {
   const { resetTurns } = useTurns();
   const moneyStore = useMoney();
 
-  const levels: Level[] = [
-    { percentRequiredComplete: 0.75, gridSize: 5 },
-    { percentRequiredComplete: 0.75, gridSize: 7 },
-    { percentRequiredComplete: 0.9, gridSize: 9 },
-  ];
+  const levels: Level[] = [level1, level2];
 
-  const currentLevel = ref(0);
+  const currentLevelIndex = ref(0);
+  const currentLevel = computed(() => levels[currentLevelIndex.value]);
 
   function loadLevel(level: number) {
     resetTurns();
     boardStateStore.loadLevel(levels[level]);
-    currentLevel.value = level;
+    currentLevelIndex.value = level;
 
     console.log("resetting money");
     moneyStore.setPlayerIncome(0);
@@ -30,7 +29,7 @@ export const useLevels = defineStore("levels", () => {
     console.log("money reset");
   }
 
-  const nextLevel = computed(() => levels[currentLevel.value + 1]);
+  const nextLevel = computed(() => levels[currentLevelIndex.value + 1]);
   // TODO: this isn't working...
   const gameComplete = computed(
     () => levelIsComplete.value && !nextLevel.value
@@ -38,7 +37,7 @@ export const useLevels = defineStore("levels", () => {
 
   function loadNextLevel() {
     if (nextLevel.value) {
-      loadLevel(currentLevel.value + 1);
+      loadLevel(currentLevelIndex.value + 1);
     } else {
       throw new Error("No more levels!");
     }
@@ -46,12 +45,13 @@ export const useLevels = defineStore("levels", () => {
 
   function restartLevel() {
     console.log("restarting");
-    loadLevel(currentLevel.value);
+    loadLevel(currentLevelIndex.value);
   }
 
   return {
     levels,
     currentLevel,
+    currentLevelIndex,
     loadLevel,
     loadNextLevel,
     gameComplete,

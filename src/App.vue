@@ -27,7 +27,8 @@ const boardStateStore = useBoardState();
 const { currentTile, gridSize, isComplete } = storeToRefs(boardStateStore);
 
 const levelsStore = useLevels();
-const { currentLevel, gameComplete } = storeToRefs(levelsStore);
+const { currentLevel, currentLevelIndex, gameComplete } =
+  storeToRefs(levelsStore);
 
 const { turn } = storeToRefs(useTurns());
 
@@ -104,7 +105,7 @@ let controlStatus: ComputedRef<"won" | "picking-tile" | "placing-tile"> =
   </dialog>
 
   <div class="game-screen">
-    <h1>Level {{ currentLevel + 1 }}</h1>
+    <h1>Level {{ currentLevelIndex + 1 }}: {{ currentLevel?.title || "" }}</h1>
 
     <GameBoard :scale="10" :gridSize="gridSize" class="board" />
 
