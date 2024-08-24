@@ -4,12 +4,6 @@ import GridProgress from "./components/GridProgress/GridProgress.vue";
 import TilePicker from "./components/TilePicker/TilePicker.vue";
 import MoneyInfo from "./components/MoneyInfo/MoneyInfo.vue";
 import PrimaryControls from "./components/PrimaryControls/PrimaryControls.vue";
-import { getIncrementedId } from "./helpers/get-incremented-id.ts";
-import { patch, shapes } from "./data/shapes";
-import { hues } from "./data/hues";
-import { padShapeToSquare } from "./helpers/pad-shape-to-square.ts";
-/* @ts-expect-error */
-import { randomItemInArray, randomInt } from "randomness-helpers";
 import { useBoardState } from "./stores/board-state.ts";
 import { useKeyboardCommands } from "./composables/use-keyboard-commands.ts";
 import { storeToRefs } from "pinia";
@@ -18,6 +12,9 @@ import { useLevels } from "./stores/levels.ts";
 import Button from "./components/Button/Button.vue";
 import { TileData } from "./types/tile-data.ts";
 import { useMoney } from "./stores/money.ts";
+/* @ts-expect-error */
+import { randomItemInArray, randomInt } from "randomness-helpers";
+import { generateTileOptions } from "./helpers/generate-tile-options.ts";
 
 const moneyStore = useMoney();
 
@@ -33,38 +30,8 @@ const { currentLevel, gameComplete } = storeToRefs(levelsStore);
 
 const tileOptions: Ref<TileData[]> = ref([]);
 
-function randomTile(): TileData {
-  return {
-    shape: padShapeToSquare(randomItemInArray(shapes)),
-    id: getIncrementedId(),
-    hue: randomItemInArray(hues),
-    price: randomInt(1, 4),
-    income: randomItemInArray([0, 0, 0, 1, 2]),
-    offset: { x: 0, y: 0 },
-  };
-}
-
 function setTileOptions() {
-  const newOptions: TileData[] = [];
-
-  while (newOptions.length < 3) {
-    const newTile = randomTile();
-
-    if (!newOptions.some((tile) => tile.shape.name === newTile.shape.name)) {
-      newOptions.push(newTile);
-    }
-  }
-
-  newOptions.push({
-    shape: patch,
-    id: getIncrementedId(),
-    hue: randomItemInArray(hues),
-    price: 3,
-    income: 0,
-    offset: { x: 0, y: 0 },
-  });
-
-  tileOptions.value = newOptions;
+  tileOptions.value = generateTileOptions();
 }
 
 setTileOptions();
