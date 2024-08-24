@@ -15,6 +15,7 @@ import { useMoney } from "./stores/money.ts";
 /* @ts-expect-error */
 import { randomItemInArray, randomInt } from "randomness-helpers";
 import { generateTileOptions } from "./helpers/generate-tile-options.ts";
+import { useTurns } from "./stores/turns.ts";
 
 const moneyStore = useMoney();
 
@@ -28,6 +29,8 @@ const { currentTile, gridSize, isComplete } = storeToRefs(boardStateStore);
 const levelsStore = useLevels();
 const { currentLevel, gameComplete } = storeToRefs(levelsStore);
 
+const { turn } = storeToRefs(useTurns());
+
 const tileOptions: Ref<TileData[]> = ref([]);
 
 function setTileOptions() {
@@ -35,10 +38,8 @@ function setTileOptions() {
 }
 
 setTileOptions();
-// This is a hacky way to update our tile option after a user plays a tile
-// TODO: In the future increment a "turns" property that we can watch for updates.
 watch(
-  () => boardStateStore.filledSquares,
+  () => turn.value,
   () => {
     setTileOptions();
     moneyStore.earnIncome();

@@ -1,4 +1,5 @@
 import { useBoardState } from "../stores/board-state";
+import { useTurns } from "../stores/turns";
 import { Commands } from "../types/commands";
 import { Point } from "../types/point";
 import { storeToRefs } from "pinia";
@@ -7,6 +8,7 @@ export function useCommands() {
   const boardStateStore = useBoardState();
   const { currentTile } = storeToRefs(boardStateStore);
   const { placeCurrentTile, setCurrentTile } = boardStateStore;
+  const { nextTurn } = useTurns();
 
   function move(vector: Point) {
     if (!currentTile.value) return;
@@ -35,6 +37,7 @@ export function useCommands() {
     placeTile: () => {
       // useSound("placed.mp3");
       placeCurrentTile();
+      nextTurn();
     },
     changeTile: () => setCurrentTile(undefined),
   };

@@ -3,10 +3,12 @@ import { Level } from "../types/level";
 import { computed, ref } from "vue";
 import { useBoardState } from "./board-state";
 import { useMoney } from "./money";
+import { useTurns } from "./turns";
 
 export const useLevels = defineStore("levels", () => {
   const boardStateStore = useBoardState();
   const { isComplete: levelIsComplete } = storeToRefs(boardStateStore);
+  const { resetTurns } = useTurns();
   const moneyStore = useMoney();
 
   const levels: Level[] = [
@@ -18,6 +20,7 @@ export const useLevels = defineStore("levels", () => {
   const currentLevel = ref(0);
 
   function loadLevel(level: number) {
+    resetTurns();
     boardStateStore.loadLevel(levels[level]);
     currentLevel.value = level;
 
