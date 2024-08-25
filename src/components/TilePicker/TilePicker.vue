@@ -1,11 +1,15 @@
 <script setup lang="ts">
-import { computed } from "vue";
+import { computed, ref, watch } from "vue";
 import { useBoardState } from "../../stores/board-state.ts";
 import { TileData } from "../../types/tile-data.ts";
 import { useMoney } from "../../stores/money.ts";
 import TilePickerButton from "./subcomponents/TilePickerButton.vue";
 import ButtonWithPrice from "./subcomponents/ButtonWithPrice.vue";
 import { RefreshCwIcon } from "lucide-vue-next";
+import { useFeatureFlags } from "../../stores/feature-flags.ts";
+import { storeToRefs } from "pinia";
+import { generateTile, GenerateTileArgs } from "../../helpers/generate-tile.ts";
+import { useTurns } from "../../stores/turns.ts";
 
 const props = defineProps<{ tiles: TileData[] }>();
 const emit = defineEmits(["refresh"]);
@@ -13,7 +17,12 @@ const emit = defineEmits(["refresh"]);
 const boardStateStore = useBoardState();
 const { setCurrentTile } = boardStateStore;
 
+const featureFlagsStore = useFeatureFlags();
+const { features } = storeToRefs(featureFlagsStore);
+
 const { canAfford, spend } = useMoney();
+
+const { turn } = storeToRefs(useTurns());
 
 const scale = 10;
 
@@ -21,12 +30,14 @@ const biggestTileSize = computed(() =>
   Math.max(...props.tiles.map((tile) => tile.shape.grid.length))
 );
 
-const patch = computed(() =>
-  props.tiles.find((tile) => tile.shape.name === "Patch")
-);
+const patchArgs: GenerateTileArgs = { shape: "Patch", price: 3 };
+const patch = ref(generateTile(patchArgs));
 
-const tilesWithoutPatch = computed(() =>
-  props.tiles.filter((tile) => tile.shape.name !== "Patch")
+watch(
+  () => turn.value,
+  () => {
+    patch.value = generateTile(patchArgs);
+  }
 );
 
 const resetPrice = 3;
@@ -39,7 +50,7 @@ const resetPrice = 3;
       <div class="tiles">
         <TilePickerButton
           @click="setCurrentTile(tile)"
-          v-for="tile in tilesWithoutPatch"
+          v-for="tile in tiles"
           :key="tile.id"
           :grid-size="biggestTileSize"
           :scale="scale"
@@ -49,14 +60,14 @@ const resetPrice = 3;
         />
       </div>
 
-      <div class="additional-options">
+      <div class="additional-options" v-if="features.money">
         <TilePickerButton
           v-if="patch"
           @click="setCurrentTile(patch)"
           :grid-size="1"
           :scale="scale / 2"
-          :tile="patch"
           :canAfford="canAfford(patch.price)"
+          :tile="patch"
         />
 
         <ButtonWithPrice

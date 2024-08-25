@@ -15,6 +15,7 @@ import { useMoney } from "./stores/money.ts";
 /* @ts-expect-error */
 import { randomItemInArray, randomInt } from "randomness-helpers";
 import { useTurns } from "./stores/turns.ts";
+import { useFeatureFlags } from "./stores/feature-flags.ts";
 
 const moneyStore = useMoney();
 
@@ -29,6 +30,9 @@ const levelsStore = useLevels();
 const { loadTilesForTurn } = levelsStore;
 const { currentLevel, currentLevelIndex, gameComplete } =
   storeToRefs(levelsStore);
+
+const featureFlagsStore = useFeatureFlags();
+const { features } = storeToRefs(featureFlagsStore);
 
 const { turn } = storeToRefs(useTurns());
 
@@ -112,7 +116,7 @@ let controlStatus: ComputedRef<"won" | "picking-tile" | "placing-tile"> =
 
     <GridProgress class="progress" />
 
-    <MoneyInfo class="money-info" />
+    <MoneyInfo class="money-info" v-if="features.money" />
 
     <div class="controls">
       <div

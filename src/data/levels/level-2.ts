@@ -1,15 +1,20 @@
+import { useFeatureFlags } from "../../stores/feature-flags";
 import { Level } from "../../types/level";
 
 export const level2: Level = {
   title: "Planting the Seed",
-  percentRequiredComplete: 1,
-  grid: [
-    [null, 0, null, 0, 0, null],
-    [0, 0, 0, null, 0, 0],
-    [null, 0, 0, 0, 0, null],
-    [null, 0, 0, 0, null, null],
-    [0, 0, 0, null, null, null],
-    [null, 0, 0, null, null, null],
+  grid: new Array(6).fill(new Array(6).fill(0)),
+  tiles: [
+    [{ shape: "2-Square" }, { shape: "Little L" }, { shape: "Mid Bar" }],
+    [{ shape: "2-Square" }, { shape: "Little L" }, { shape: "Mid Bar" }],
   ],
-  tiles: [[]],
+  events: [
+    {
+      action: () => {
+        const featureFlagsStore = useFeatureFlags();
+
+        featureFlagsStore.enableFeature("money");
+      },
+    },
+  ],
 };

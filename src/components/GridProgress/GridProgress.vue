@@ -3,7 +3,7 @@ import { storeToRefs } from "pinia";
 import { useBoardState } from "../../stores/board-state.ts";
 import { useLevels } from "../../stores/levels.ts";
 import Button from "../Button/Button.vue";
-const { percentRequiredComplete, percentComplete, isComplete } = storeToRefs(
+const { filledSquares, totalSquares, isComplete } = storeToRefs(
   useBoardState()
 );
 
@@ -23,17 +23,13 @@ const { gameComplete } = storeToRefs(levelsStore);
       </header>
       <header v-else>
         <span>
-          <h2>Cover {{ percentRequiredComplete * 100 }}% of the board</h2>
-          <span> ({{ Math.ceil(percentComplete * 100) }}% complete)</span>
+          <h2>{{ filledSquares }}/{{ totalSquares }} spaces filled</h2>
         </span>
 
         <Button @click="levelsStore.restartLevel">Restart Level</Button>
       </header>
 
-      <progress
-        :value="percentComplete"
-        :max="percentRequiredComplete"
-      ></progress>
+      <progress :value="filledSquares" :max="totalSquares"></progress>
     </template>
   </div>
 </template>
@@ -43,6 +39,7 @@ header {
   display: flex;
   gap: 0.5em;
   justify-content: space-between;
+  align-items: center;
 }
 
 div {

@@ -15,16 +15,11 @@ export const useBoardState = defineStore("board-state", () => {
   const { spend, increaseIncome } = useMoney();
 
   function loadLevel(level: Level) {
-    percentRequiredComplete.value = level.percentRequiredComplete;
-
     levelGrid.value = [...level.grid.map((row) => [...row])];
 
     currentTile.value = undefined;
     placedTiles.value = [];
   }
-
-  // Configuration
-  const percentRequiredComplete = ref(0.75);
 
   const gridSize = computed(() => levelGrid.value.length);
   const totalSquares = computed(
@@ -36,9 +31,7 @@ export const useBoardState = defineStore("board-state", () => {
   const percentComplete = computed(
     () => filledSquares.value / totalSquares.value
   );
-  const isComplete = computed(
-    () => percentComplete.value >= percentRequiredComplete.value
-  );
+  const isComplete = computed(() => percentComplete.value === 1);
 
   const currentTileGridSquares = computed(() => {
     if (!currentTile.value) return [];
@@ -101,7 +94,6 @@ export const useBoardState = defineStore("board-state", () => {
     placedTiles,
     invalidPlacement,
     canPlaceTile,
-    percentRequiredComplete,
     percentComplete,
     isComplete,
     gridSize,

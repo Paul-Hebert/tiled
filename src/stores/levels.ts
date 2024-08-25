@@ -5,7 +5,8 @@ import { useBoardState } from "./board-state";
 import { useMoney } from "./money";
 import { useTurns } from "./turns";
 import { level1 } from "../data/levels/level-1";
-// import { level2 } from "../data/levels/level-2";
+import { generateTile } from "../helpers/generate-tile";
+import { level2 } from "../data/levels/level-2";
 
 export const useLevels = defineStore("levels", () => {
   const boardStateStore = useBoardState();
@@ -17,10 +18,7 @@ export const useLevels = defineStore("levels", () => {
 
   const moneyStore = useMoney();
 
-  const levels: Level[] = [
-    level1,
-    // level2
-  ];
+  const levels: Level[] = [level1, level2];
 
   const currentLevelIndex = ref(0);
   const currentLevel = computed(() => levels[currentLevelIndex.value]);
@@ -30,10 +28,11 @@ export const useLevels = defineStore("levels", () => {
     boardStateStore.loadLevel(levels[level]);
     currentLevelIndex.value = level;
 
-    console.log("resetting money");
+    // Run starting events
+    currentLevel.value.events?.forEach((event) => event.action());
+
     moneyStore.setPlayerIncome(0);
     moneyStore.setPlayerMoney(10);
-    console.log("money reset");
   }
 
   const nextLevel = computed(() => levels[currentLevelIndex.value + 1]);
@@ -63,7 +62,10 @@ export const useLevels = defineStore("levels", () => {
       tileIndex -= turnTiles.length;
     }
 
-    return structuredClone(turnTiles[tileIndex]);
+    // TODO: Is structured clone necessary here?
+    return structuredClone(turnTiles[tileIndex]).map((tile) =>
+      generateTile(tile)
+    );
   }
 
   return {

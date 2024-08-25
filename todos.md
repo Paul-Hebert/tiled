@@ -9,11 +9,10 @@
 ### Priorities:
 
 - Gameplay:
-  - Predefined tiles for levels
-  - Turn on/off features (e.g. money)
   - Better terrain system
   - Basic audio
   - Fix bug where "next turn" does nothing after final level
+- Design quality levels!
 - Graphics:
   - Flowers
   - Seeds
@@ -23,6 +22,7 @@
   - Messaging system
     - Level announcements
     - Toasts
+  - "Can't place" handling
   - Better "too expensive" treatment
   - Phone UI/Responsive designs
 - Technical:

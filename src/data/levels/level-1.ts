@@ -1,25 +1,24 @@
-import { generateTile } from "../../helpers/generate-tile";
+import { useFeatureFlags } from "../../stores/feature-flags";
 import { Level } from "../../types/level";
-import { shapesByName } from "../shapes";
 
 export const level1: Level = {
   title: "Fertile Ground",
-  percentRequiredComplete: 0.8,
-  grid: [
-    [null, 0, null, 0, 0, null],
-    [0, 0, 0, 0, 0, 0],
-    [0, 0, 0, 0, 0, null],
-    [null, 0, 0, 0, 0, null],
-    [0, 0, 0, 0, 0, 0],
-    [null, 0, 0, 0, null, null],
-  ],
+  grid: new Array(4).fill(new Array(4).fill(0)),
   tiles: [
-    [
-      generateTile({ shape: shapesByName["2-Square"] }),
-      generateTile({ shape: shapesByName["Little L"] }),
-      generateTile({ shape: shapesByName["Mid Bar"] }),
-    ],
-    [generateTile({ shape: shapesByName["Little L"] })],
-    [generateTile({ shape: shapesByName["Little L"] })],
+    [{ shape: "Belly" }, { shape: "Stubby T" }, { shape: "Long Bar" }],
+    [{ shape: "2-Square" }, { shape: "Little L" }, { shape: "Mid Bar" }],
+    [{ shape: "Belly" }, { shape: "Short Bar" }, { shape: "Little L" }],
+    [{ shape: "2-Square" }, { shape: "Little L" }, { shape: "Patch" }],
+    [{ shape: "Patch" }, { shape: "Short Bar" }, { shape: "Little L" }],
+    [{ shape: "Short Bar" }, { shape: "Little L" }, { shape: "Patch" }],
+  ],
+  events: [
+    {
+      action: () => {
+        const featureFlagsStore = useFeatureFlags();
+
+        featureFlagsStore.resetFeatures();
+      },
+    },
   ],
 };

@@ -1,9 +1,13 @@
+import { GenerateTileArgs } from "../helpers/generate-tile";
 import { Grid } from "./grid";
-import { TileData } from "./tile-data";
 
 export interface Level {
   grid: Grid;
-  percentRequiredComplete: number;
   title: string;
-  tiles: TileData[][];
+  tiles: GenerateTileArgs[][];
+  events?: LevelEvent[];
+}
+
+interface LevelEvent {
+  action: () => void;
 }
