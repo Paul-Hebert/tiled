@@ -18,8 +18,6 @@ export const level2: Level = {
 
         featureFlagsStore.enableFeature("money");
 
-        featureFlagsStore.resetFeatures();
-
         messagingStore.setModalMessage({
           title: "Money, money, money!",
           message: MoneyMessage,
