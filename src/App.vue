@@ -15,7 +15,6 @@ import { useMoney } from "./stores/money.ts";
 /* @ts-expect-error */
 import { randomItemInArray, randomInt } from "randomness-helpers";
 import { useTurns } from "./stores/turns.ts";
-import { useFeatureFlags } from "./stores/feature-flags.ts";
 import MessengerModal from "./components/global/MessengerModal.vue/MessengerModal.vue";
 
 const moneyStore = useMoney();
@@ -29,9 +28,6 @@ const levelsStore = useLevels();
 const { loadTilesForTurn } = levelsStore;
 const { currentLevel, currentLevelIndex, gameComplete } =
   storeToRefs(levelsStore);
-
-const featureFlagsStore = useFeatureFlags();
-const { features } = storeToRefs(featureFlagsStore);
 
 const { turn } = storeToRefs(useTurns());
 
@@ -93,8 +89,6 @@ let controlStatus: ComputedRef<
 
     <GridProgress class="progress" />
 
-    <MoneyInfo class="money-info" v-if="features.money" />
-
     <div class="controls">
       <div
         class="success-wrapper"
@@ -136,7 +130,6 @@ let controlStatus: ComputedRef<
     "title"
     "board"
     "progress"
-    "money-info"
     "controls";
   flex-direction: column;
   place-content: center;
@@ -171,7 +164,6 @@ h1 {
     grid-template-areas:
       "board title"
       "board progress"
-      "board money-info"
       "board controls";
     grid-template-columns: 1fr 30em;
     padding: 2em;
@@ -214,10 +206,5 @@ h1 {
 .success-wrapper {
   display: grid;
   place-content: center;
-}
-
-.money-info {
-  grid-area: money-info;
-  align-self: end;
 }
 </style>

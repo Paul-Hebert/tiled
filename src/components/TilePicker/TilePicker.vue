@@ -10,6 +10,7 @@ import { useFeatureFlags } from "../../stores/feature-flags.ts";
 import { storeToRefs } from "pinia";
 import { generateTile, GenerateTileArgs } from "../../helpers/generate-tile.ts";
 import { useTurns } from "../../stores/turns.ts";
+import MoneyInfo from "../MoneyInfo/MoneyInfo.vue";
 
 const props = defineProps<{ tiles: TileData[] }>();
 const emit = defineEmits(["refresh"]);
@@ -45,7 +46,11 @@ const resetPrice = 3;
 
 <template>
   <div class="wrapper">
-    <h2>Pick a Tile</h2>
+    <header>
+      <h2>Pick a Tile</h2>
+
+      <MoneyInfo class="money-info" v-if="features.money" />
+    </header>
     <div class="tile-picker">
       <div class="tiles">
         <TilePickerButton
@@ -128,5 +133,10 @@ const resetPrice = 3;
 .refresh-inner {
   display: flex;
   gap: 0.5em;
+}
+
+header {
+  display: flex;
+  justify-content: space-between;
 }
 </style>

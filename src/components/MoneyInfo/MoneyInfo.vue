@@ -16,5 +16,6 @@ const { playerMoney, income } = storeToRefs(useMoney());
 .money-info {
   display: flex;
   justify-content: space-between;
+  gap: 1em;
 }
 </style>
