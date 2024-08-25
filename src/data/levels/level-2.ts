@@ -11,4 +11,5 @@ export const level2: Level = {
     [0, 0, 0, null, null, null],
     [null, 0, 0, null, null, null],
   ],
+  tiles: [[]],
 };

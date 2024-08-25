@@ -109,6 +109,9 @@ const resetPrice = 3;
 .big-tile-button {
   flex: 1;
   height: 100%;
+  height: clamp(4.5em, 20vh, 8em);
+  flex-grow: 0;
+  flex-shrink: 1;
 }
 
 .refresh-inner {

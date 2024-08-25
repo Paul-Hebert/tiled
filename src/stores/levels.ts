@@ -5,15 +5,22 @@ import { useBoardState } from "./board-state";
 import { useMoney } from "./money";
 import { useTurns } from "./turns";
 import { level1 } from "../data/levels/level-1";
-import { level2 } from "../data/levels/level-2";
+// import { level2 } from "../data/levels/level-2";
 
 export const useLevels = defineStore("levels", () => {
   const boardStateStore = useBoardState();
   const { isComplete: levelIsComplete } = storeToRefs(boardStateStore);
-  const { resetTurns } = useTurns();
+
+  const turnsStore = useTurns();
+  const { resetTurns } = turnsStore;
+  const { turn } = storeToRefs(turnsStore);
+
   const moneyStore = useMoney();
 
-  const levels: Level[] = [level1, level2];
+  const levels: Level[] = [
+    level1,
+    // level2
+  ];
 
   const currentLevelIndex = ref(0);
   const currentLevel = computed(() => levels[currentLevelIndex.value]);
@@ -48,6 +55,17 @@ export const useLevels = defineStore("levels", () => {
     loadLevel(currentLevelIndex.value);
   }
 
+  function loadTilesForTurn() {
+    const turnTiles = currentLevel.value.tiles;
+    let tileIndex = turn.value;
+
+    while (tileIndex >= turnTiles.length) {
+      tileIndex -= turnTiles.length;
+    }
+
+    return structuredClone(turnTiles[tileIndex]);
+  }
+
   return {
     levels,
     currentLevel,
@@ -56,5 +74,6 @@ export const useLevels = defineStore("levels", () => {
     loadNextLevel,
     gameComplete,
     restartLevel,
+    loadTilesForTurn,
   };
 });

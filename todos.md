@@ -13,6 +13,7 @@
   - Turn on/off features (e.g. money)
   - Better terrain system
   - Basic audio
+  - Fix bug where "next turn" does nothing after final level
 - Graphics:
   - Flowers
   - Seeds

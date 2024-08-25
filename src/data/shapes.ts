@@ -226,3 +226,9 @@ export const patch: Shape = {
     { x: 0, y: 1 },
   ],
 };
+
+export let shapesByName: Record<string, Shape> = {};
+
+shapes.forEach((shape) => {
+  shapesByName[shape.name] = shape;
+});

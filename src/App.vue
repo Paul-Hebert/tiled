@@ -14,7 +14,6 @@ import { TileData } from "./types/tile-data.ts";
 import { useMoney } from "./stores/money.ts";
 /* @ts-expect-error */
 import { randomItemInArray, randomInt } from "randomness-helpers";
-import { generateTileOptions } from "./helpers/generate-tile-options.ts";
 import { useTurns } from "./stores/turns.ts";
 
 const moneyStore = useMoney();
@@ -24,9 +23,10 @@ useKeyboardCommands();
 const instructionsDialog = ref();
 
 const boardStateStore = useBoardState();
-const { currentTile, gridSize, isComplete } = storeToRefs(boardStateStore);
+const { currentTile, isComplete } = storeToRefs(boardStateStore);
 
 const levelsStore = useLevels();
+const { loadTilesForTurn } = levelsStore;
 const { currentLevel, currentLevelIndex, gameComplete } =
   storeToRefs(levelsStore);
 
@@ -35,7 +35,8 @@ const { turn } = storeToRefs(useTurns());
 const tileOptions: Ref<TileData[]> = ref([]);
 
 function setTileOptions() {
-  tileOptions.value = generateTileOptions();
+  console.log(loadTilesForTurn());
+  tileOptions.value = loadTilesForTurn();
 }
 
 setTileOptions();
