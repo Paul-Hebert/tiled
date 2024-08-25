@@ -1,35 +1,32 @@
 <script setup lang="ts">
-defineProps<{ size: number; scale: number }>();
+import { random } from "randomness-helpers";
+import { Grid } from "../../types/grid.ts";
+defineProps<{ grid: Grid; scale: number }>();
 </script>
 
 <template>
   <g class="board">
-    <rect :width="size * scale" :height="size * scale" />
-    <template v-for="i in size + 1">
-      <line
-        :x1="0"
-        :x2="scale * size"
-        :y1="(i - 1) * scale"
-        :y2="(i - 1) * scale"
-      />
-      <line
-        :y1="0"
-        :y2="scale * size"
-        :x1="(i - 1) * scale"
-        :x2="(i - 1) * scale"
-      />
+    <template v-for="(row, y) in grid">
+      <template v-for="(cell, x) in row">
+        <rect
+          :x="x * scale"
+          :y="y * scale"
+          :width="scale"
+          :height="scale"
+          v-if="cell !== null"
+          :style="{ rotate: `${random(-1, 1)}deg` }"
+        />
+      </template>
     </template>
   </g>
 </template>
 
 <style scoped>
-line {
-  stroke: #fff;
-  stroke-width: 0.5;
-  stroke-linecap: round;
-}
-
 rect {
   fill: #eee;
+  scale: 0.9;
+  transform-origin: center;
+  transform-box: fill-box;
+  rx: 0.4px;
 }
 </style>

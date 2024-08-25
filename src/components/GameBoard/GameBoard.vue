@@ -4,8 +4,11 @@ import Tile, { type TileComponentProps } from "../Tile/Tile.vue";
 import { type ComputedRef, computed } from "vue";
 import { useBoardState } from "../../stores/board-state.ts";
 import { storeToRefs } from "pinia";
+import { Grid } from "../../types/grid.ts";
 
-const props = defineProps<{ scale: number; gridSize: number }>();
+const props = defineProps<{ scale: number; grid: Grid }>();
+
+const gridSize = computed(() => props.grid.length);
 
 const boardStateStore = useBoardState();
 
@@ -19,7 +22,7 @@ const allTiles: ComputedRef<TileComponentProps[]> = computed(() => {
     invalidPlacement: false,
     scale: props.scale,
     id: tile.id,
-    gridSize: props.gridSize,
+    gridSize: gridSize.value,
   }));
 
   if (currentTile.value) {
@@ -30,7 +33,7 @@ const allTiles: ComputedRef<TileComponentProps[]> = computed(() => {
       scale: props.scale,
       id: currentTile.value.id,
       selected: true,
-      gridSize: props.gridSize,
+      gridSize: gridSize.value,
     });
   }
 
@@ -40,7 +43,7 @@ const allTiles: ComputedRef<TileComponentProps[]> = computed(() => {
 
 <template>
   <svg :viewBox="`0 0 ${scale * gridSize} ${scale * gridSize}`">
-    <BackgroundGrid :size="gridSize" :scale="scale" />
+    <BackgroundGrid :grid="grid" :scale="scale" />
     <Tile v-for="tile in allTiles" v-bind="tile" :key="tile.id" />
   </svg>
 </template>

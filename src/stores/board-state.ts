@@ -16,21 +16,20 @@ export const useBoardState = defineStore("board-state", () => {
 
   function loadLevel(level: Level) {
     percentRequiredComplete.value = level.percentRequiredComplete;
-    gridSize.value = level.gridSize;
 
-    levelGrid.value = Array.from({ length: level.gridSize }, () =>
-      Array.from({ length: level.gridSize }, () => 0)
-    );
+    levelGrid.value = [...level.grid];
 
     currentTile.value = undefined;
     placedTiles.value = [];
   }
 
   // Configuration
-  const gridSize = ref(5);
   const percentRequiredComplete = ref(0.75);
 
-  const totalSquares = computed(() => gridSize.value * gridSize.value);
+  const gridSize = computed(() => levelGrid.value.length);
+  const totalSquares = computed(
+    () => levelGrid.value.flat().filter((cell) => cell !== null).length
+  );
   const filledSquares = computed(
     () => levelGrid.value.flat().filter((x) => x === 1).length
   );
@@ -60,12 +59,7 @@ export const useBoardState = defineStore("board-state", () => {
     }
 
     return currentTileGridSquares.value.every(
-      (point) =>
-        point.x >= 0 &&
-        point.x < gridSize.value &&
-        point.y >= 0 &&
-        point.y < gridSize.value &&
-        levelGrid.value[point.y][point.x] === 0
+      (point) => levelGrid.value[point.y]?.[point.x] === 0
     );
   });
 

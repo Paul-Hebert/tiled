@@ -1,5 +1,7 @@
+import { Grid } from "./grid";
+
 export interface Level {
-  gridSize: number;
+  grid: Grid;
   percentRequiredComplete: number;
   title: string;
 }

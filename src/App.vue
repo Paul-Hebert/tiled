@@ -107,7 +107,7 @@ let controlStatus: ComputedRef<"won" | "picking-tile" | "placing-tile"> =
   <div class="game-screen">
     <h1>Level {{ currentLevelIndex + 1 }}: {{ currentLevel?.title || "" }}</h1>
 
-    <GameBoard :scale="10" :gridSize="gridSize" class="board" />
+    <GameBoard :scale="10" :grid="currentLevel.grid" class="board" />
 
     <GridProgress class="progress" />
 
