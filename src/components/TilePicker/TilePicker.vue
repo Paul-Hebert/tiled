@@ -31,7 +31,7 @@ const biggestTileSize = computed(() =>
   Math.max(...props.tiles.map((tile) => tile.shape.grid.length))
 );
 
-const patchArgs: GenerateTileArgs = { shape: "Patch", price: 3 };
+const patchArgs: GenerateTileArgs = { shape: "Patch", price: 5 };
 const patch = ref(generateTile(patchArgs));
 
 watch(
@@ -41,7 +41,7 @@ watch(
   }
 );
 
-const resetPrice = 3;
+const resetPrice = 5;
 </script>
 
 <template>
@@ -125,7 +125,7 @@ const resetPrice = 3;
 .big-tile-button {
   flex: 1;
   height: 100%;
-  height: clamp(4.5em, 20vh, 8em);
+  height: clamp(4.5em, 20vh, 7em);
   flex-grow: 0;
   flex-shrink: 1;
 }
