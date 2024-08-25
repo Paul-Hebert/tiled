@@ -1,4 +1,4 @@
-import { Level } from "../../types/level";
+import { Level } from "../../../types/level";
 
 export const level2: Level = {
   title: "Planting the Seed",

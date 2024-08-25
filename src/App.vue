@@ -16,12 +16,11 @@ import { useMoney } from "./stores/money.ts";
 import { randomItemInArray, randomInt } from "randomness-helpers";
 import { useTurns } from "./stores/turns.ts";
 import { useFeatureFlags } from "./stores/feature-flags.ts";
+import MessengerModal from "./components/global/MessengerModal.vue/MessengerModal.vue";
 
 const moneyStore = useMoney();
 
 useKeyboardCommands();
-
-const instructionsDialog = ref();
 
 const boardStateStore = useBoardState();
 const { currentTile, isComplete } = storeToRefs(boardStateStore);
@@ -55,11 +54,9 @@ watch(
 // Load our starting level
 onMounted(() => {
   levelsStore.loadLevel(0);
-
-  instructionsDialog.value.showModal();
 });
-// And load subsequent levels when the current level clears
-// TODO... give the user the option when to proceed.
+
+// Game end success message
 watch(
   () => gameComplete.value,
   (gameComplete) => {
@@ -89,30 +86,6 @@ let controlStatus: ComputedRef<
 </script>
 
 <template>
-  <dialog ref="instructionsDialog">
-    <h1>Fill the board with shapes</h1>
-    <p>
-      Select shapes and place them on the board. You can move shapes using the
-      buttons on the screen, or using your keyboard.
-    </p>
-
-    <ul>
-      <li>Use the arrow keys to move the selected shape.</li>
-      <li>Use the space bar to rotate the selected shape.</li>
-      <li>Use the enter key to place the selected shape.</li>
-    </ul>
-
-    <p>Shapes cannot overlap other shapes of extend off the board.</p>
-
-    <p>
-      Each level will require you to fill a certain percentage of the board.
-    </p>
-
-    <p>If you get stuck, you can restart the level to try again.</p>
-
-    <Button @click="instructionsDialog.close()">Got it!</Button>
-  </dialog>
-
   <div class="game-screen">
     <h1>Level {{ currentLevelIndex + 1 }}: {{ currentLevel?.title || "" }}</h1>
 
@@ -148,6 +121,8 @@ let controlStatus: ComputedRef<
         @refresh="setTileOptions"
       />
     </div>
+
+    <MessengerModal />
   </div>
 </template>
 
@@ -234,22 +209,6 @@ h1 {
   visibility: hidden;
   opacity: 0;
   pointer-events: none;
-}
-
-dialog[open] {
-  display: flex;
-  flex-direction: column;
-  gap: 1em;
-  padding: 2em;
-  border-radius: 0.5em;
-  border: none;
-  margin: auto;
-  max-width: 60ch;
-}
-
-::backdrop {
-  background: rgba(0, 0, 0, 0.5);
-  backdrop-filter: blur(2px);
 }
 
 .success-wrapper {

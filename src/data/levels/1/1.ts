@@ -1,5 +1,7 @@
-import { useFeatureFlags } from "../../stores/feature-flags";
-import { Level } from "../../types/level";
+import { useMessaging } from "../../../stores/messaging";
+import { useFeatureFlags } from "../../../stores/feature-flags";
+import { Level } from "../../../types/level";
+import IntroMessage from "./IntroMessage.vue";
 
 export const level1: Level = {
   title: "Fertile Ground",
@@ -16,8 +18,14 @@ export const level1: Level = {
     {
       action: () => {
         const featureFlagsStore = useFeatureFlags();
+        const messagingStore = useMessaging();
 
         featureFlagsStore.resetFeatures();
+
+        messagingStore.setModalMessage({
+          title: "Fill the board with tiles",
+          message: IntroMessage,
+        });
       },
     },
   ],

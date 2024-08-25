@@ -1,5 +1,7 @@
-import { useFeatureFlags } from "../../stores/feature-flags";
-import { Level } from "../../types/level";
+import { useFeatureFlags } from "../../../stores/feature-flags";
+import { useMessaging } from "../../../stores/messaging";
+import { Level } from "../../../types/level";
+import MoneyMessage from "./MoneyMessage.vue";
 
 export const level2: Level = {
   title: "Planting the Seed",
@@ -12,8 +14,16 @@ export const level2: Level = {
     {
       action: () => {
         const featureFlagsStore = useFeatureFlags();
+        const messagingStore = useMessaging();
 
         featureFlagsStore.enableFeature("money");
+
+        featureFlagsStore.resetFeatures();
+
+        messagingStore.setModalMessage({
+          title: "Money, money, money!",
+          message: MoneyMessage,
+        });
       },
     },
   ],

@@ -4,9 +4,9 @@ import { computed, ref } from "vue";
 import { useBoardState } from "./board-state";
 import { useMoney } from "./money";
 import { useTurns } from "./turns";
-import { level1 } from "../data/levels/level-1";
+import { level1 } from "../data/levels/1/1";
 import { generateTile } from "../helpers/generate-tile";
-import { level2 } from "../data/levels/level-2";
+import { level2 } from "../data/levels/2/2";
 
 export const useLevels = defineStore("levels", () => {
   const boardStateStore = useBoardState();
