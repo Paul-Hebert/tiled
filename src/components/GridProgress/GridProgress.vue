@@ -8,29 +8,22 @@ const { filledSquares, totalSquares, isComplete } = storeToRefs(
 );
 
 const levelsStore = useLevels();
-
-const { gameComplete } = storeToRefs(levelsStore);
 </script>
 
 <template>
   <div>
-    <template v-if="gameComplete">
-      <h2>You won the game!</h2>
-    </template>
-    <template v-else>
-      <header v-if="isComplete">
-        <h2>Level complete!</h2>
-      </header>
-      <header v-else>
-        <span>
-          <h2>{{ filledSquares }}/{{ totalSquares }} spaces filled</h2>
-        </span>
+    <header v-if="isComplete">
+      <h2>Level complete!</h2>
+    </header>
+    <header v-else>
+      <span>
+        <h2>{{ filledSquares }}/{{ totalSquares }} spaces filled</h2>
+      </span>
 
-        <Button @click="levelsStore.restartLevel">Restart Level</Button>
-      </header>
+      <Button @click="levelsStore.restartLevel">Restart Level</Button>
+    </header>
 
-      <progress :value="filledSquares" :max="totalSquares"></progress>
-    </template>
+    <progress :value="filledSquares" :max="totalSquares" />
   </div>
 </template>
 

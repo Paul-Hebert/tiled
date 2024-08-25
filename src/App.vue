@@ -61,7 +61,7 @@ onMounted(() => {
 // And load subsequent levels when the current level clears
 // TODO... give the user the option when to proceed.
 watch(
-  () => gameComplete,
+  () => gameComplete.value,
   (gameComplete) => {
     if (gameComplete) {
       // Wait a moment after user placement before announcing victory
@@ -72,16 +72,20 @@ watch(
   }
 );
 
-let controlStatus: ComputedRef<"won" | "picking-tile" | "placing-tile"> =
-  computed(() => {
-    if (isComplete.value) {
-      return "won";
-    }
-    if (currentTile.value) {
-      return "placing-tile";
-    }
-    return "picking-tile";
-  });
+let controlStatus: ComputedRef<
+  "game-over" | "won" | "picking-tile" | "placing-tile"
+> = computed(() => {
+  if (gameComplete.value) {
+    return "game-over";
+  }
+  if (isComplete.value) {
+    return "won";
+  }
+  if (currentTile.value) {
+    return "placing-tile";
+  }
+  return "picking-tile";
+});
 </script>
 
 <template>

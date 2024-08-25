@@ -36,7 +36,6 @@ export const useLevels = defineStore("levels", () => {
   }
 
   const nextLevel = computed(() => levels[currentLevelIndex.value + 1]);
-  // TODO: this isn't working...
   const gameComplete = computed(
     () => levelIsComplete.value && !nextLevel.value
   );
