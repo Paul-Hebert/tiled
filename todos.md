@@ -1,3 +1,26 @@
+## "Three Level Demo Plan"
+
+### Levels:
+
+- First level: placing tiles, no money, no terrain
+- Second level: money
+- Third level: money and terrain: missing pieces, surround junk to grow flowers
+
+### Priorities:
+
+- Gameplay:
+  - Predefined tiles for levels
+  - Turn on/off features (e.g. money)
+  - Better terrain system
+  - Basic audio
+- Graphics:
+  - Flowers
+  - Seeds
+  - "Junk"
+  - Explore new graphics styles
+- Technical:
+  - Level selector (via env?)
+
 ## Core Placement UI
 
 - Flipping tiles

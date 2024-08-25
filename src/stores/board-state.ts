@@ -17,7 +17,7 @@ export const useBoardState = defineStore("board-state", () => {
   function loadLevel(level: Level) {
     percentRequiredComplete.value = level.percentRequiredComplete;
 
-    levelGrid.value = [...level.grid];
+    levelGrid.value = [...level.grid.map((row) => [...row])];
 
     currentTile.value = undefined;
     placedTiles.value = [];
