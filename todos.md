@@ -18,6 +18,12 @@
   - Seeds
   - "Junk"
   - Explore new graphics styles
+- UI
+  - Messaging system
+    - Level announcements
+    - Toasts
+  - Better "too expensive" treatment
+  - Phone UI/Responsive designs
 - Technical:
   - Level selector (via env?)
 
