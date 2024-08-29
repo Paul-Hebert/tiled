@@ -1,13 +1,13 @@
 <script setup lang="ts">
+import TileBackground from "../../images/tile-background.png";
 import { computed } from "vue";
 import type { TileData } from "../../types/tile-data";
-import StripedPattern from "../Patterns/StripedPattern.vue";
 
 export interface TileComponentProps extends TileData {
   scale: number;
   canBePlaced?: boolean;
   invalidPlacement?: boolean;
-  id: number;
+  id: string | number;
   selected?: boolean;
 }
 
@@ -35,39 +35,44 @@ const path = computed(() => {
 
 const length = computed(() => props.shape.grid.length);
 
-const patternId = computed(() => `pattern-${props.id}`);
+const pathId = computed(() => `path-${props.id}`);
+const clipId = computed(() => `clip-${props.id}`);
 </script>
 
 <template>
   <svg
     :viewBox="`0 0 ${length * scale} ${length * scale}`"
+    class="transform-group tile-wrapper"
+    :class="{ canBePlaced, placed }"
     :style="{
       '--x': offset.x,
       '--y': offset.y,
       '--scale': scale,
-      '--hue': hue,
       '--rotation': `${rotation || 0}deg`,
       '--length': length,
     }"
-    class="transform-group tile-wrapper"
-    :class="{ canBePlaced, placed }"
   >
     <defs>
-      <StripedPattern :scale="scale" :id="patternId" />
+      <path :id="pathId" :d="path" />
+      <clipPath :id="clipId">
+        <use :href="`#${pathId}`" />
+      </clipPath>
     </defs>
     <g class="rotate-group transform-group">
-      <path :d="path" class="shadow" />
+      <use :href="`#${pathId}`" class="shadow" />
 
       <g
         class="offset-group transform-group"
         :class="{ 'half-down': invalidPlacement }"
       >
         <g class="transform-group" :class="{ invalidPlacement }">
-          <path
-            :d="path"
+          <image
+            :href="TileBackground"
             class="tile"
             :class="{ selected }"
-            :fill="`url(#${patternId})`"
+            :clip-path="`url(#${clipId})`"
+            :width="length * scale"
+            :height="length * scale"
           />
         </g>
       </g>
@@ -168,7 +173,7 @@ svg {
 }
 
 .shadow {
-  fill: hsl(var(--hue), 10%, 30%, 0.3);
+  fill: hsl(100deg, 10%, 30%, 0.3);
   transition-property: rotate, fill;
 }
 

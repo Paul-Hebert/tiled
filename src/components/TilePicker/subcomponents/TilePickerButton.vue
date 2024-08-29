@@ -35,6 +35,7 @@ const grid = computed(
         :scale="10"
         placed
         :grid-size="gridSize"
+        :id="`picker-${tile.id}`"
       />
     </GridContainer>
   </ButtonWithPrice>
