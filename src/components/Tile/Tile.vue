@@ -9,7 +9,6 @@ export interface TileComponentProps extends TileData {
   invalidPlacement?: boolean;
   id: number;
   selected?: boolean;
-  gridSize: number;
 }
 
 const props = defineProps<TileComponentProps>();
@@ -34,23 +33,24 @@ const path = computed(() => {
   return path;
 });
 
-const squareSize = computed(() => props.shape.grid.length);
+const length = computed(() => props.shape.grid.length);
 
 const patternId = computed(() => `pattern-${props.id}`);
 </script>
 
 <template>
-  <g
-    class="transform-group tile-wrapper"
-    :class="{ canBePlaced, placed }"
+  <svg
+    :viewBox="`0 0 ${length * scale} ${length * scale}`"
     :style="{
       '--x': offset.x,
       '--y': offset.y,
       '--scale': scale,
       '--hue': hue,
       '--rotation': `${rotation || 0}deg`,
-      '--grid-size': gridSize,
+      '--length': length,
     }"
+    class="transform-group tile-wrapper"
+    :class="{ canBePlaced, placed }"
   >
     <defs>
       <StripedPattern :scale="scale" :id="patternId" />
@@ -74,16 +74,24 @@ const patternId = computed(() => `pattern-${props.id}`);
 
       <rect
         class="square-placeholder"
-        :width="(squareSize + 2) * scale"
-        :height="(squareSize + 2) * scale"
+        :width="(length + 2) * scale"
+        :height="(length + 2) * scale"
         :x="-1 * scale"
         :y="-1 * scale"
       />
     </g>
-  </g>
+  </svg>
 </template>
 
 <style scoped>
+svg {
+  width: calc(var(--square-size) * var(--length));
+  position: absolute;
+  top: 0;
+  left: 0;
+  overflow: visible;
+}
+
 .transform-group {
   transition-duration: 0.1s;
   transition-timing-function: var(--move-ease);
@@ -100,11 +108,9 @@ const patternId = computed(() => `pattern-${props.id}`);
   --fill-color: hsl(var(--hue), 50%, 80%);
   --stroke-color: hsl(var(--hue), 50%, 60%);
 
-  --scale-modifier: calc(100% / var(--grid-size));
-
   transition-property: translate;
-  translate: calc(var(--x) * var(--scale-modifier))
-    calc(var(--y) * var(--scale-modifier));
+  translate: calc(var(--x) * var(--square-size))
+    calc(var(--y) * var(--square-size));
   transform-box: initial;
 }
 

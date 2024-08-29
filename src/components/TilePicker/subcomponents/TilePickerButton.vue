@@ -5,6 +5,7 @@ import { TileData } from "../../../types/tile-data.ts";
 import ButtonWithPrice from "./ButtonWithPrice.vue";
 import { computed } from "vue";
 import { Grid } from "../../../types/grid.ts";
+import GridContainer from "../../GridContainer/GridContainer.vue";
 
 const props = defineProps<{
   tile: TileData;
@@ -26,13 +27,8 @@ const grid = computed(
     class="tile-button"
     :disabled="!canAfford"
   >
-    <svg
-      :viewBox="`0 0 ${gridSize * scale} ${gridSize * scale}`"
-      class="tile"
-      width="1000"
-      height="1000"
-    >
-      <BackgroundGrid :scale="scale" :grid="grid" />
+    <GridContainer :grid-size="gridSize">
+      <BackgroundGrid :scale="scale" :grid="grid" :grid-size="gridSize" />
       <Tile
         v-bind="tile"
         :offset="{ x: 0, y: 0 }"
@@ -40,7 +36,7 @@ const grid = computed(
         placed
         :grid-size="gridSize"
       />
-    </svg>
+    </GridContainer>
   </ButtonWithPrice>
 </template>
 
@@ -51,8 +47,7 @@ const grid = computed(
   display: flex;
 }
 
-svg {
-  max-width: 100%;
-  max-height: 100%;
+:deep(.button-inner) {
+  place-content: stretch;
 }
 </style>

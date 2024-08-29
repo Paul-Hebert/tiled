@@ -5,6 +5,7 @@ import { type ComputedRef, computed } from "vue";
 import { useBoardState } from "../../stores/board-state.ts";
 import { storeToRefs } from "pinia";
 import { Grid } from "../../types/grid.ts";
+import GridContainer from "../GridContainer/GridContainer.vue";
 
 const props = defineProps<{ scale: number; grid: Grid }>();
 
@@ -22,7 +23,6 @@ const allTiles: ComputedRef<TileComponentProps[]> = computed(() => {
     invalidPlacement: false,
     scale: props.scale,
     id: tile.id,
-    gridSize: gridSize.value,
   }));
 
   if (currentTile.value) {
@@ -33,7 +33,6 @@ const allTiles: ComputedRef<TileComponentProps[]> = computed(() => {
       scale: props.scale,
       id: currentTile.value.id,
       selected: true,
-      gridSize: gridSize.value,
     });
   }
 
@@ -42,8 +41,10 @@ const allTiles: ComputedRef<TileComponentProps[]> = computed(() => {
 </script>
 
 <template>
-  <svg :viewBox="`0 0 ${scale * gridSize} ${scale * gridSize}`">
-    <BackgroundGrid :grid="grid" :scale="scale" />
-    <Tile v-for="tile in allTiles" v-bind="tile" :key="tile.id" />
-  </svg>
+  <div class="game-board">
+    <GridContainer :grid-size="gridSize">
+      <BackgroundGrid :grid="grid" :scale="scale" :grid-size="gridSize" />
+      <Tile v-for="tile in allTiles" v-bind="tile" :key="tile.id" />
+    </GridContainer>
+  </div>
 </template>

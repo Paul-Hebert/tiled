@@ -1,11 +1,11 @@
 <script setup lang="ts">
 import { random } from "randomness-helpers";
 import { Grid } from "../../types/grid.ts";
-defineProps<{ grid: Grid; scale: number }>();
+defineProps<{ grid: Grid; scale: number; gridSize: number }>();
 </script>
 
 <template>
-  <g class="board">
+  <svg :viewBox="`0 0 ${scale * gridSize} ${scale * gridSize}`">
     <template v-for="(row, y) in grid">
       <template v-for="(cell, x) in row">
         <rect
@@ -18,10 +18,15 @@ defineProps<{ grid: Grid; scale: number }>();
         />
       </template>
     </template>
-  </g>
+  </svg>
 </template>
 
 <style scoped>
+svg {
+  width: 100%;
+  height: 100%;
+}
+
 rect {
   fill: #eee;
   scale: 0.9;
