@@ -66,14 +66,15 @@ const clipId = computed(() => `clip-${props.id}`);
         :class="{ 'half-down': invalidPlacement }"
       >
         <g class="transform-group" :class="{ invalidPlacement }">
-          <image
-            :href="TileBackground"
-            class="tile"
-            :class="{ selected }"
-            :clip-path="`url(#${clipId})`"
-            :width="length * scale"
-            :height="length * scale"
-          />
+          <g class="tile" :class="{ selected }">
+            <image
+              :href="TileBackground"
+              :clip-path="`url(#${clipId})`"
+              :width="length * scale"
+              :height="length * scale"
+            />
+            <use :href="`#${pathId}`" class="outline" />
+          </g>
         </g>
       </g>
 
@@ -106,12 +107,9 @@ svg {
 }
 
 .tile-wrapper {
-  --offset-distance: 0.125em;
+  --offset-distance: 5%;
   --offset-angle: calc(-135deg - var(--rotation));
   --move-ease: ease-out;
-
-  --fill-color: hsl(var(--hue), 50%, 80%);
-  --stroke-color: hsl(var(--hue), 50%, 60%);
 
   transition-property: translate;
   translate: calc(var(--x) * var(--square-size))
@@ -138,13 +136,17 @@ svg {
 }
 
 .tile {
-  stroke: var(--stroke-color);
-  stroke-width: 0.25px;
   transition-timing-function: ease-out;
   transition-timing-function: 0.2s;
   transition-property: opacity, scale;
   transform-origin: center;
   transform-box: fill-box;
+}
+
+.outline {
+  stroke: hsla(100deg, 40%, 50%);
+  fill: none;
+  stroke-width: 0.25px;
 }
 
 .tile.selected {
@@ -182,7 +184,7 @@ svg {
 }
 
 .offset-group.half-down {
-  --offset-distance: 0.075em;
+  --offset-distance: 2.5%;
 }
 
 .invalidPlacement {
