@@ -157,6 +157,8 @@ h1 {
   grid-area: board;
   width: 100%;
   height: 100%;
+  display: grid;
+  align-content: center;
 }
 
 @media (orientation: landscape) and (width > 900px) {
@@ -169,6 +171,7 @@ h1 {
     padding: 2em;
     column-gap: 1em;
     grid-template-rows: auto auto 1fr;
+    justify-content: space-between;
   }
 
   h1 {

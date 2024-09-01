@@ -14,6 +14,8 @@ defineProps<{ gridSize: number }>();
 .grid-container {
   container-type: inline-size;
   display: grid;
+  max-height: 80svh;
+  aspect-ratio: 1;
 }
 .grid-container-inner {
   --square-size: calc(100cqi / var(--count));
