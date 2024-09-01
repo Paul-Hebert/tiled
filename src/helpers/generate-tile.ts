@@ -19,5 +19,9 @@ export function generateTile({ shape, price, income }: GenerateTileArgs) {
     price: price || 0,
     income: income || 0,
     offset: { x: 0, y: 0 },
+    bgSprite: {
+      x: randomInt(1, 6),
+      y: randomInt(1, 6),
+    },
   };
 }

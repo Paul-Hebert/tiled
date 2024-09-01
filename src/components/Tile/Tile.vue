@@ -1,7 +1,7 @@
 <script setup lang="ts">
-import TileBackground from "../../images/tile-background.png";
 import { computed } from "vue";
 import type { TileData } from "../../types/tile-data";
+import { Point } from "../../types/point.ts";
 
 export interface TileComponentProps extends TileData {
   scale: number;
@@ -9,6 +9,7 @@ export interface TileComponentProps extends TileData {
   invalidPlacement?: boolean;
   id: string | number;
   selected?: boolean;
+  bgSprite: Point;
 }
 
 const props = defineProps<TileComponentProps>();
@@ -68,7 +69,7 @@ const clipId = computed(() => `clip-${props.id}`);
         <g class="transform-group" :class="{ invalidPlacement }">
           <g class="tile" :class="{ selected }">
             <image
-              :href="TileBackground"
+              :href="`/split-bg/row-${bgSprite.y}-column-${bgSprite.x}.jpg`"
               :clip-path="`url(#${clipId})`"
               :width="length * scale"
               :height="length * scale"
