@@ -12,7 +12,7 @@ export const useBoardState = defineStore("board-state", () => {
   const currentTile: Ref<TileData | undefined> = ref();
   const placedTiles: Ref<TileData[]> = ref([]);
 
-  const { spend, increaseIncome } = useMoney();
+  const { spend } = useMoney();
 
   function loadLevel(level: Level) {
     levelGrid.value = [...level.grid.map((row) => [...row])];
@@ -79,7 +79,6 @@ export const useBoardState = defineStore("board-state", () => {
     });
 
     spend(currentTile.value.price);
-    increaseIncome(currentTile.value.income);
 
     currentTile.value.placed = true;
     placedTiles.value.push({ ...currentTile.value });

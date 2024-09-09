@@ -78,7 +78,6 @@ const resetPrice = 5;
         <ButtonWithPrice
           :price="resetPrice"
           :disabled="!canAfford(resetPrice)"
-          :income="0"
           class="additional-option"
           @click="
             () => {

@@ -10,5 +10,4 @@ export interface TileData {
   rotation?: number;
   flipped?: boolean;
   price: number;
-  income: number;
 }

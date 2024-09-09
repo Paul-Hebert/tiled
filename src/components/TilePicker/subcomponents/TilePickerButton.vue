@@ -23,7 +23,6 @@ const grid = computed(
 <template>
   <ButtonWithPrice
     :price="tile.price"
-    :income="tile.income"
     class="tile-button"
     :disabled="!canAfford"
   >

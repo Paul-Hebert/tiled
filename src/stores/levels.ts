@@ -31,8 +31,7 @@ export const useLevels = defineStore("levels", () => {
     // Run starting events
     currentLevel.value.events?.forEach((event) => event.action());
 
-    moneyStore.setPlayerIncome(0);
-    moneyStore.setPlayerMoney(10);
+    moneyStore.setResourceCount(10);
   }
 
   const nextLevel = computed(() => levels[currentLevelIndex.value + 1]);

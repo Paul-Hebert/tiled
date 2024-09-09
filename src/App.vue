@@ -11,13 +11,10 @@ import { computed, ComputedRef, onMounted, type Ref, ref, watch } from "vue";
 import { useLevels } from "./stores/levels.ts";
 import Button from "./components/Button/Button.vue";
 import { TileData } from "./types/tile-data.ts";
-import { useMoney } from "./stores/money.ts";
 /* @ts-expect-error */
 import { randomItemInArray, randomInt } from "randomness-helpers";
 import { useTurns } from "./stores/turns.ts";
 import MessengerModal from "./components/global/MessengerModal.vue/MessengerModal.vue";
-
-const moneyStore = useMoney();
 
 useKeyboardCommands();
 
@@ -43,7 +40,6 @@ watch(
   () => turn.value,
   () => {
     setTileOptions();
-    moneyStore.earnIncome();
   }
 );
 
