@@ -12,8 +12,6 @@
 - Features to remove/replace
   - Current money implementation
     - Bonus actions
-    - Convert to "energy"?
-    - Remove income
   - Current levels implementation
     - "Retry level"
     - Hard-coded tiles + grid

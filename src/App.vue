@@ -43,7 +43,6 @@ watch(
   () => turn.value,
   () => {
     setTileOptions();
-    energyStore.earnIncome();
   }
 );
 

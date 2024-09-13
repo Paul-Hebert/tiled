@@ -12,7 +12,6 @@ export function randomTile(): TileData {
     id: getIncrementedId(),
     hue: randomItemInArray(hues),
     price: randomInt(1, 4),
-    income: randomItemInArray([0, 0, 0, 1, 2]),
     offset: { x: 0, y: 0 },
   };
 }

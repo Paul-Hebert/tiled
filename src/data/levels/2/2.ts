@@ -8,28 +8,28 @@ export const level2: Level = {
   grid: new Array(6).fill(new Array(6).fill(0)),
   tiles: [
     [
-      { shape: "Cross", income: 1, price: 4 },
-      { shape: "Short Bar", income: 1, price: 1 },
-      { shape: "Belly", income: 1, price: 3 },
+      { shape: "Cross", price: 4 },
+      { shape: "Short Bar", price: 1 },
+      { shape: "Belly", price: 3 },
     ],
     [
-      { shape: "Long Squiggle", income: 1, price: 4 },
+      { shape: "Long Squiggle", price: 4 },
       { shape: "Little L", price: 5 },
       { shape: "Belly", price: 3 },
     ],
     [
       { shape: "Plus", price: 3 },
       { shape: "Short Bar", price: 5 },
-      { shape: "Belly", income: 1, price: 6 },
+      { shape: "Belly", price: 6 },
     ],
     [
-      { shape: "Long Bar", income: 1, price: 6 },
+      { shape: "Long Bar", price: 6 },
       { shape: "Mid Bar", price: 2 },
       { shape: "U" },
     ],
     [
-      { shape: "Stubby T", income: 1, price: 4 },
-      { shape: "Short Bar", income: 0, price: 2 },
+      { shape: "Stubby T", price: 4 },
+      { shape: "Short Bar", price: 2 },
       { shape: "Belly" },
     ],
   ],

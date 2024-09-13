@@ -22,7 +22,6 @@ export function generateTileOptions() {
     id: getIncrementedId(),
     hue: randomItemInArray(hues),
     price: 3,
-    income: 0,
     offset: { x: 0, y: 0 },
   });
 
