@@ -3,7 +3,7 @@ import { ref } from "vue";
 
 export const useFeatureFlags = defineStore("feature-flags", () => {
   const featuresDefaults = {
-    money: false,
+    energy: false,
   };
 
   const features = ref({ ...featuresDefaults });

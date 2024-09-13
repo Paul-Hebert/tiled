@@ -2,7 +2,7 @@
 import GameBoard from "./components/GameBoard/GameBoard.vue";
 import GridProgress from "./components/GridProgress/GridProgress.vue";
 import TilePicker from "./components/TilePicker/TilePicker.vue";
-import MoneyInfo from "./components/MoneyInfo/MoneyInfo.vue";
+import EnergyInfo from "./components/EnergyInfo/EnergyInfo.vue";
 import PrimaryControls from "./components/PrimaryControls/PrimaryControls.vue";
 import { useBoardState } from "./stores/board-state.ts";
 import { useKeyboardCommands } from "./composables/use-keyboard-commands.ts";
@@ -11,13 +11,13 @@ import { computed, ComputedRef, onMounted, type Ref, ref, watch } from "vue";
 import { useLevels } from "./stores/levels.ts";
 import Button from "./components/Button/Button.vue";
 import { TileData } from "./types/tile-data.ts";
-import { useMoney } from "./stores/money.ts";
+import { useEnergy } from "./stores/energy.ts";
 /* @ts-expect-error */
 import { randomItemInArray, randomInt } from "randomness-helpers";
 import { useTurns } from "./stores/turns.ts";
 import MessengerModal from "./components/global/MessengerModal.vue/MessengerModal.vue";
 
-const moneyStore = useMoney();
+const energyStore = useEnergy();
 
 useKeyboardCommands();
 
@@ -43,7 +43,7 @@ watch(
   () => turn.value,
   () => {
     setTileOptions();
-    moneyStore.earnIncome();
+    energyStore.earnIncome();
   }
 );
 

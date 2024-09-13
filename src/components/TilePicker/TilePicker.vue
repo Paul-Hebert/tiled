@@ -2,7 +2,7 @@
 import { computed, ref, watch } from "vue";
 import { useBoardState } from "../../stores/board-state.ts";
 import { TileData } from "../../types/tile-data.ts";
-import { useMoney } from "../../stores/money.ts";
+import { useEnergy } from "../../stores/energy.ts";
 import TilePickerButton from "./subcomponents/TilePickerButton.vue";
 import ButtonWithPrice from "./subcomponents/ButtonWithPrice.vue";
 import { RefreshCwIcon } from "lucide-vue-next";
@@ -10,7 +10,7 @@ import { useFeatureFlags } from "../../stores/feature-flags.ts";
 import { storeToRefs } from "pinia";
 import { generateTile, GenerateTileArgs } from "../../helpers/generate-tile.ts";
 import { useTurns } from "../../stores/turns.ts";
-import MoneyInfo from "../MoneyInfo/MoneyInfo.vue";
+import EnergyInfo from "../EnergyInfo/EnergyInfo.vue";
 
 const props = defineProps<{ tiles: TileData[] }>();
 const emit = defineEmits(["refresh"]);
@@ -21,7 +21,7 @@ const { setCurrentTile } = boardStateStore;
 const featureFlagsStore = useFeatureFlags();
 const { features } = storeToRefs(featureFlagsStore);
 
-const { canAfford, spend } = useMoney();
+const { canAfford, spend } = useEnergy();
 
 const { turn } = storeToRefs(useTurns());
 
@@ -49,7 +49,7 @@ const resetPrice = 5;
     <header>
       <h2>Pick a Tile</h2>
 
-      <MoneyInfo class="money-info" v-if="features.money" />
+      <EnergyInfo class="energy-info" v-if="features.energy" />
     </header>
     <div class="tile-picker">
       <div class="tiles">
@@ -65,7 +65,7 @@ const resetPrice = 5;
         />
       </div>
 
-      <div class="additional-options" v-if="features.money">
+      <div class="additional-options" v-if="features.energy">
         <TilePickerButton
           v-if="patch"
           @click="setCurrentTile(patch)"

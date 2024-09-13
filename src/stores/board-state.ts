@@ -5,14 +5,14 @@ import { TileData } from "../types/tile-data";
 import { getActivePointsFromGrid } from "../helpers/get-active-points-from-grid";
 import { rotateGrid } from "../helpers/rotate-grid";
 import { Level } from "../types/level";
-import { useMoney } from "./money";
+import { useEnergy } from "./energy";
 
 export const useBoardState = defineStore("board-state", () => {
   const levelGrid: Ref<Grid> = ref([[]]);
   const currentTile: Ref<TileData | undefined> = ref();
   const placedTiles: Ref<TileData[]> = ref([]);
 
-  const { spend, increaseIncome } = useMoney();
+  const { spend, increaseIncome } = useEnergy();
 
   function loadLevel(level: Level) {
     levelGrid.value = [...level.grid.map((row) => [...row])];

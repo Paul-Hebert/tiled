@@ -2,7 +2,7 @@ import { defineStore, storeToRefs } from "pinia";
 import { Level } from "../types/level";
 import { computed, ref } from "vue";
 import { useBoardState } from "./board-state";
-import { useMoney } from "./money";
+import { useEnergy } from "./energy";
 import { useTurns } from "./turns";
 import { level1 } from "../data/levels/1/1";
 import { generateTile } from "../helpers/generate-tile";
@@ -16,7 +16,7 @@ export const useLevels = defineStore("levels", () => {
   const { resetTurns } = turnsStore;
   const { turn } = storeToRefs(turnsStore);
 
-  const moneyStore = useMoney();
+  const energyStore = useEnergy();
 
   const levels: Level[] = [level1, level2];
 
@@ -31,8 +31,8 @@ export const useLevels = defineStore("levels", () => {
     // Run starting events
     currentLevel.value.events?.forEach((event) => event.action());
 
-    moneyStore.setPlayerIncome(0);
-    moneyStore.setPlayerMoney(10);
+    energyStore.setPlayerIncome(0);
+    energyStore.setPlayerEnergy(10);
   }
 
   const nextLevel = computed(() => levels[currentLevelIndex.value + 1]);

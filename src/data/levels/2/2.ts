@@ -1,7 +1,7 @@
 import { useFeatureFlags } from "../../../stores/feature-flags";
 import { useMessaging } from "../../../stores/messaging";
 import { Level } from "../../../types/level";
-import MoneyMessage from "./MoneyMessage.vue";
+import EnergyMessage from "./EnergyMessage.vue";
 
 export const level2: Level = {
   title: "Planting the Seed",
@@ -39,11 +39,11 @@ export const level2: Level = {
         const featureFlagsStore = useFeatureFlags();
         const messagingStore = useMessaging();
 
-        featureFlagsStore.enableFeature("money");
+        featureFlagsStore.enableFeature("energy");
 
         messagingStore.setModalMessage({
-          title: "Money, money, money!",
-          message: MoneyMessage,
+          title: "Energy, energy, energy!",
+          message: EnergyMessage,
         });
       },
     },
