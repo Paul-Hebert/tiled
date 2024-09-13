@@ -2,29 +2,29 @@ import { defineStore } from "pinia";
 import { ref } from "vue";
 
 export const useEnergy = defineStore("energy", () => {
-  const playerEnergy = ref(0);
+  const energy = ref(0);
 
-  const canAfford = (cost: number) => playerEnergy.value >= cost;
+  const canAfford = (cost: number) => energy.value >= cost;
 
-  const spend = (cost: number) => {
+  const spendEnergy = (cost: number) => {
     if (!canAfford(cost)) {
       throw new Error("Insufficient funds");
     }
 
-    playerEnergy.value -= cost;
+    energy.value -= cost;
   };
 
-  const earn = (amount: number) => (playerEnergy.value += amount);
-  const setPlayerEnergy = (amount: number) => {
-    playerEnergy.value = amount;
-    console.log(playerEnergy.value);
+  const earnEnergy = (amount: number) => (energy.value += amount);
+  const setEnergy = (amount: number) => {
+    energy.value = amount;
+    console.log(energy.value);
   };
 
   return {
-    playerEnergy,
-    spend,
+    energy,
+    earnEnergy,
+    spendEnergy,
     canAfford,
-    earn,
-    setPlayerEnergy,
+    setEnergy,
   };
 });

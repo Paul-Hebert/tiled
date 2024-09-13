@@ -17,7 +17,7 @@ const emit = defineEmits(["refresh"]);
 const boardStateStore = useBoardState();
 const { setCurrentTile } = boardStateStore;
 
-const { canAfford, spend } = useEnergy();
+const { canAfford, spendEnergy } = useEnergy();
 
 const { turn } = storeToRefs(useTurns());
 
@@ -77,7 +77,7 @@ const resetPrice = 5;
           class="additional-option"
           @click="
             () => {
-              spend(resetPrice);
+              spendEnergy(resetPrice);
               emit('refresh');
             }
           "

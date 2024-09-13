@@ -12,7 +12,7 @@ export const useBoardState = defineStore("board-state", () => {
   const currentTile: Ref<TileData | undefined> = ref();
   const placedTiles: Ref<TileData[]> = ref([]);
 
-  const { spend } = useEnergy();
+  const { spendEnergy } = useEnergy();
 
   function loadLevel(level: Level) {
     levelGrid.value = [...level.grid.map((row) => [...row])];
@@ -78,7 +78,7 @@ export const useBoardState = defineStore("board-state", () => {
       levelGrid.value[point.y][point.x] = 1;
     });
 
-    spend(currentTile.value.price);
+    spendEnergy(currentTile.value.price);
 
     currentTile.value.placed = true;
     placedTiles.value.push({ ...currentTile.value });
