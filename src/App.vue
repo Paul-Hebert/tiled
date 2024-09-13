@@ -9,7 +9,6 @@ import { computed, ComputedRef, onMounted, type Ref, ref, watch } from "vue";
 import { useLevels } from "./stores/levels.ts";
 import Button from "./components/Button/Button.vue";
 import { TileData } from "./types/tile-data.ts";
-import { useEnergy } from "./stores/energy.ts";
 /* @ts-expect-error */
 import { randomItemInArray, randomInt } from "randomness-helpers";
 import { useTurns } from "./stores/turns.ts";
