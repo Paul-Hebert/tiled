@@ -1,4 +1,3 @@
-import { useFeatureFlags } from "../../../stores/feature-flags";
 import { useMessaging } from "../../../stores/messaging";
 import { Level } from "../../../types/level";
 import EnergyMessage from "./EnergyMessage.vue";
@@ -36,10 +35,7 @@ export const level2: Level = {
   events: [
     {
       action: () => {
-        const featureFlagsStore = useFeatureFlags();
         const messagingStore = useMessaging();
-
-        featureFlagsStore.enableFeature("energy");
 
         messagingStore.setModalMessage({
           title: "Energy, energy, energy!",

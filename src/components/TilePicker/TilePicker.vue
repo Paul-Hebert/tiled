@@ -6,7 +6,6 @@ import { useEnergy } from "../../stores/energy.ts";
 import TilePickerButton from "./subcomponents/TilePickerButton.vue";
 import ButtonWithPrice from "./subcomponents/ButtonWithPrice.vue";
 import { RefreshCwIcon } from "lucide-vue-next";
-import { useFeatureFlags } from "../../stores/feature-flags.ts";
 import { storeToRefs } from "pinia";
 import { generateTile, GenerateTileArgs } from "../../helpers/generate-tile.ts";
 import { useTurns } from "../../stores/turns.ts";
@@ -17,9 +16,6 @@ const emit = defineEmits(["refresh"]);
 
 const boardStateStore = useBoardState();
 const { setCurrentTile } = boardStateStore;
-
-const featureFlagsStore = useFeatureFlags();
-const { features } = storeToRefs(featureFlagsStore);
 
 const { canAfford, spend } = useEnergy();
 
@@ -49,7 +45,7 @@ const resetPrice = 5;
     <header>
       <h2>Pick a Tile</h2>
 
-      <EnergyInfo class="energy-info" v-if="features.energy" />
+      <EnergyInfo class="energy-info" />
     </header>
     <div class="tile-picker">
       <div class="tiles">
@@ -65,7 +61,7 @@ const resetPrice = 5;
         />
       </div>
 
-      <div class="additional-options" v-if="features.energy">
+      <div class="additional-options">
         <TilePickerButton
           v-if="patch"
           @click="setCurrentTile(patch)"
