@@ -47,11 +47,6 @@ export const useLevels = defineStore("levels", () => {
     }
   }
 
-  function restartLevel() {
-    console.log("restarting");
-    loadLevel(currentLevelIndex.value);
-  }
-
   function loadTilesForTurn() {
     const turnTiles = currentLevel.value.tiles;
     let tileIndex = turn.value;
@@ -73,7 +68,6 @@ export const useLevels = defineStore("levels", () => {
     loadLevel,
     loadNextLevel,
     gameComplete,
-    restartLevel,
     loadTilesForTurn,
   };
 });

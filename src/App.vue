@@ -1,8 +1,6 @@
 <script setup lang="ts">
 import GameBoard from "./components/GameBoard/GameBoard.vue";
-import GridProgress from "./components/GridProgress/GridProgress.vue";
 import TilePicker from "./components/TilePicker/TilePicker.vue";
-import EnergyInfo from "./components/EnergyInfo/EnergyInfo.vue";
 import PrimaryControls from "./components/PrimaryControls/PrimaryControls.vue";
 import { useBoardState } from "./stores/board-state.ts";
 import { useKeyboardCommands } from "./composables/use-keyboard-commands.ts";
@@ -16,8 +14,6 @@ import { useEnergy } from "./stores/energy.ts";
 import { randomItemInArray, randomInt } from "randomness-helpers";
 import { useTurns } from "./stores/turns.ts";
 import MessengerModal from "./components/global/MessengerModal.vue/MessengerModal.vue";
-
-const energyStore = useEnergy();
 
 useKeyboardCommands();
 
@@ -85,8 +81,6 @@ let controlStatus: ComputedRef<
     <h1>Level {{ currentLevelIndex + 1 }}: {{ currentLevel?.title || "" }}</h1>
 
     <GameBoard :scale="10" :grid="currentLevel.grid" class="board" />
-
-    <GridProgress class="progress" />
 
     <div class="controls">
       <div
