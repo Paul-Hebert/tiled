@@ -14,7 +14,7 @@ export const useEnergy = defineStore("energy", () => {
     energy.value -= cost;
   };
 
-  const earnEnergy = (amount: number) => (energy.value += amount);
+  const gainEnergy = (amount: number) => (energy.value += amount);
   const setEnergy = (amount: number) => {
     energy.value = amount;
     console.log(energy.value);
@@ -22,7 +22,7 @@ export const useEnergy = defineStore("energy", () => {
 
   return {
     energy,
-    earnEnergy,
+    gainEnergy,
     spendEnergy,
     canAfford,
     setEnergy,
