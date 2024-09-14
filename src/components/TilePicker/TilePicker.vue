@@ -9,7 +9,6 @@ import { RefreshCwIcon } from "lucide-vue-next";
 import { storeToRefs } from "pinia";
 import { generateTile, GenerateTileArgs } from "../../helpers/generate-tile.ts";
 import { useTurns } from "../../stores/turns.ts";
-import EnergyInfo from "../EnergyInfo/EnergyInfo.vue";
 
 const props = defineProps<{ tiles: TileData[] }>();
 const emit = defineEmits(["refresh"]);
@@ -44,8 +43,6 @@ const resetPrice = 5;
   <div class="wrapper">
     <header>
       <h2>Pick a Tile</h2>
-
-      <EnergyInfo class="energy-info" />
     </header>
     <div class="tile-picker">
       <div class="tiles">

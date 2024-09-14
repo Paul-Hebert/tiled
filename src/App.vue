@@ -13,6 +13,7 @@ import { TileData } from "./types/tile-data.ts";
 import { randomItemInArray, randomInt } from "randomness-helpers";
 import { useTurns } from "./stores/turns.ts";
 import MessengerModal from "./components/global/MessengerModal.vue/MessengerModal.vue";
+import PlayerStats from "./components/PlayerStats/PlayerStats.vue"
 
 useKeyboardCommands();
 
@@ -80,6 +81,8 @@ let controlStatus: ComputedRef<
     <h1>Level {{ currentLevelIndex + 1 }}: {{ currentLevel?.title || "" }}</h1>
 
     <GameBoard :scale="10" :grid="currentLevel.grid" class="board" />
+
+    <PlayerStats />
 
     <div class="controls">
       <div
