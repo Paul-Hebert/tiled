@@ -11,7 +11,6 @@ import Button from "./components/Button/Button.vue";
 import { TileData } from "./types/tile-data.ts";
 /* @ts-expect-error */
 import { randomItemInArray, randomInt } from "randomness-helpers";
-import { useTurns } from "./stores/turns.ts";
 import MessengerModal from "./components/global/MessengerModal.vue/MessengerModal.vue";
 import PlayerStats from "./components/PlayerStats/PlayerStats.vue"
 
@@ -24,23 +23,6 @@ const levelsStore = useLevels();
 const { loadTilesForTurn } = levelsStore;
 const { currentLevel, currentLevelIndex, gameComplete } =
   storeToRefs(levelsStore);
-
-const { turn } = storeToRefs(useTurns());
-
-const tileOptions: Ref<TileData[]> = ref([]);
-
-function setTileOptions() {
-  console.log(loadTilesForTurn());
-  tileOptions.value = loadTilesForTurn();
-}
-
-setTileOptions();
-watch(
-  () => turn.value,
-  () => {
-    setTileOptions();
-  }
-);
 
 // Load our starting level
 onMounted(() => {

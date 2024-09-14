@@ -7,10 +7,7 @@ import TilePickerButton from "./subcomponents/TilePickerButton.vue";
 import ButtonWithPrice from "./subcomponents/ButtonWithPrice.vue";
 import { RefreshCwIcon } from "lucide-vue-next";
 import { storeToRefs } from "pinia";
-import { generateTile, GenerateTileArgs } from "../../helpers/generate-tile.ts";
-
-const props = defineProps<{ tiles: TileData[] }>();
-const emit = defineEmits(["refresh"]);
+import { generateTileOptions } from "../../helpers/generate-tile-options.ts";
 
 const boardStateStore = useBoardState();
 const { setCurrentTile } = boardStateStore;
@@ -19,8 +16,10 @@ const { canAfford, spendEnergy } = useEnergy();
 
 const scale = 10;
 
+const tileOptions = ref(generateTileOptions());
+
 const biggestTileSize = computed(() =>
-  Math.max(...props.tiles.map((tile) => tile.shape.grid.length))
+  Math.max(...tileOptions.value.map((tile) => tile.shape.grid.length))
 );
 
 const resetPrice = 5;
@@ -35,7 +34,7 @@ const resetPrice = 5;
       <div class="tiles">
         <TilePickerButton
           @click="setCurrentTile(tile)"
-          v-for="tile in tiles"
+          v-for="tile in tileOptions"
           :key="tile.id"
           :grid-size="biggestTileSize"
           :scale="scale"
@@ -53,7 +52,6 @@ const resetPrice = 5;
           @click="
             () => {
               spendEnergy(resetPrice);
-              emit('refresh');
             }
           "
         >
