@@ -8,7 +8,6 @@ import ButtonWithPrice from "./subcomponents/ButtonWithPrice.vue";
 import { RefreshCwIcon } from "lucide-vue-next";
 import { storeToRefs } from "pinia";
 import { generateTile, GenerateTileArgs } from "../../helpers/generate-tile.ts";
-import { useTurns } from "../../stores/turns.ts";
 
 const props = defineProps<{ tiles: TileData[] }>();
 const emit = defineEmits(["refresh"]);
@@ -18,22 +17,10 @@ const { setCurrentTile } = boardStateStore;
 
 const { canAfford, spendEnergy } = useEnergy();
 
-const { turn } = storeToRefs(useTurns());
-
 const scale = 10;
 
 const biggestTileSize = computed(() =>
   Math.max(...props.tiles.map((tile) => tile.shape.grid.length))
-);
-
-const patchArgs: GenerateTileArgs = { shape: "Patch", price: 5 };
-const patch = ref(generateTile(patchArgs));
-
-watch(
-  () => turn.value,
-  () => {
-    patch.value = generateTile(patchArgs);
-  }
 );
 
 const resetPrice = 5;
@@ -59,15 +46,6 @@ const resetPrice = 5;
       </div>
 
       <div class="additional-options">
-        <TilePickerButton
-          v-if="patch"
-          @click="setCurrentTile(patch)"
-          :grid-size="1"
-          :scale="scale / 2"
-          :canAfford="canAfford(patch.price)"
-          :tile="patch"
-        />
-
         <ButtonWithPrice
           :price="resetPrice"
           :disabled="!canAfford(resetPrice)"
@@ -106,12 +84,6 @@ const resetPrice = 5;
   display: flex;
   gap: 1em;
   justify-content: space-around;
-}
-
-.additional-options {
-  display: flex;
-  gap: 1em;
-  justify-self: center;
 }
 
 .big-tile-button {
