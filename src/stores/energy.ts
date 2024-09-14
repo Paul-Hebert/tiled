@@ -13,11 +13,10 @@ export const useEnergy = defineStore("energy", () => {
 
     energy.value -= cost;
   };
-
   const gainEnergy = (amount: number) => (energy.value += amount);
+  
   const setEnergy = (amount: number) => {
     energy.value = amount;
-    console.log(energy.value);
   };
 
   return {
