@@ -18,6 +18,12 @@ const scale = 10;
 
 const tileOptions = ref(generateTileOptions());
 
+watch(() => tileOptions.value, (options) => {
+  if(options.length === 0) {
+    tileOptions.value = generateTileOptions(); 
+  }
+})
+
 const biggestTileSize = computed(() =>
   Math.max(...tileOptions.value.map((tile) => tile.shape.grid.length))
 );
@@ -33,7 +39,12 @@ const resetPrice = 5;
     <div class="tile-picker">
       <div class="tiles">
         <TilePickerButton
-          @click="setCurrentTile(tile)"
+          @click="
+            () => {
+              setCurrentTile(tile);
+              tileOptions = tileOptions.filter(t => t.id !== tile.id);
+            }
+          "
           v-for="tile in tileOptions"
           :key="tile.id"
           :grid-size="biggestTileSize"
@@ -52,6 +63,7 @@ const resetPrice = 5;
           @click="
             () => {
               spendEnergy(resetPrice);
+              tileOptions = generateTileOptions();
             }
           "
         >
